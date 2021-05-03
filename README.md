@@ -1,16 +1,8 @@
-# projeto_final_1
+# Layout para projeto final 1
 
-A new Flutter project.
+Adiantamento do layout do app de projeto final
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Seguindo o layout de https://xd.adobe.com/view/6189fad1-97b4-4fdf-5113-8d7b8c8a3108-17b8/grid
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
