@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Screens/Login.dart';
-import 'Screens/Home.dart';
+
 
 
 void main() {
@@ -13,9 +13,9 @@ class BytebankApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         primaryColor: Colors.grey[850],
-        accentColor: Colors.blueAccent[700],
+        accentColor: Colors.green,
         buttonTheme: ButtonThemeData(
-          buttonColor: Colors.blueAccent[700],
+          buttonColor: Colors.indigo,
           textTheme: ButtonTextTheme.primary,
         ),
       ),
