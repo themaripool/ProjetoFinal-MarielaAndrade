@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Screens/Settings.dart';
 
 class DrawerMenu extends StatelessWidget {
-  const DrawerMenu({
-    Key key,
-  }) : super(key: key);
+  
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class DrawerMenu extends StatelessWidget {
                   ),
                 ),
                 Align(
-                  alignment: Alignment.centerRight - Alignment(1.15, - 0.3),
+                  alignment: Alignment.centerRight - Alignment(1.15, -0.3),
                   child: Text(
                     'Médico',
                     style: TextStyle(
@@ -45,6 +45,7 @@ class DrawerMenu extends StatelessWidget {
               ),
             ),
             ListTile(
+              selected: 0 == _selectedIndex,
               leading: Icon(
                 Icons.add_circle,
                 color: Colors.grey[700],
@@ -58,27 +59,32 @@ class DrawerMenu extends StatelessWidget {
               },
             ),
             ListTile(
+              selected: 1 == _selectedIndex,
               leading: Icon(
                 Icons.notifications,
                 color: Colors.grey[700],
               ),
-              title: Text('Notificações',
-                  style: TextStyle(color: Colors.white70)),
+              title:
+                  Text('Notificações', style: TextStyle(color: Colors.white70)),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
             ListTile(
+              selected: 2 == _selectedIndex,
               leading: Icon(
                 Icons.settings,
                 color: Colors.grey[700],
               ),
               title: Text('Ajustes', style: TextStyle(color: Colors.white70)),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return Settings();
+                }));
               },
             ),
             ListTile(
+              selected: 3 == _selectedIndex,
               leading: Icon(
                 Icons.search,
                 color: Colors.grey[700],
