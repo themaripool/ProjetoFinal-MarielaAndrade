@@ -80,17 +80,37 @@ class _AlertDialogPatientState extends State<AlertDialogPatient> {
         ),
       ),
       actions: [
-        TextButton(
+        OutlinedButton(
+            style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.grey[900])),
             onPressed: () {
               print("On pressed do cancelar");
               Navigator.pop(context);
             },
-            child: Text("Cancelar")),
-        TextButton(
+            child: Text("VER DADOS", style: TextStyle(color: Colors.white))),
+        OutlinedButton(
+            style: ButtonStyle(
+              side: MaterialStateProperty.all(BorderSide(color: Colors.black)),
+            ),
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text("Confirmar"))
+            child: Row(
+              children: [
+                Column(
+                  children: [
+                    Text("CONFERIR", style: TextStyle(color: Colors.black)),
+                    Text("PACIENTE", style: TextStyle(color: Colors.black)),
+                  ],
+                ),
+                Icon(
+                  Icons.done,
+                  color: Colors.black,
+                  size: 32,
+                )
+              ],
+            )),
       ],
     );
   }
