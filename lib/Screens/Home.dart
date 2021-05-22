@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Components/HeaderDrawer.dart';
 import 'package:projeto_final_1/Enums/DrawerSections.dart';
+import 'package:projeto_final_1/Screens/BedDetails.dart';
 import 'package:projeto_final_1/Screens/DashBoard.dart';
 import 'package:projeto_final_1/Screens/Search.dart';
 import 'package:projeto_final_1/Screens/Settings.dart';
