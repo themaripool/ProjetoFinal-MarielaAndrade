@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/Components/DrawerMenu.dart';
 
 class Settings extends StatefulWidget {
-
   @override
   _SettingsState createState() => _SettingsState();
 }
@@ -15,8 +13,6 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("AJUSTES"), centerTitle: true),
-      drawer: DrawerMenu(),
       body: Column(
         children: [
           SwitchListTile(
@@ -27,7 +23,6 @@ class _SettingsState extends State<Settings> {
                 _toggleAirplaneMode = value;
               });
             },
-            
             value: _toggleAirplaneMode,
           ),
           SwitchListTile(
@@ -39,7 +34,7 @@ class _SettingsState extends State<Settings> {
               });
             },
             value: _toggleWifi,
-          ), 
+          ),
           SwitchListTile(
             title: Text('Bluetooth'),
             secondary: Icon(Icons.bluetooth),

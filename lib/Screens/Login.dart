@@ -15,7 +15,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      //resizeToAvoidBottomPadding: false,
       body: Stack(children: <Widget>[
         Container(
           child: Column(children: [
@@ -53,8 +53,7 @@ class LoginHeader extends StatelessWidget {
                   style: TextStyle(color: Colors.white, fontSize: 36),
                 ),
                 Text("COVID",
-                    style:
-                        TextStyle(color: Colors.white, fontSize: 36)),
+                    style: TextStyle(color: Colors.white, fontSize: 36)),
               ],
             ),
           ),
@@ -69,7 +68,9 @@ class LoginForm extends StatelessWidget {
     Key key,
     @required TextEditingController userNameCntl,
     @required TextEditingController passwordCntl,
-  }) : _userNameCntl = userNameCntl, _passwordCntl = passwordCntl, super(key: key);
+  })  : _userNameCntl = userNameCntl,
+        _passwordCntl = passwordCntl,
+        super(key: key);
 
   final TextEditingController _userNameCntl;
   final TextEditingController _passwordCntl;
