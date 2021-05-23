@@ -27,7 +27,7 @@ class _AlertDialogPatientState extends State<AlertDialogPatient> {
         child: Column(
           children: [
             //Status do paciente
-            LevelComponentWidget(),
+            LevelComponentWidget(Colors.yellow),
 
             Padding(
               padding: const EdgeInsets.only(bottom: 32, top: 8),

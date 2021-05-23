@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class LevelComponentWidget extends StatelessWidget {
-  const LevelComponentWidget({
-    Key key,
-  }) : super(key: key);
+  final Color severitycolor;
+
+  LevelComponentWidget(this.severitycolor);
 
   @override
   Widget build(BuildContext context) {
@@ -15,29 +15,25 @@ class LevelComponentWidget extends StatelessWidget {
           height: 30,
           width: 30,
           decoration: BoxDecoration(
-              border: Border.all(color: Colors.black),
-              color: Color.fromRGBO(230, 178, 47, 1.0)),
+              border: Border.all(color: Colors.black), color: severitycolor),
         ),
         Container(
           height: 30,
           width: 30,
           decoration: BoxDecoration(
-              border: Border.all(color: Colors.black),
-              color: Color.fromRGBO(230, 178, 47, 1.0)),
+              border: Border.all(color: Colors.black), color: severitycolor),
         ),
         Container(
           height: 30,
           width: 30,
           decoration: BoxDecoration(
-              border: Border.all(color: Colors.black),
-              color: Color.fromRGBO(230, 178, 47, 1.0)),
+              border: Border.all(color: Colors.black), color: severitycolor),
         ),
         Container(
           height: 30,
           width: 30,
           decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey[350]),
-              color: Colors.grey[350]),
+              border: Border.all(color: Colors.black), color: Colors.grey[350]),
         ),
       ],
     );

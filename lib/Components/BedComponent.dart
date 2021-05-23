@@ -5,18 +5,25 @@ import 'package:projeto_final_1/Components/LevelComponent.dart';
 class BedComponent extends StatefulWidget {
   final String bedNumber;
   final Color color;
+  final Color severitycolor;
+  final String severityState;
 
-  BedComponent(this.bedNumber, this.color);
+  BedComponent(
+      this.bedNumber, this.color, this.severitycolor, this.severityState);
 
   @override
-  _BedComponentState createState() =>
-      _BedComponentState(this.bedNumber, this.color);
+  _BedComponentState createState() => _BedComponentState(
+      this.bedNumber, this.color, this.severitycolor, this.severityState);
 }
 
 class _BedComponentState extends State<BedComponent> {
   final String bedNumber;
   final Color color;
-  _BedComponentState(this.bedNumber, this.color);
+  final Color severitycolor;
+  final String severityState;
+
+  _BedComponentState(
+      this.bedNumber, this.color, this.severitycolor, this.severityState);
   //  {
   //   this.icon,
   //   this.iconSize = 64,
@@ -93,11 +100,11 @@ class _BedComponentState extends State<BedComponent> {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8, left: 1),
-            child: LevelComponentWidget(),
+            child: LevelComponentWidget(severitycolor),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8, left: 8),
-            child: Text("SEVERO",
+            child: Text(severityState,
                 style: TextStyle(fontSize: 12, color: Colors.white)),
           )
         ],
