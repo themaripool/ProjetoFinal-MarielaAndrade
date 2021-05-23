@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:projeto_final_1/Components/AlertDialogPatient.dart';
 import 'package:projeto_final_1/Components/BedComponent.dart';
 import 'package:projeto_final_1/Components/BedComponentList.dart';
 
@@ -78,7 +79,12 @@ class _DashboardState extends State<Dashboard> {
                         color: Colors.black,
                       )),
                       onPressed: () {
-                        print('Received click');
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialogPatient();
+                          },
+                        );
                       },
                       child: const Text(
                         'Alarmes',

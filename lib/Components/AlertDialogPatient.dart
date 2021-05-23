@@ -13,110 +13,146 @@ class AlertDialogPatient extends StatefulWidget {
 
 const TWO_PI = 3.14 * 2;
 
+//decoration: BoxDecoration(color: Color.fromRGBO(230, 178, 47, 1.0))
+
 class _AlertDialogPatientState extends State<AlertDialogPatient> {
 //216 176 63
   @override
   Widget build(BuildContext context) {
     final size = 200.0;
-    return AlertDialog(
-      backgroundColor: Color.fromRGBO(230, 178, 47, 1.0),
-      title: Center(
-          child: Text("LEITO X",
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold))),
-      content: Center(
-        child: Column(
-          children: [
-            //Status do paciente
-            LevelComponentWidget(Colors.yellow),
-
-            Padding(
-              padding: const EdgeInsets.only(bottom: 32, top: 8),
-              child: Text("Estado Severo", style: TextStyle(fontSize: 20)),
-            ),
-
-            CircularGraph(size: size),
-
-            //texto abaixo do circulo
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment:
-                    CrossAxisAlignment.center, //Center Row contents vertically,
+    return Column(
+      children: [
+        Container(
+          width: 300,
+          height: 580,
+          decoration: BoxDecoration(color: Color.fromRGBO(230, 178, 47, 1.0)),
+          child: Column(
+            children: [
+              Row(
                 children: [
-                  Text("SaO2",
-                      style:
-                          TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
-                  Text(" 79%", style: TextStyle(fontSize: 26)),
-                  Icon(Icons.arrow_upward, size: 32)
+                  Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8, left: 52),
+                    child: Text("LEITO X",
+                        style: TextStyle(
+                            fontSize: 26, fontWeight: FontWeight.bold)),
+                  ),
+                  Spacer(),
+                  OutlinedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.transparent)),
+                      onPressed: () {
+                        print("On pressed x");
+                        Navigator.pop(context);
+                      },
+                      child: Icon(
+                        Icons.close,
+                        color: Colors.black,
+                      ))
                 ],
               ),
-            ),
 
-            //texto com mais infos
-            Padding(
-              padding: const EdgeInsets.only(top: 32.0),
-              child: Container(
-                child: Column(
+              LevelComponentWidget(Colors.yellow),
+
+              Padding(
+                padding: const EdgeInsets.only(bottom: 32, top: 8),
+                child: Text("Estado Severo", style: TextStyle(fontSize: 20)),
+              ),
+
+              CircularGraph(size: size),
+
+              //texto abaixo do circulo
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment
+                      .center, //Center Row contents vertically,
                   children: [
-                    Row(children: [
-                      Icon(Icons.arrow_downward, size: 20),
-                      Text("FC: ",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold)),
-                      Text("60 bpm", style: TextStyle(fontSize: 20))
-                    ]),
-                    Row(children: [
-                      Text("Temp: ",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold)),
-                      Text("36.1 C", style: TextStyle(fontSize: 20))
-                    ]),
-                    Row(children: [
-                      Text("FR: ",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold)),
-                      Text("12pm", style: TextStyle(fontSize: 20))
-                    ]),
+                    Text("SaO2",
+                        style: TextStyle(
+                            fontSize: 26, fontWeight: FontWeight.bold)),
+                    Text(" 79%", style: TextStyle(fontSize: 26)),
+                    Icon(Icons.arrow_upward, size: 32)
                   ],
                 ),
               ),
-            )
-          ],
-        ),
-      ),
-      actions: [
-        OutlinedButton(
-            style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.grey[900])),
-            onPressed: () {
-              print("On pressed do cancelar");
-              Navigator.pop(context);
-            },
-            child: Text("VER DADOS", style: TextStyle(color: Colors.white))),
-        OutlinedButton(
-            style: ButtonStyle(
-              side: MaterialStateProperty.all(BorderSide(color: Colors.black)),
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Row(
-              children: [
-                Column(
+
+              Padding(
+                  padding: const EdgeInsets.only(top: 32.0, left: 16),
+                  child: Container(
+                    child: Column(
+                      children: [
+                        Row(children: [
+                          Icon(Icons.arrow_downward, size: 20),
+                          Text("FC: ",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                          Text("60 bpm", style: TextStyle(fontSize: 20))
+                        ]),
+                        Row(children: [
+                          Text("Temp: ",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                          Text("36.1 C", style: TextStyle(fontSize: 20))
+                        ]),
+                        Row(children: [
+                          Text("FR: ",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                          Text("12pm", style: TextStyle(fontSize: 20))
+                        ]),
+                      ],
+                    ),
+                  )),
+
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
                   children: [
-                    Text("CONFERIR", style: TextStyle(color: Colors.black)),
-                    Text("PACIENTE", style: TextStyle(color: Colors.black)),
+                    OutlinedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Colors.grey[900])),
+                        onPressed: () {
+                          print("On pressed do cancelar");
+                          Navigator.pop(context);
+                        },
+                        child: Text("VER DADOS",
+                            style: TextStyle(color: Colors.white))),
+                    Spacer(),
+                    OutlinedButton(
+                        style: ButtonStyle(
+                          side: MaterialStateProperty.all(
+                              BorderSide(color: Colors.black)),
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Row(
+                          children: [
+                            Column(
+                              children: [
+                                Text("CONFERIR",
+                                    style: TextStyle(color: Colors.black)),
+                                Text("PACIENTE",
+                                    style: TextStyle(color: Colors.black)),
+                              ],
+                            ),
+                            Icon(
+                              Icons.done,
+                              color: Colors.black,
+                              size: 32,
+                            )
+                          ],
+                        )),
                   ],
                 ),
-                Icon(
-                  Icons.done,
-                  color: Colors.black,
-                  size: 32,
-                )
-              ],
-            )),
+              )
+            ],
+          ),
+        )
       ],
     );
   }
@@ -179,3 +215,106 @@ class CircularGraph extends StatelessWidget {
     );
   }
 }
+
+// AlertDialog(
+//         backgroundColor: Color.fromRGBO(230, 178, 47, 1.0),
+//         title: Center(
+//             child: Text("LEITO X",
+//                 style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold))),
+//         content: Center(
+//           child: Column(
+//             children: [
+//               //Status do paciente
+//               LevelComponentWidget(Colors.yellow),
+
+//               Padding(
+//                 padding: const EdgeInsets.only(bottom: 32, top: 8),
+//                 child: Text("Estado Severo", style: TextStyle(fontSize: 20)),
+//               ),
+
+//               CircularGraph(size: size),
+
+//               //texto abaixo do circulo
+//               Padding(
+//                 padding: const EdgeInsets.only(top: 16.0),
+//                 child: Row(
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   crossAxisAlignment: CrossAxisAlignment
+//                       .center, //Center Row contents vertically,
+//                   children: [
+//                     Text("SaO2",
+//                         style: TextStyle(
+//                             fontSize: 26, fontWeight: FontWeight.bold)),
+//                     Text(" 79%", style: TextStyle(fontSize: 26)),
+//                     Icon(Icons.arrow_upward, size: 32)
+//                   ],
+//                 ),
+//               ),
+
+//               //texto com mais infos
+//               Padding(
+//                 padding: const EdgeInsets.only(top: 32.0),
+//                 child: Container(
+//                   child: Column(
+//                     children: [
+//                       Row(children: [
+//                         Icon(Icons.arrow_downward, size: 20),
+//                         Text("FC: ",
+//                             style: TextStyle(
+//                                 fontSize: 20, fontWeight: FontWeight.bold)),
+//                         Text("60 bpm", style: TextStyle(fontSize: 20))
+//                       ]),
+//                       Row(children: [
+//                         Text("Temp: ",
+//                             style: TextStyle(
+//                                 fontSize: 20, fontWeight: FontWeight.bold)),
+//                         Text("36.1 C", style: TextStyle(fontSize: 20))
+//                       ]),
+//                       Row(children: [
+//                         Text("FR: ",
+//                             style: TextStyle(
+//                                 fontSize: 20, fontWeight: FontWeight.bold)),
+//                         Text("12pm", style: TextStyle(fontSize: 20))
+//                       ]),
+//                     ],
+//                   ),
+//                 ),
+//               )
+//             ],
+//           ),
+//         ),
+//         actions: [
+//           OutlinedButton(
+//               style: ButtonStyle(
+//                   backgroundColor:
+//                       MaterialStateProperty.all<Color>(Colors.grey[900])),
+//               onPressed: () {
+//                 print("On pressed do cancelar");
+//                 Navigator.pop(context);
+//               },
+//               child: Text("VER DADOS", style: TextStyle(color: Colors.white))),
+//           OutlinedButton(
+//               style: ButtonStyle(
+//                 side:
+//                     MaterialStateProperty.all(BorderSide(color: Colors.black)),
+//               ),
+//               onPressed: () {
+//                 Navigator.pop(context);
+//               },
+//               child: Row(
+//                 children: [
+//                   Column(
+//                     children: [
+//                       Text("CONFERIR", style: TextStyle(color: Colors.black)),
+//                       Text("PACIENTE", style: TextStyle(color: Colors.black)),
+//                     ],
+//                   ),
+//                   Icon(
+//                     Icons.done,
+//                     color: Colors.black,
+//                     size: 32,
+//                   )
+//                 ],
+//               )),
+//         ],
+//       ),
