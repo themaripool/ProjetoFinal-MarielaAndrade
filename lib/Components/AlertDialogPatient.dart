@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Components/LevelComponent.dart';
 
 class AlertDialogPatient extends StatefulWidget {
   final Function(String password) onConfirm;
@@ -19,26 +20,29 @@ class _AlertDialogPatientState extends State<AlertDialogPatient> {
     final size = 200.0;
     return AlertDialog(
       backgroundColor: Color.fromRGBO(230, 178, 47, 1.0),
-      title: Center(child: Text("LEITO X", style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold))),
+      title: Center(
+          child: Text("LEITO X",
+              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold))),
       content: Center(
         child: Column(
           children: [
             //Status do paciente
-            LevelWidget(),
+            LevelComponentWidget(),
 
             Padding(
               padding: const EdgeInsets.only(bottom: 32, top: 8),
-              child: Text("Estado Severo",style: TextStyle(fontSize: 20)),
+              child: Text("Estado Severo", style: TextStyle(fontSize: 20)),
             ),
-            
+
             CircularGraph(size: size),
-            
+
             //texto abaixo do circulo
             Padding(
               padding: const EdgeInsets.only(top: 16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically,
+                crossAxisAlignment:
+                    CrossAxisAlignment.center, //Center Row contents vertically,
                 children: [
                   Text("SaO2",
                       style:
@@ -78,7 +82,6 @@ class _AlertDialogPatientState extends State<AlertDialogPatient> {
                 ),
               ),
             )
-
           ],
         ),
       ),
@@ -92,7 +95,6 @@ class _AlertDialogPatientState extends State<AlertDialogPatient> {
               Navigator.pop(context);
             },
             child: Text("VER DADOS", style: TextStyle(color: Colors.white))),
-
         OutlinedButton(
             style: ButtonStyle(
               side: MaterialStateProperty.all(BorderSide(color: Colors.black)),
@@ -115,58 +117,6 @@ class _AlertDialogPatientState extends State<AlertDialogPatient> {
                 )
               ],
             )),
-      ],
-    );
-  }
-}
-
-class LevelWidget extends StatelessWidget {
-  const LevelWidget({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          height: 30,
-          width: 30,
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.black),
-              color: Color.fromRGBO(230, 178, 47, 1.0)
-          ),
-        ),
-
-        Container(
-          height: 30,
-          width: 30,
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.black),
-              color: Color.fromRGBO(230, 178, 47, 1.0)
-          ),
-        ),
-
-        Container(
-          height: 30,
-          width: 30,
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.black),
-              color: Color.fromRGBO(230, 178, 47, 1.0)
-          ),
-        ),
-
-        Container(
-          height: 30,
-          width: 30,
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey[350]),
-              color: Colors.grey[350]
-          ),
-        ),
-        
       ],
     );
   }
