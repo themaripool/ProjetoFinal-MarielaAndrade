@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:projeto_final_1/Components/AlertDialogPatient.dart';
 import 'package:projeto_final_1/Components/BedComponent.dart';
 import 'package:projeto_final_1/Components/BedComponentList.dart';
+import 'package:projeto_final_1/Screens/BedDetails.dart';
 
 var componentes = [
   BedComponent(
@@ -154,7 +155,16 @@ class _GridListViewState extends State<GridListView> {
         crossAxisSpacing: 2.0,
         childAspectRatio: (130 / 177),
         children: List.generate(componentes.length, (index) {
-          return Center(child: componentes[index]);
+          return GestureDetector(
+              onTap: () {
+                print(index = index); //index comeca em 0 BedDetails()
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => BedDetails(index + 1)),
+                );
+              },
+              child: Center(child: componentes[index]));
         }));
   }
 }
@@ -177,7 +187,15 @@ class _ListViewPatientsState extends State<ListViewPatients> {
         color: Colors.black,
       ),
       itemBuilder: (BuildContext context, int index) {
-        return componentesLista[index];
+        return GestureDetector(
+            onTap: () {
+              print(index = index); //index comeca em 0 BedDetails()
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BedDetails(index + 1)),
+              );
+            },
+            child: componentesLista[index]);
       },
     );
   }
