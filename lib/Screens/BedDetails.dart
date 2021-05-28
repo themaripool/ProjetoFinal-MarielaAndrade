@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Screens/DataScreen.dart';
 
 class BedDetails extends StatefulWidget {
   final int bedNumber;
@@ -44,7 +45,7 @@ class _BedDetailsState extends State<BedDetails> {
           ),
           body: TabBarView(
             children: <Widget>[
-              Text("Tela de dados aqui"),
+              DataScreen(),
               Text("Tela de alerta aqui")
             ],
           )),
