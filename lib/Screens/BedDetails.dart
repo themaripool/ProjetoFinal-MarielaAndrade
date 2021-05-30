@@ -1,21 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Screens/AlertScreen.dart';
 import 'package:projeto_final_1/Screens/DataScreen.dart';
 
-class BedDetails extends StatefulWidget {
+class BedDetails extends StatelessWidget {
   final int bedNumber;
   BedDetails(this.bedNumber);
-  @override
-  _BedDetailsState createState() => _BedDetailsState(this.bedNumber);
-}
-
-class _BedDetailsState extends State<BedDetails> {
-  int segmentedControlGroupValue = 0;
-  final int bedNumber;
-
- _BedDetailsState(this.bedNumber);
-  
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -44,10 +34,7 @@ class _BedDetailsState extends State<BedDetails> {
             ),
           ),
           body: TabBarView(
-            children: <Widget>[
-              DataScreen(),
-              Text("Tela de alerta aqui")
-            ],
+            children: <Widget>[DataScreen(), AlertScreen()],
           )),
     ));
   }
