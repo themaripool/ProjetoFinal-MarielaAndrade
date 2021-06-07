@@ -1,19 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Screens/Home.dart';
+import 'package:projeto_final_1/Screens/HomePatient.dart';
 
 class LoginButton extends StatelessWidget {
+
+  
   const LoginButton({
     Key key,
-  }) : super(key: key);
+    @required bool isdoctor,
+    @required bool ispatient,
+  }) : _isdoctor = isdoctor,
+      _ispatient = ispatient,
+      super(key: key);
+
+  final bool _ispatient;
+  final bool _isdoctor;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () => {
-        print("Tocou no login"),
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return Home();
-        }))
+        if (_isdoctor == true){
+          print("Tocou no login"),
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return Home();
+          }))
+        }
+        else if (_ispatient == true){
+          print("Tocou no login - caso paciente"),
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return HomePatient();
+          }))
+        }
+        
       },
       child: Text("Login"),
       style: ButtonStyle(

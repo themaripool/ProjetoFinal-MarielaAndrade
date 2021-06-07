@@ -63,7 +63,7 @@ class LoginHeader extends StatelessWidget {
   }
 }
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
   const LoginForm({
     Key key,
     @required TextEditingController userNameCntl,
@@ -76,6 +76,14 @@ class LoginForm extends StatelessWidget {
   final TextEditingController _passwordCntl;
 
   @override
+  _LoginFormState createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  var isPatient = false;
+  var isDoctor = false;
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(24.0),
@@ -84,7 +92,7 @@ class LoginForm extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 16),
             child: TextFieldLogin(
-                controller: _userNameCntl,
+                controller: widget._userNameCntl,
                 keyboard: TextInputType.emailAddress,
                 obscureText: false,
                 icon: Icon(Icons.person),
@@ -93,21 +101,53 @@ class LoginForm extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 32),
             child: TextFieldLogin(
-              controller: _passwordCntl,
+              controller: widget._passwordCntl,
               keyboard: TextInputType.number,
               obscureText: true,
               icon: Icon(Icons.lock),
               labelText: "Password",
             ),
           ),
+          
           Padding(
             padding: const EdgeInsets.only(top: 72),
             child: SizedBox(
               width: 350.0,
               height: 50.0,
-              child: LoginButton(),
+              child: LoginButton(isdoctor: isDoctor, ispatient: isPatient,),
             ),
-          )
+          ),
+
+          Row(
+            children: [
+              Checkbox(
+                value: isPatient,
+                onChanged: (value) {
+                  setState(() {
+                    isPatient = !isPatient;
+                    isDoctor = false;
+                  });
+                },
+              ),
+              Text("Paciente ", style: TextStyle(fontSize: 18)),
+            ],
+          ),
+
+          Row(
+            children: [
+              Checkbox(
+                value: isDoctor,
+                onChanged: (value) {
+                  setState(() {
+                    isDoctor = !isDoctor;
+                    isPatient = false;
+                  });
+                },
+              ),
+              Text("Médico / Enfermetiro ", style: TextStyle(fontSize: 18)),
+            ],
+          ),
+          
         ],
       ),
     );
