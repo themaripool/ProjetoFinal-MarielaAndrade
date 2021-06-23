@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Screens/PatientSymptoms.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
 
@@ -42,6 +43,27 @@ class _PatientDataState extends State<PatientData> {
               style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
             ),
           ),
+          GestureDetector(
+            onTap: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PatientSymptoms()),
+              )
+            },
+            child: Container(
+              width: 150,
+              height: 100,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                elevation: 10,
+                child: Row(
+                  children: [Text("Sintomas do dia")],
+                ),
+              ),
+            ),
+          ),
           SfCartesianChart(
               tooltipBehavior: TooltipBehavior(enable: true),
               primaryXAxis: CategoryAxis(),
@@ -66,6 +88,57 @@ class _PatientDataState extends State<PatientData> {
               ]),
         ],
       ),
+    );
+  }
+}
+
+class Alert2Widget extends StatelessWidget {
+  const Alert2Widget({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialog(
+      backgroundColor: Colors.transparent,
+      children: [
+        Container(
+          width: 200,
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            color: Colors.pink,
+            elevation: 10,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                const ListTile(
+                  leading: Icon(Icons.album, size: 70),
+                  title: Text('Heart Shaker',
+                      style: TextStyle(color: Colors.white)),
+                  subtitle:
+                      Text('TWICE', style: TextStyle(color: Colors.white)),
+                ),
+                ButtonBarTheme(
+                  data: ButtonBarThemeData(buttonHeight: 2),
+                  child: ButtonBar(
+                    children: <Widget>[
+                      TextButton(
+                        child: const Text('Ok',
+                            style: TextStyle(color: Colors.white)),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        )
+      ],
     );
   }
 }
