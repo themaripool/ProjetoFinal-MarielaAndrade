@@ -43,25 +43,38 @@ class _PatientDataState extends State<PatientData> {
               style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
             ),
           ),
-          GestureDetector(
-            onTap: () => {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => PatientSymptoms()),
-              )
-            },
-            child: Container(
-              width: 150,
-              height: 100,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 64),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PatientSymptoms()),
+                    )
+                  },
+                  child: CardButtom(
+                    icon: Icons.assignment_late_outlined,
+                    text: "Sintomas do Dia",
+                    width: 155,
+                  ),
                 ),
-                elevation: 10,
-                child: Row(
-                  children: [Text("Sintomas do dia")],
+                GestureDetector(
+                  onTap: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PatientSymptoms()),
+                    )
+                  },
+                  child: CardButtom(
+                    icon: Icons.event_note_outlined,
+                    text: "Histórico de Sintomas",
+                    width: 190,
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
           SfCartesianChart(
@@ -87,6 +100,45 @@ class _PatientDataState extends State<PatientData> {
                     markerSettings: MarkerSettings(isVisible: true))
               ]),
         ],
+      ),
+    );
+  }
+}
+
+class CardButtom extends StatelessWidget {
+  const CardButtom({
+    Key key,
+    this.icon,
+    this.text,
+    this.width,
+  }) : super(key: key);
+
+  final IconData icon;
+  final String text;
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: this.width,
+      height: 80,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        elevation: 10,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              //event_note_outlined
+              //Icons.assignment_late_outlined
+              Text(text),
+              Icon(this.icon)
+            ],
+          ),
+        ),
       ),
     );
   }
