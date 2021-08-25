@@ -17,6 +17,10 @@ class PatientData extends StatefulWidget {
   _PatientDataState createState() => _PatientDataState();
 }
 
+// TODO:
+// Exibicao de dados - Graficos
+// Modelo de Dados
+
 class _PatientDataState extends State<PatientData> {
   List<_News2Data> data = [
     _News2Data(100.0, "17:55", 35.6, 175),
