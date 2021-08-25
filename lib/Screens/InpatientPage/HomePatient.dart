@@ -1,8 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/Screens/PatientData.dart';
-import 'package:projeto_final_1/Screens/PatientSymptoms.dart';
+import 'package:projeto_final_1/Screens/InpatientPage/PatientData.dart';
+import 'package:projeto_final_1/Screens/InpatientPage/PatientSymptoms.dart';
 
-class HomePatient extends StatelessWidget {
+class HomePatient extends StatefulWidget {
+
+  @override
+  _HomePatientState createState() => _HomePatientState();
+}
+
+class _HomePatientState extends State<HomePatient> {
+  
+  int _pageIndex = 0; 
+
+  final List<Widget> _screens = [
+    PatientData(),
+    PatientSymptoms()
+  ];
+
+  void onTabTapped(int index) {
+    setState(() {
+      _pageIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -34,24 +54,20 @@ class HomePatient extends StatelessWidget {
               "Bem Vindo John Doe",
               style: TextStyle(color: Colors.grey[350]),
             ),
-            // bottom: TabBar(
-            //   tabs: <Widget>[
-            //     Tab(
-            //       icon: Icon(Icons.addchart_sharp),
-            //       text: "DADOS",
-            //     ),
-            //     Tab(
-            //       icon: Icon(Icons.analytics_outlined),
-            //       text: "SINTOMAS",
-            //     )
-            //   ],
-            // ),
           ),
-          body: PatientData()
-          // TabBarView(
-          //   children: <Widget>[PatientData(), PatientSymptoms()],
-          // )
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _pageIndex, 
+            onTap: onTabTapped,
+            items: [
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.addchart_sharp), label: "DADOS"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.analytics_outlined),
+                  label: "SINTOMAS"),
+            ],
           ),
+          body:  _screens[_pageIndex],
+        ),
     ));
   }
 }

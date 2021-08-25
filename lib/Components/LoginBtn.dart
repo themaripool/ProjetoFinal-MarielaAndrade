@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Screens/Home.dart';
-import 'package:projeto_final_1/Screens/HomePatient.dart';
+import 'package:projeto_final_1/Screens/InpatientPage/HomePatient.dart';
 
 class LoginButton extends StatelessWidget {
 

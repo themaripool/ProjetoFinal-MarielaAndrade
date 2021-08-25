@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/Screens/PatientSymptoms.dart';
+import 'package:projeto_final_1/Screens/InpatientPage/PatientSymptoms.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
 

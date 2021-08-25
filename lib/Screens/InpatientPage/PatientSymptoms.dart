@@ -20,7 +20,7 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(backgroundColor: Colors.grey[700], title: Text("Sintomas do Dia"),),
+     // appBar: AppBar(backgroundColor: Colors.grey[700], title: Text("Sintomas do Dia"),),
       body: SingleChildScrollView(
         reverse: true,
         child: Column(
