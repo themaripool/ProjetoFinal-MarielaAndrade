@@ -1,20 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:projeto_final_1/Enums/InpatientSymptomsEnum.dart';
 import 'package:projeto_final_1/Screens/InpatientPage/Models/symptoms.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class InpatientRatingAlert extends StatefulWidget {
-  InpatientRatingAlert({
-    Key key,
-  });
+  final String symptomCase;
+
+  InpatientRatingAlert(this.symptomCase);
 
   @override
   _InpatientRatingAlertState createState() => _InpatientRatingAlertState();
 }
 
 class _InpatientRatingAlertState extends State<InpatientRatingAlert> {
-  var currentNumber = 0;
+
+  _InpatientRatingAlertState();
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +45,14 @@ class _InpatientRatingAlertState extends State<InpatientRatingAlert> {
                                 FormBuilderFieldOption(value: number))
                             .toList(),
                         onChanged: (number) => {
-                              print("$number mudou aaa"),
-                              valor.setHeadacheVal(number)
+                          print("sintoma = ${widget.symptomCase.toString()}"),
+                          print("headache = ${InpatientSymptomsEnum.headache.toString()}"),
+                              if (widget.symptomCase.toString() == "headache"){valor.setHeadacheVal(number)},
+                              if (widget.symptomCase.toString() == "tiredness"){valor.setTirednessVal(number)},
+                              if (widget.symptomCase.toString() == "pain"){valor.setPainVal(number)},
+                              if (widget.symptomCase.toString() == "nausea"){valor.setNauseaVal(number)},
+                              if (widget.symptomCase.toString() == "diarrhea"){valor.setDiarrheaVal(number)},
+                              Navigator.pop(context)
                             });
                   })
                 ],

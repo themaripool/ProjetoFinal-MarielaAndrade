@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Enums/InpatientSymptomsEnum.dart';
 
 class Symptoms extends ChangeNotifier {
 
@@ -11,18 +12,58 @@ class Symptoms extends ChangeNotifier {
 
   Symptoms(this.headacheVal, this.tirednessVal, this.painVal, this.nauseaVal, this.diarrheaVal, this.otherVal);
 
-
-  @override
-  String toString() {
+// Formatacao do int para String na exibicao no app
+  
+  String toStringHeadache(){
     return '$headacheVal';
   }
+
+  String toStringTiredness(){
+    return '$tirednessVal';
+  }
+
+  String toStringPain(){
+    return '$painVal';
+  }
+
+  String toStringNausea(){
+    return '$nauseaVal';
+  }
+
+  String toStringDiarrhea(){
+    return '$diarrheaVal';
+  }
+
+  // Atualizacoes dos dados usando provider
+
   void setHeadacheVal(int val){
-    print("val recebido = $val");
     this.headacheVal = val;
-    print("val do novo headache = ${this.headacheVal}");
     notifyListeners();
-    print("passou aqui");
+  }
+
+   void setTirednessVal(int val){
+    this.tirednessVal = val;
+    notifyListeners();
+  }
+
+   void setPainVal(int val){
+    this.painVal = val;
+    notifyListeners();
+  }
+
+   void setNauseaVal(int val){
+    this.nauseaVal = val;
+    notifyListeners();
+  }
+
+   void setDiarrheaVal(int val){
+    this.diarrheaVal = val;
+    notifyListeners();
+  }
+
+   void setOtherVal(String val){
+    this.otherVal = val;
+    notifyListeners();
   }
  
-  
 }

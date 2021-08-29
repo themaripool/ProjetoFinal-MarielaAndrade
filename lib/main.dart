@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 
 void main() => runApp(ChangeNotifierProvider(
-      create: (context) => Symptoms(0, 0, 0, 0, 0, ""),
+      create: (context) => Symptoms(-1, -1, -1, -1, -1, ""),
       child: TccApp(),
     ));
 
