@@ -1,15 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Screens/InpatientPage/InpatientHomeComponent.dart';
 
-class _News2Data {
-  _News2Data(this.pulse, this.time, this.temp, this.bloodPressure);
-
-  final double pulse;
-  final String time;
-  final double temp;
-  final int bloodPressure;
-}
-
 class PatientData extends StatefulWidget {
   @override
   _PatientDataState createState() => _PatientDataState();
@@ -18,10 +9,10 @@ class PatientData extends StatefulWidget {
 class _PatientDataState extends State<PatientData> {
 
   var componentes = [
-    InpatientHomeComponent(Colors.white, "Freq Res p/ min", "12"),
-    InpatientHomeComponent(Colors.yellow, "PA", "92"),
+    InpatientHomeComponent(Colors.white, "Frequência Respiratória", "12 p/ min"),
+    InpatientHomeComponent(Colors.yellow, "Pressão Arterial", "92"),
     InpatientHomeComponent(Colors.orange, "Pulso", "111"),
-    InpatientHomeComponent(Colors.white, "Consciencia", "Alerta"),
+    InpatientHomeComponent(Colors.white, "Consciência", "Alerta"),
     InpatientHomeComponent(Colors.red, "Temperatura", "31.1 C"),
     InpatientHomeComponent(Colors.white, "SP 02", "88"),
   ];
@@ -30,14 +21,15 @@ class _PatientDataState extends State<PatientData> {
   Widget build(BuildContext context) {
 
     return GridView.count(
-        crossAxisCount: 3,
-        mainAxisSpacing: 20.0,
-        crossAxisSpacing: 2.0,
-        childAspectRatio: (130 / 177),
-        children: List.generate(componentes.length, (index) {
-          return GestureDetector(
-              onTap: () {},
-              child: Center(child: componentes[index]));
+      padding: EdgeInsets.only(top: 16),
+      crossAxisCount: 3,
+      mainAxisSpacing: 20.0,
+      crossAxisSpacing: 4.0,
+      childAspectRatio: (130 / 177),
+      children: List.generate(componentes.length, (index) {
+        return GestureDetector(
+            onTap: () {},
+            child: Center(child: componentes[index]));
         }));
   }
 }

@@ -35,21 +35,9 @@ class _InpatientHomeComponentState extends State<InpatientHomeComponent> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Text(
-              title,
-              style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Text(description,
-                style: TextStyle(fontSize: 18, color: Colors.black)),
-          )
+          Icon(Icons.medical_services, size: 32),
+          Padding( padding: const EdgeInsets.all(8), child: Text(description, style: TextStyle(fontSize: 24, color: Colors.black)),),
+          Padding(padding: const EdgeInsets.all(8), child: Text(title, style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.bold),),),
         ],
       ),
     );

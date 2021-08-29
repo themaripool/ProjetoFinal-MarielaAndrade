@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/Enums/InpatientSymptomsEnum.dart';
 
 class Symptoms extends ChangeNotifier {
 
