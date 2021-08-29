@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:projeto_final_1/Screens/InpatientPage/InpatientData.dart';
 import 'package:projeto_final_1/Screens/InpatientPage/InpatientRatingAlert.dart';
+import 'package:projeto_final_1/Screens/InpatientPage/Models/symptoms.dart';
+import 'package:provider/provider.dart';
 
 class PatientSymptoms extends StatefulWidget {
   @override
@@ -10,10 +10,8 @@ class PatientSymptoms extends StatefulWidget {
 
 // TODO:
 // Ver como que ficar os dialogs com mais de uma opcao de Dor
-// ver como atualizar o texto do nivel de dor no dismiss do dialogs
 // ver como que salva no clique do botao
 // Alerta: espacamento + cor + tamanho
-
 
 class _PatientSymptomsState extends State<PatientSymptoms> {
   bool headache = false;
@@ -22,13 +20,6 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
   bool nausea = false;
   bool diarrhea = false;
   bool other = false;
-
-  var headacheVal = null;
-  var tirednessVal = 0;
-  var painVal = 0;
-  var nauseaVal = 0;
-  var diarrheaVal = 0;
-  var otherVal = 0;
 
   TextEditingController _others = TextEditingController();
 
@@ -54,201 +45,194 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-      
                     /* Dor de Cabeça */
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Checkbox(
-                        value: headache,
-                        onChanged: (value) async {
-                          setState(() {
-                            headache = !headache;
-                          });
-                          if (headache == true) {
-                            headacheVal = await showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return InpatientRatingAlert();
-                              },
-                            );
-                            headacheVal = headacheVal != null ? headacheVal : 0 ;
-                            print("$headacheVal testeeee");
-                          }
-                        },
-                      ),
-                      Text(
-                        "Dor de Cabeça",
-                        style: TextStyle(fontSize: 18),
-                      ),
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Checkbox(
+                            value: headache,
+                            onChanged: (value) async {
+                              setState(() {
+                                headache = !headache;
+                              });
+                              if (headache == true) {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return InpatientRatingAlert();
+                                  },
+                                );
+                              }
+                            },
+                          ),
+                          Text(
+                            "Dor de Cabeça",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          Consumer<Symptoms>(builder: (context, headacheVal, child) {
+                            print("Headache val = $headacheVal");
+                            return Text(headacheVal.toString());
+                          }),
+                        ]),
 
-                      if (headacheVal != null)
-                        Text(" Nível de dor = $headacheVal",style: TextStyle(fontSize: 18),)
+                    // /* Cansaço */
 
-                      
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Checkbox(
+                    //     value: tiredness,
+                    //     onChanged: (value) async {
+                    //       setState(() {
+                    //         tiredness = !tiredness;
+                    //       });
+                    //       if (tiredness == true) {
+                    //         tirednessVal = await showDialog(
+                    //           context: context,
+                    //           builder: (BuildContext context) {
+                    //             return InpatientRatingAlert();
+                    //           },
+                    //         );
+                    //         tirednessVal = tirednessVal != null ? tirednessVal : 0 ;
+                    //         print("$tirednessVal testeeee");
+                    //       }
+                    //     },
+                    //   ),
+                    //   Text(
+                    //     "Cansaço",
+                    //     style: TextStyle(fontSize: 18),
+                    //   ),
+                    //   Text(" Nível de dor = $tirednessVal",
+                    //     style: TextStyle(fontSize: 18),
+                    //   ),
+                    // ]),
 
-                      
-                      
-                    ]),
+                    // /* Dor */
 
-                    /* Cansaço */
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Checkbox(
+                    //     value: pain,
+                    //     onChanged: (value) async {
+                    //       setState(() {
+                    //         pain = !pain;
+                    //       });
+                    //       if (pain == true) {
+                    //         painVal = await showDialog(
+                    //           context: context,
+                    //           builder: (BuildContext context) {
+                    //             return InpatientRatingAlert();
+                    //           },
+                    //         );
+                    //         painVal = painVal != null ? painVal : 0 ;
+                    //         print("$painVal testeeee");
+                    //       }
+                    //     },
+                    //   ),
+                    //   Text(
+                    //     "Dor",
+                    //     style: TextStyle(fontSize: 18),
+                    //   ),
+                    //   Text(" Nível de dor = $painVal",
+                    //     style: TextStyle(fontSize: 18),
+                    //   ),
+                    // ]),
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Checkbox(
-                        value: tiredness,
-                        onChanged: (value) async {
-                          setState(() {
-                            tiredness = !tiredness;
-                          });
-                          if (tiredness == true) {
-                            tirednessVal = await showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return InpatientRatingAlert();
-                              },
-                            );
-                            tirednessVal = tirednessVal != null ? tirednessVal : 0 ;
-                            print("$tirednessVal testeeee");
-                          }
-                        },
-                      ),
-                      Text(
-                        "Cansaço",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      Text(" Nível de dor = $tirednessVal",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ]),
+                    // /* Nausea */
 
-                    /* Dor */
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Checkbox(
+                    //     value: nausea,
+                    //     onChanged: (value) async {
+                    //       setState(() {
+                    //         nausea = !nausea;
+                    //       });
+                    //       if (nausea == true) {
+                    //         nauseaVal = await showDialog(
+                    //           context: context,
+                    //           builder: (BuildContext context) {
+                    //             return InpatientRatingAlert();
+                    //           },
+                    //         );
+                    //         nauseaVal = nauseaVal != null ? nauseaVal : 0 ;
+                    //         print("$nauseaVal testeeee");
+                    //       }
+                    //     },
+                    //   ),
+                    //   Text(
+                    //     "Nausea",
+                    //     style: TextStyle(fontSize: 18),
+                    //   ),
+                    //   Text(" Nível de dor = $nauseaVal",
+                    //     style: TextStyle(fontSize: 18),
+                    //   ),
+                    // ]),
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Checkbox(
-                        value: pain,
-                        onChanged: (value) async {
-                          setState(() {
-                            pain = !pain;
-                          });
-                          if (pain == true) {
-                            painVal = await showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return InpatientRatingAlert();
-                              },
-                            );
-                            painVal = painVal != null ? painVal : 0 ;
-                            print("$painVal testeeee");
-                          }
-                        },
-                      ),
-                      Text(
-                        "Dor",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      Text(" Nível de dor = $painVal",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ]),
+                    // /* Diarreia */
 
-                    /* Nausea */
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Checkbox(
+                    //     value: diarrhea,
+                    //     onChanged: (value) async {
+                    //       setState(() {
+                    //         diarrhea = !diarrhea;
+                    //       });
+                    //       if (diarrhea == true) {
+                    //         diarrheaVal = await showDialog(
+                    //           context: context,
+                    //           builder: (BuildContext context) {
+                    //             return InpatientRatingAlert();
+                    //           },
+                    //         );
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Checkbox(
-                        value: nausea,
-                        onChanged: (value) async {
-                          setState(() {
-                            nausea = !nausea;
-                          });
-                          if (nausea == true) {
-                            nauseaVal = await showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return InpatientRatingAlert();
-                              },
-                            );
-                            nauseaVal = nauseaVal != null ? nauseaVal : 0 ;
-                            print("$nauseaVal testeeee");
-                          }
-                        },
-                      ),
-                      Text(
-                        "Nausea",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      Text(" Nível de dor = $nauseaVal",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ]),
+                    //         print("$diarrheaVal testeeee");
+                    //       }
+                    //     },
+                    //   ),
+                    //   Text(
+                    //     "Diarreia",
+                    //     style: TextStyle(fontSize: 18),
+                    //   ),
+                    //   Text(" Nível de dor = $diarrheaVal",
+                    //     style: TextStyle(fontSize: 18),
+                    //   ),
+                    // ]),
 
-                    /* Diarreia */
+                    // /* Outros */
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Checkbox(
-                        value: diarrhea,
-                        onChanged: (value) async {
-                          setState(() {
-                            diarrhea = !diarrhea;
-                          });
-                          if (diarrhea == true) {
-                            diarrheaVal = await showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return InpatientRatingAlert();
-                              },
-                            );
-                            
-                            print("$diarrheaVal testeeee");
-                          }
-                        },
-                      ),
-                      Text(
-                        "Diarreia",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      Text(" Nível de dor = $diarrheaVal",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ]),
-
-                    /* Outros */
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Checkbox(
-                        value: other,
-                        onChanged: (value) async {
-                          setState(() {
-                            other = !other;
-                          });
-                          if (other == true) {
-                            otherVal = await showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return InpatientRatingAlert();
-                              },
-                            );
-                            print("$otherVal testeeee");
-                          }
-                        },
-                      ),
-                      Text(
-                        "Outros",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      Text(" Nível de dor = $otherVal",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ]),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Checkbox(
+                    //     value: other,
+                    //     onChanged: (value) async {
+                    //       setState(() {
+                    //         other = !other;
+                    //       });
+                    //       if (other == true) {
+                    //         otherVal = await showDialog(
+                    //           context: context,
+                    //           builder: (BuildContext context) {
+                    //             return InpatientRatingAlert();
+                    //           },
+                    //         );
+                    //         print("$otherVal testeeee");
+                    //       }
+                    //     },
+                    //   ),
+                    //   Text(
+                    //     "Outros",
+                    //     style: TextStyle(fontSize: 18),
+                    //   ),
+                    //   Text(" Nível de dor = $otherVal",
+                    //     style: TextStyle(fontSize: 18),
+                    //   ),
+                    // ]),
                   ],
                 ),
               ),

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Screens/InpatientPage/InpatientHomeComponent.dart';
-import 'package:projeto_final_1/Screens/InpatientPage/InpatientSymptoms.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:intl/intl.dart';
 
 class _News2Data {
   _News2Data(this.pulse, this.time, this.temp, this.bloodPressure);
@@ -72,8 +69,6 @@ class CardButtom extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              //event_note_outlined
-              //Icons.assignment_late_outlined
               Text(text),
               Icon(this.icon)
             ],

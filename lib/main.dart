@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Screens/InpatientPage/Models/symptoms.dart';
 import 'package:projeto_final_1/Screens/Login.dart';
+import 'package:provider/provider.dart';
 
 
 
-void main() {
-  runApp(BytebankApp());
-}
+void main() => runApp(ChangeNotifierProvider(
+      create: (context) => Symptoms(0, 0, 0, 0, 0, ""),
+      child: TccApp(),
+    ));
 
-class BytebankApp extends StatelessWidget {
+class TccApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
