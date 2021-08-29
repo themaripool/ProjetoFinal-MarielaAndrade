@@ -9,12 +9,12 @@ class PatientData extends StatefulWidget {
 class _PatientDataState extends State<PatientData> {
 
   var componentes = [
-    InpatientHomeComponent(Colors.white, "Frequência Respiratória", "12 p/ min"),
-    InpatientHomeComponent(Colors.yellow, "Pressão Arterial", "92"),
-    InpatientHomeComponent(Colors.orange, "Pulso", "111"),
-    InpatientHomeComponent(Colors.white, "Consciência", "Alerta"),
-    InpatientHomeComponent(Colors.red, "Temperatura", "31.1 C"),
-    InpatientHomeComponent(Colors.white, "SP 02", "88"),
+    InpatientHomeComponent(Colors.white, "Frequência Respiratória", "12 p/ min", "respiratoryFreq"),
+    InpatientHomeComponent(Colors.yellow, "Pressão Arterial", "92", "bloodPressure"),
+    InpatientHomeComponent(Colors.orange, "Pulso", "111", "pulse"),
+    InpatientHomeComponent(Colors.white, "Consciência", "Alerta", "conscience"),
+    InpatientHomeComponent(Colors.red, "Temperatura", "31.1 C", "temperature"),
+    InpatientHomeComponent(Colors.white, "SP 02", "88", "sp"),
   ];
 
   @override
