@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Screens/InpatientPage/Home%20Details/InpatientDetails.dart';
 import 'package:projeto_final_1/Screens/InpatientPage/Home/InpatientHomeComponent.dart';
 
 /* TELA DE HOME DO PACIENTE
@@ -14,6 +17,20 @@ TODO:
 [x] Notifier do News2 criado
 [] Ver como mudar cor de acordo com dados recebidos
 */
+
+// ================== teste de tela ====================
+
+class teste {
+   String data;
+   String valor;
+   teste(this.data, this.valor);
+ }
+
+var lista = [
+  teste("23:45", "23"), 
+  teste("23:55", "24")
+];
+// ================== teste de tela ====================
 
 
 class PatientData extends StatefulWidget {
@@ -43,8 +60,16 @@ class _PatientDataState extends State<PatientData> {
       childAspectRatio: (130 / 177),
       children: List.generate(componentes.length, (index) {
         return GestureDetector(
-            onTap: () {},
+            onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => InpatientDetails(dataList: lista,)),
+                );
+            },
             child: Center(child: componentes[index]));
         }));
   }
 }
+
+
