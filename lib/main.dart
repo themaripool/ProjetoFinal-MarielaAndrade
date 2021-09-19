@@ -11,7 +11,7 @@ void main() async {
   runApp(
     MultiProvider(
     providers: [
-      Provider<Symptoms>(create: (_) => Symptoms(-1, -1, -1, -1, -1, "")),
+      ChangeNotifierProvider<Symptoms>(create: (_) => Symptoms(-1, -1, -1, -1, -1, "")),
       Provider<News2>(create: (_) => News2(32, 43, 54, 12, 32, 43)),
     ],
     child: TccApp(),

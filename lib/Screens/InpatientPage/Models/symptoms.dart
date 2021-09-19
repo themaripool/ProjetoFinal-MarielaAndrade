@@ -33,11 +33,16 @@ class Symptoms extends ChangeNotifier {
     return '$diarrheaVal';
   }
 
+  String toStringOthers(){
+    return '$otherVal';
+  }
+
   // Atualizacoes dos dados usando provider
 
   void setHeadacheVal(int val){
     this.headacheVal = val;
     notifyListeners();
+    print("notificaou");
   }
 
    void setTirednessVal(int val){
