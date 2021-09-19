@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/Screens/InpatientPage/InpatientData.dart';
-import 'package:projeto_final_1/Screens/InpatientPage/InpatientSymptoms.dart';
+import 'package:projeto_final_1/Screens/InpatientPage/Home/InpatientData.dart';
+import 'package:projeto_final_1/Screens/InpatientPage/Symptoms/InpatientSymptoms.dart';
 
 class HomePatient extends StatefulWidget {
 
@@ -32,17 +32,6 @@ class _HomePatientState extends State<HomePatient> {
       child: Scaffold(
           appBar: AppBar(
             actions: [
-              IconButton(
-                icon: Icon(Icons.notifications_none),
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Alert2Widget();
-                    },
-                  );
-                },
-              ),
               CircleAvatar(
                 backgroundImage: NetworkImage(
                     'https://i.pinimg.com/originals/c9/85/9c/c9859c3719f1328d1795df856940ddfd.jpg'),

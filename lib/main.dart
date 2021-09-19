@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Screens/InpatientPage/Models/news2.dart';
 import 'package:projeto_final_1/Screens/InpatientPage/Models/symptoms.dart';
 import 'package:projeto_final_1/Screens/Login.dart';
 import 'package:provider/provider.dart';
 
 
 
-void main() => runApp(ChangeNotifierProvider(
-      create: (context) => Symptoms(-1, -1, -1, -1, -1, ""),
-      child: TccApp(),
-    ));
+void main() async {
+  Provider.debugCheckInvalidValueType = null;
+  runApp(
+    MultiProvider(
+    providers: [
+      Provider<Symptoms>(create: (_) => Symptoms(-1, -1, -1, -1, -1, "")),
+      Provider<News2>(create: (_) => News2(32, 43, 54, 12, 32, 43)),
+    ],
+    child: TccApp(),
+  ));
+}
 
 class TccApp extends StatelessWidget {
   @override

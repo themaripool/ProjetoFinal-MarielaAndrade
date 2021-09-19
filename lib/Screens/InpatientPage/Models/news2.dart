@@ -19,9 +19,17 @@ class News2 extends ChangeNotifier {
     notifyListeners();
   }
 
+  String toStringRespiratoryFreq(){
+    return '$respiratoryFreq';
+  }
+
    void setBloodPressure(double val){
     this.bloodPressure = val;
     notifyListeners();
+  }
+
+  String toStringBloodPressure(){
+    return '$bloodPressure';
   }
 
    void setPulse(double val){
@@ -29,9 +37,17 @@ class News2 extends ChangeNotifier {
     notifyListeners();
   }
 
+  String toStringPulse(){
+    return '$pulse';
+  }
+
    void setConscience(double val){
     this.conscience = val;
     notifyListeners();
+  }
+
+  String toStringConscience(){
+    return '$conscience';
   }
 
    void setTemperature(double val){
@@ -39,9 +55,17 @@ class News2 extends ChangeNotifier {
     notifyListeners();
   }
 
+  String toStringTemperature(){
+    return '$temperature';
+  }
+
    void setSp(double val){
     this.sp = val;
     notifyListeners();
+  }
+
+  String toStringSp(){
+    return '$sp';
   }
 
 }
