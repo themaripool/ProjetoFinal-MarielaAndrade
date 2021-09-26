@@ -1,43 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/API/mqtt_client.dart';
 import 'package:projeto_final_1/Screens/Home.dart';
 import 'package:projeto_final_1/Screens/InpatientPage/InpatientNavigation.dart';
 
 class LoginButton extends StatelessWidget {
-
-  
-  const LoginButton({
-    Key key,
-    @required bool isdoctor,
-    @required bool ispatient,
-  }) : _isdoctor = isdoctor,
-      _ispatient = ispatient,
-      super(key: key);
-
   final bool _ispatient;
   final bool _isdoctor;
+  final String login;
+  final String password;
+
+  const LoginButton({
+    Key key,
+    bool isdoctor,
+    bool ispatient,
+    this.login,
+    this.password,
+  })  : _isdoctor = isdoctor,
+        _ispatient = ispatient,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () => {
-        if (_isdoctor == true){
-          print("Tocou no login"),
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return Home();
-          }))
-        }
-        else if (_ispatient == true){
-          print("Tocou no login - caso paciente"),
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return HomePatient();
-          }))
-        }
-        
+        if (_isdoctor == true)
+          {
+            print("Tocou no login"),
+            /*  if (login.isEmpty) {login = "teste"},
+            if (password.isEmpty) {password = "123"}, */
+            mainTest1(context, login, password),
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return Home();
+            }))
+          }
+        else if (_ispatient == true)
+          {
+            print("Tocou no login - caso paciente"),
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return HomePatient();
+            }))
+          }
       },
       child: Text("Login"),
       style: ButtonStyle(
-          backgroundColor:
-              MaterialStateProperty.all<Color>(Colors.grey[850]),
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.grey[850]),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(40.0),

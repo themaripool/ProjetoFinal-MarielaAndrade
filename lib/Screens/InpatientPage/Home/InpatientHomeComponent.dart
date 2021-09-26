@@ -7,8 +7,7 @@ class InpatientHomeComponent extends StatefulWidget {
   final String title;
   final String cardCase;
 
-  InpatientHomeComponent(
-      this.severitycolor, this.title, this.cardCase);
+  InpatientHomeComponent(this.severitycolor, this.title, this.cardCase);
 
   @override
   _InpatientHomeComponentState createState() => _InpatientHomeComponentState(
@@ -20,8 +19,7 @@ class _InpatientHomeComponentState extends State<InpatientHomeComponent> {
   final String title;
   final String cardCase;
 
-  _InpatientHomeComponentState(
-      this.severitycolor, this.title, this.cardCase);
+  _InpatientHomeComponentState(this.severitycolor, this.title, this.cardCase);
 
   var icon;
 
@@ -47,7 +45,7 @@ class _InpatientHomeComponentState extends State<InpatientHomeComponent> {
             Image.asset('assets/images/temperature.png', height: 40, width: 40);
         break;
       default:
-        icon = Icon(Icons.air, size: 32);
+        icon = Icon(Icons.airplay, size: 32);
         break;
     }
 

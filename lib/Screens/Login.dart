@@ -108,16 +108,19 @@ class _LoginFormState extends State<LoginForm> {
               labelText: "Password",
             ),
           ),
-          
           Padding(
             padding: const EdgeInsets.only(top: 72),
             child: SizedBox(
               width: 350.0,
               height: 50.0,
-              child: LoginButton(isdoctor: isDoctor, ispatient: isPatient,),
+              child: LoginButton(
+                isdoctor: isDoctor,
+                ispatient: isPatient,
+                login: widget._userNameCntl.text,
+                password: widget._passwordCntl.text,
+              ),
             ),
           ),
-
           Row(
             children: [
               Checkbox(
@@ -132,7 +135,6 @@ class _LoginFormState extends State<LoginForm> {
               Text("Paciente ", style: TextStyle(fontSize: 18)),
             ],
           ),
-
           Row(
             children: [
               Checkbox(
@@ -147,7 +149,6 @@ class _LoginFormState extends State<LoginForm> {
               Text("Médico / Enfermetiro ", style: TextStyle(fontSize: 18)),
             ],
           ),
-          
         ],
       ),
     );
