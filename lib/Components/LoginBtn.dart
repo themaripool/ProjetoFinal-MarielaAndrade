@@ -3,6 +3,14 @@ import 'package:projeto_final_1/API/mqtt_client.dart';
 import 'package:projeto_final_1/Screens/Home.dart';
 import 'package:projeto_final_1/Screens/InpatientPage/InpatientNavigation.dart';
 
+/*
+  TODO:
+  [x] Login recebendo inputo do teclado
+  [] Casos de erro caso o input do teclado for errado
+  [] Casos input for vazio
+  [] Tirar dependencia do checkbox -> mudar para botao no caso do paciente
+*/
+
 class LoginButton extends StatelessWidget {
   final bool _ispatient;
   final bool _isdoctor;
