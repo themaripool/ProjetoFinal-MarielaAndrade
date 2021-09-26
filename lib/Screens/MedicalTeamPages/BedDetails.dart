@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/Screens/AlertScreen.dart';
-import 'package:projeto_final_1/Screens/DataScreen.dart';
+import 'package:projeto_final_1/Screens/MedicalTeamPages/AlertScreen.dart';
+import 'package:projeto_final_1/Screens/MedicalTeamPages/DataScreen.dart';
 
 class BedDetails extends StatelessWidget {
   final int bedNumber;

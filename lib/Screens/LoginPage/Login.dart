@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:projeto_final_1/Components/LoginBtn.dart';
-import 'package:projeto_final_1/Components/TextFieldLogin.dart';
+import 'package:projeto_final_1/Screens/LoginPage/Components/LoginBtn.dart';
+import 'package:projeto_final_1/Screens/LoginPage/Components/TextFieldLogin.dart';
 
 class Login extends StatefulWidget {
   @override

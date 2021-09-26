@@ -1,8 +1,6 @@
-
-
 enum DrawerSections {
   dashboard,
-  notifications,
+ // notifications,
   settings,
-  search,
+  //search,
 }

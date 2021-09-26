@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Screens/InpatientPage/Models/news2.dart';
 import 'package:projeto_final_1/Screens/InpatientPage/Models/symptoms.dart';
-import 'package:projeto_final_1/Screens/Login.dart';
+import 'package:projeto_final_1/Screens/LoginPage/Login.dart';
 import 'package:provider/provider.dart';
 
 
