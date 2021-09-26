@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Components/HeaderDrawer.dart';
 import 'package:projeto_final_1/Enums/DrawerSections.dart';
 import 'package:projeto_final_1/Screens/MedicalTeamPages/Dashboard/Dashboard.dart';
+import 'package:projeto_final_1/Screens/ThemeProvider.dart';
+import 'package:provider/provider.dart';
 import 'MedicalTeamPages/MenuPages/Settings.dart';
 
 void main() => runApp(Home());
@@ -9,9 +11,10 @@ void main() => runApp(Home());
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final themeNotifier = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
       home: HomePage(),
-      theme: ThemeData(primaryColor: Color.fromRGBO(236, 234, 234, 1.0)),
+      theme: themeNotifier.getTheme(),
     );
   }
 }

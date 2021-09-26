@@ -1,4 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../ThemeProvider.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -9,9 +14,11 @@ class _SettingsState extends State<Settings> {
   bool _toggleAirplaneMode = false;
   bool _toggleWifi = false;
   bool _toggleBluetooth = false;
+  bool _toggleDarkMode = false;
 
   @override
   Widget build(BuildContext context) {
+    final themeNotifier = Provider.of<ThemeNotifier>(context);
     return Scaffold(
       body: Column(
         children: [
@@ -44,6 +51,18 @@ class _SettingsState extends State<Settings> {
               });
             },
             value: _toggleBluetooth,
+          ),
+
+          SwitchListTile(
+            title: Text('Modo Escuro'),
+            secondary: Icon(Icons.bluetooth),
+            onChanged: (value) {
+              setState(() {
+                _toggleDarkMode = value;
+                themeNotifier.onThemeChanged(value, themeNotifier);
+              });
+            },
+            value: _toggleDarkMode,
           )
         ],
       ),
