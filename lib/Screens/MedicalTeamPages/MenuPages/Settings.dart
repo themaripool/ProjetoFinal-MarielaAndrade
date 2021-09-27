@@ -67,6 +67,11 @@ class _SettingsState extends State<Settings> {
                 themeNotifier.setSharedPrefDarkMode(value);
                 _toggleDarkMode = value;
                 print("[DEBUG]: AAAA ${_prefs.getBool('darkMode')}  e valueee $value");
+                /*
+                  TODO:
+                  [] Switch de acordo com valor do shared SharedPreferences
+                  [] Terminar cores de dark mode 
+                */
               });
             },
             value: _toggleDarkMode,
