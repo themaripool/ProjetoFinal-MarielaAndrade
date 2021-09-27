@@ -3,22 +3,26 @@ import 'package:projeto_final_1/Screens/InpatientPage/Models/news2.dart';
 import 'package:projeto_final_1/Screens/InpatientPage/Models/symptoms.dart';
 import 'package:projeto_final_1/Screens/LoginPage/Login.dart';
 import 'package:provider/provider.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Screens/ThemeProvider.dart';
 
 
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences.getInstance().then((prefs) {
+  var darkModeOn = prefs.getBool('darkMode') ?? true;
   Provider.debugCheckInvalidValueType = null;
   runApp(
     MultiProvider(
     providers: [
       ChangeNotifierProvider<Symptoms>(create: (_) => Symptoms(-1, -1, -1, -1, -1, "")),
       Provider<News2>(create: (_) => News2(32, 43, 54, 12, 32, 43)),
-       ChangeNotifierProvider<ThemeNotifier>(create: (_) => ThemeNotifier(darkTheme),),
+       ChangeNotifierProvider<ThemeNotifier>(create: (_) => ThemeNotifier(darkModeOn ? darkTheme : lightTheme),),
     ],
     child: TccApp(),
   ));
+  });
 }
 
 //      ChangeNotifierProvider(create: (ctx) => ThemeProvider(),),
@@ -34,6 +38,16 @@ class TccApp extends StatelessWidget {
     );
   }
 }
+
+// SharedPreferences.getInstance().then((prefs) {
+//   var darkModeOn = prefs.getBool('darkMode') ?? true;
+//   runApp(
+//     ChangeNotifierProvider<ThemeNotifier>(
+//       builder: (_) => ThemeNotifier(darkModeOn ? darkTheme : lightTheme),
+//       child: MyApp(),
+//     ),
+//   );
+// });
 
 // MaterialApp(
 //       theme: ThemeData(

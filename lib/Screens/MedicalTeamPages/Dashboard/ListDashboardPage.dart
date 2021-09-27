@@ -16,7 +16,7 @@ class _ListViewPatientsState extends State<ListViewPatients> {
     return ListView.separated(
       itemCount: componentesLista.length,
       separatorBuilder: (BuildContext context, int index) => const Divider(
-        color: Colors.black,
+        color: Colors.white,
       ),
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(

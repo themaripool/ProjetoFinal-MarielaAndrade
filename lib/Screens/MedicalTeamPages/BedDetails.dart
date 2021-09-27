@@ -18,7 +18,6 @@ class BedDetails extends StatelessWidget {
               icon: new Icon(Icons.arrow_back),
               onPressed: () => Navigator.of(context).pop(),
             ),
-            backgroundColor: Colors.grey[700],
             title: Text("Leito Número $bedNumber"),
             bottom: TabBar(
               tabs: <Widget>[

@@ -31,7 +31,6 @@ class _BedComponentListState extends State<BedComponentList> {
   Widget build(BuildContext context) {
     return Container(
       height: 100.0,
-      decoration: BoxDecoration(color: Colors.grey[300]),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -51,34 +50,30 @@ class _BedComponentListState extends State<BedComponentList> {
                   Text("FC: ",
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)),
+                          fontWeight: FontWeight.bold)),
                   Text("60 bpm",
-                      style: TextStyle(fontSize: 14, color: Colors.black)),
+                      style: TextStyle(fontSize: 14)),
                   Spacer(),
                   Text("SaO2: ",
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)),
+                          fontWeight: FontWeight.bold)),
                   Text("79%",
-                      style: TextStyle(fontSize: 14, color: Colors.black)),
+                      style: TextStyle(fontSize: 14)),
                   Spacer(),
                   Text("Temp: ",
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)),
+                          fontWeight: FontWeight.bold)),
                   Text("36.1 C",
-                      style: TextStyle(fontSize: 14, color: Colors.black)),
+                      style: TextStyle(fontSize: 14)),
                   Spacer(),
                   Text("FR: ",
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)),
+                          fontWeight: FontWeight.bold)),
                   Text("12pm",
-                      style: TextStyle(fontSize: 14, color: Colors.black)),
+                      style: TextStyle(fontSize: 14)),
                 ],
               ),
             ),

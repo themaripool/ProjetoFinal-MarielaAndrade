@@ -69,15 +69,13 @@ class _HomePageState extends State<HomePage> {
                                   Expanded(
                                     child: Icon(
                                       Icons.dashboard_outlined,
-                                      size: 20,
-                                      color: Colors.grey[700],
+                                      size: 20
                                     ),
                                   ),
                                   Expanded(
                                     flex: 3,
                                     child: Text(
                                       "DashBoard",
-                                      style: TextStyle(color: Colors.black),
                                     ),
                                   ),
                                 ],
@@ -109,14 +107,12 @@ class _HomePageState extends State<HomePage> {
                                     child: Icon(
                                       Icons.settings,
                                       size: 20,
-                                      color: Colors.grey[700],
                                     ),
                                   ),
                                   Expanded(
                                     flex: 3,
                                     child: Text(
                                       "Ajustes",
-                                      style: TextStyle(color: Colors.black),
                                     ),
                                   ),
                                 ],

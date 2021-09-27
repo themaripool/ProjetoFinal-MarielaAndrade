@@ -79,12 +79,11 @@ class _AlertComponentListState extends State<AlertComponentList> {
               Text(dataEMes,
                   style: TextStyle(
                       fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black)),
+                      fontWeight: FontWeight.bold)),
               Padding(
                 padding: const EdgeInsets.only(left: 8),
                 child: Text(hora,
-                    style: TextStyle(fontSize: 14, color: Colors.black)),
+                    style: TextStyle(fontSize: 14)),
               ),
               Spacer(),
               Padding(

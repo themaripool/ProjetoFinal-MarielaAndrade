@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../ThemeProvider.dart';
 
@@ -19,6 +20,10 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
+    SharedPreferences _prefs;
+     SharedPreferences.getInstance().then((prefs) {
+      _prefs = prefs;
+    });
     return Scaffold(
       body: Column(
         children: [
@@ -58,8 +63,10 @@ class _SettingsState extends State<Settings> {
             secondary: Icon(Icons.bluetooth),
             onChanged: (value) {
               setState(() {
-                _toggleDarkMode = value;
                 themeNotifier.onThemeChanged(value, themeNotifier);
+                themeNotifier.setSharedPrefDarkMode(value);
+                _toggleDarkMode = value;
+                print("[DEBUG]: AAAA ${_prefs.getBool('darkMode')}  e valueee $value");
               });
             },
             value: _toggleDarkMode,

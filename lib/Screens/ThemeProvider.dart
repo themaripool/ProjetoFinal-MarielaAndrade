@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final darkTheme = ThemeData(
   primarySwatch: Colors.grey,
@@ -32,11 +33,15 @@ class ThemeNotifier with ChangeNotifier {
     notifyListeners();
   }
 
-  void onThemeChanged(bool value, ThemeNotifier themeNotifier) async {
+  void onThemeChanged(bool value, ThemeNotifier themeNotifier){
     (value)
         ? themeNotifier.setTheme(darkTheme)
         : themeNotifier.setTheme(lightTheme);
-    // var prefs = await SharedPreferences.getInstance();
-    // prefs.setBool('darkMode', value);
+  }
+
+  Future<void> setSharedPrefDarkMode(bool value) async {
+    var prefs = await SharedPreferences.getInstance();
+    print("[DEBUG]: SETOU O VALOR $value");
+    prefs.setBool('darkMode', value);
   }
 }

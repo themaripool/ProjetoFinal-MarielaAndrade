@@ -40,7 +40,6 @@ class _DashboardState extends State<Dashboard> {
     }
 
     return Scaffold(
-        backgroundColor: Colors.grey[300],
         body: Center(
           child: Column(children: [
             Padding(
@@ -67,7 +66,7 @@ class _DashboardState extends State<Dashboard> {
                       },
                       child: Icon(
                         Icons.grid_on,
-                        color: status == false ? Colors.black : Colors.white,
+                        color: status == false ? Theme.of(context).primaryColorDark : Theme.of(context).primaryColorLight,
                       )),
                   OutlinedButton(
                       style: OutlinedButton.styleFrom(
@@ -86,7 +85,7 @@ class _DashboardState extends State<Dashboard> {
                       },
                       child: Icon(
                         Icons.list,
-                        color: status == false ? Colors.white : Colors.black,
+                        color: status == false ? Theme.of(context).primaryColorLight : Theme.of(context).primaryColorDark,
                       )),
                 ],
               ),
@@ -108,7 +107,7 @@ class AlertDashboardButton extends StatelessWidget {
         style: OutlinedButton.styleFrom(
             side: BorderSide(
           width: 1.5,
-          color: Colors.black,
+          color: Theme.of(context).primaryColor,
         )),
         onPressed: () {
           showDialog(
@@ -120,7 +119,6 @@ class AlertDashboardButton extends StatelessWidget {
         },
         child: const Text(
           'Alarmes',
-          style: TextStyle(color: Colors.black),
         ));
   }
 }

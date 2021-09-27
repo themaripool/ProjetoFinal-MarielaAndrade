@@ -169,11 +169,9 @@ class _DataScreenState extends State<DataScreen> {
                 children: [
                   Text(
                     'Conferir Paciente',
-                    style: TextStyle(color: Colors.white),
                   ),
                   Icon(
-                    Icons.done,
-                    color: Colors.white,
+                    Icons.done
                   )
                 ],
               ),
