@@ -50,7 +50,9 @@ var appHistory = TOPIC_604 + '2'; //"SmartAlarm/Client/Application/History"
 
 final client = MqttServerClient.withPort(broker, clientIdentifier, port);
 
-Future<int> mainTest1(context, login, password) async {
+var contentLoginRequest;
+
+Future<dynamic> mainTest1(context, login, password) async {
   username = login;
   passwd = password;
 
@@ -105,8 +107,8 @@ Future<int> mainTest1(context, login, password) async {
   Map<String, dynamic> str = {
     'CD': '1',
     'DT': '1632084398',
-    'UN': 'teste',
-    'PW': '123'
+    'UN': '$username',
+    'PW': '$passwd'
   };
 
   String json = jsonEncode(str);
@@ -128,11 +130,13 @@ Future<int> mainTest1(context, login, password) async {
       var content = jsonDecode(contentPayload);
       print("content = $content");
 
-      var cd = content['CD'];
+      contentLoginRequest = content['CD'];
 
-      if (cd == "2") {
+      return contentLoginRequest;
+
+      /* if (contentLoginRequest == "2") {
         login_accepted();
-      }
+      } */
     } else if (c[0].topic ==
         "SmartAlarm/Client/Application/InitialData/teste1") {
       receive_InitialData(contentPayload);
@@ -176,7 +180,7 @@ Future<int> mainTest1(context, login, password) async {
   /*  await MqttUtilities.asyncSleep(2);
   print('EXAMPLE::Disconnecting');
   client.disconnect(); */
-  return 0;
+  //return 0;
 }
 
 void onSubscribed(String topic) {

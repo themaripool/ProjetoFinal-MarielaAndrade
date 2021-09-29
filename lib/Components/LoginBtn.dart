@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/API/mqttManager.dart';
+import 'package:projeto_final_1/API/mqttManager.dart';
 import 'package:projeto_final_1/API/mqtt_client.dart';
 import 'package:projeto_final_1/Screens/Home.dart';
 import 'package:projeto_final_1/Screens/InpatientPage/InpatientNavigation.dart';
@@ -29,6 +31,7 @@ class LoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MQTTManager manager;
     return ElevatedButton(
       onPressed: () => {
         if (_isdoctor == true)
@@ -36,18 +39,16 @@ class LoginButton extends StatelessWidget {
             print("Tocou no login"),
             /*  if (login.isEmpty) {login = "teste"},
             if (password.isEmpty) {password = "123"}, */
-            mainTest1(context, login, password),
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
+            //mainTest1(context, login, password),
+            MQTTManager().initializeMQTTClient(login, password, context),
+            MQTTManager().connect(),
+            print(MQTTManager().contentLoginRequest),
+            /* Navigator.push(context, MaterialPageRoute(builder: (context) {
               return Home();
-            }))
+            })) */
           }
         else if (_ispatient == true)
-          {
-            print("Tocou no login - caso paciente"),
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return HomePatient();
-            }))
-          }
+          {print("Tocou no login - caso paciente")}
       },
       child: Text("Login"),
       style: ButtonStyle(
