@@ -43,12 +43,16 @@ class LoginButton extends StatelessWidget {
             MQTTManager().initializeMQTTClient(login, password, context),
             MQTTManager().connect(),
             print(MQTTManager().contentLoginRequest),
-            /* Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return Home();
-            })) */
           }
-        else if (_ispatient == true)
-          {print("Tocou no login - caso paciente")}
+        else if (_ispatient == true){
+          
+          print("Tocou no login - caso paciente"),
+
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return HomePatient();
+          }))
+          
+        }
       },
       child: Text("Login"),
       style: ButtonStyle(
