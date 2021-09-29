@@ -21,6 +21,10 @@ class BedProvider extends ChangeNotifier {
     return this.bedNumber;
   }
 
+  int getBedListLen() {
+    return _bedDataList.length;
+  }
+
   searchBedNumberInList(int bedSearched) {
     var i = 0;
     for (var bed in _bedDataList) {

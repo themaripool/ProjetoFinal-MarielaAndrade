@@ -1,42 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/API/BedDataList.dart';
 import 'package:projeto_final_1/Components/LevelComponent.dart';
 
-class BedComponent extends StatefulWidget {
-  final String bedNumber;
-  final Color color;
-  final Color severitycolor;
-  final String severityState;
 
-  BedComponent(
-      this.bedNumber, this.color, this.severitycolor, this.severityState);
+class BedComponent extends StatelessWidget {
+  final int index;
+  final BedData bedInfo;
+  final Function updateCallback;
+  final Function deleteCallback;
 
-  @override
-  _BedComponentState createState() => _BedComponentState(
-      this.bedNumber, this.color, this.severitycolor, this.severityState);
-}
-
-class _BedComponentState extends State<BedComponent> {
-  final String bedNumber;
-  final Color color;
-  final Color severitycolor;
-  final String severityState;
-
-  _BedComponentState(
-      this.bedNumber, this.color, this.severitycolor, this.severityState);
-  //  {
-  //   this.icon,
-  //   this.iconSize = 64,
-  //   this.fontSize = 24,
-  // }
+  BedComponent({
+    this.index,
+    this.bedInfo,
+    this.updateCallback,
+    this.deleteCallback,
+  });
 
   @override
-  Widget build(BuildContext context) {
+   Widget build(BuildContext context) {
     return Container(
       height: 177.0,
       width: 130.0,
       decoration: BoxDecoration(
-          border: Border.all(color: color, width: 4), color: Colors.grey[850]),
+          border: Border.all(color: Colors.green, width: 4), color: Colors.grey[850]),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
@@ -45,7 +32,7 @@ class _BedComponentState extends State<BedComponent> {
           Padding(
             padding: const EdgeInsets.only(bottom: 8, left: 8),
             child: Text(
-              bedNumber,
+              "LEITO " + bedInfo.bedNumber.toString(),
               style: TextStyle(
                   fontSize: 14,
                   color: Colors.white,
@@ -60,7 +47,7 @@ class _BedComponentState extends State<BedComponent> {
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
-              Text("60 bpm",
+              Text(bedInfo.fc.toString(),
                   style: TextStyle(fontSize: 12, color: Colors.white))
             ]),
           ),
@@ -72,7 +59,7 @@ class _BedComponentState extends State<BedComponent> {
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
-              Text("79%", style: TextStyle(fontSize: 12, color: Colors.white))
+              Text(bedInfo.so.toString(), style: TextStyle(fontSize: 12, color: Colors.white))
             ]),
           ),
           Padding(
@@ -83,7 +70,7 @@ class _BedComponentState extends State<BedComponent> {
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
-              Text("36.1 C",
+              Text(bedInfo.te.toString(),
                   style: TextStyle(fontSize: 12, color: Colors.white))
             ]),
           ),
@@ -95,16 +82,16 @@ class _BedComponentState extends State<BedComponent> {
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
-              Text("12pm", style: TextStyle(fontSize: 12, color: Colors.white))
+              Text(bedInfo.fr.toString(), style: TextStyle(fontSize: 12, color: Colors.white))
             ]),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8, left: 1),
-            child: LevelComponentWidget(severitycolor),
+            child: LevelComponentWidget(Colors.green),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8, left: 8),
-            child: Text(severityState,
+            child: Text("SEVERO",
                 style: TextStyle(fontSize: 12, color: Colors.white)),
           )
         ],

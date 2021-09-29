@@ -64,6 +64,7 @@ class MQTTManager {
     passwd = password;
 
     contextNavigation = context;
+    contextProvider = context;
 
     _client.useWebSocket = true;
     _client.port = port;
@@ -139,29 +140,22 @@ class MQTTManager {
         contentLoginRequest = content['CD'];
 
         if (contentLoginRequest == "2") {
-
           login_accepted();
           Navigator.push(contextNavigation,
               MaterialPageRoute(builder: (contextNavigation) {
             return Home();
           }));
-
         } else if (contentLoginRequest != "2") {
-
           _client.disconnect();
           showErrorLoginAlertDialog(contextNavigation);
+        }
+      } else if (c[0].topic == clientInitialData) {
+        receive_InitialData(contentPayload);
+      } else {
+        var subTopics = c[0].topic.split("/");
 
-        } else if (c[0].topic == clientInitialData) {
-
-          receive_InitialData(contentPayload);
-
-        } else {
-          
-          var subTopics = c[0].topic.split("/");
-
-          if (c[0].topic.contains(TOPIC_200)) {
-            receive_data(contentPayload, subTopics);
-          }
+        if (c[0].topic.contains(TOPIC_200)) {
+          receive_data(contentPayload, subTopics);
         }
       }
     });

@@ -15,16 +15,18 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //resizeToAvoidBottomPadding: false,
-      body: Stack(children: <Widget>[
-        Container(
-          child: Column(children: [
-            //Header da pagina
-            LoginHeader(),
-            LoginForm(userNameCntl: _userNameCntl, passwordCntl: _passwordCntl),
-          ]),
-        ),
-      ]),
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
+        child: Stack(children: <Widget>[
+          Container(
+            child: Column(children: [
+              //Header da pagina
+              LoginHeader(),
+              LoginForm(userNameCntl: _userNameCntl, passwordCntl: _passwordCntl),
+            ]),
+          ),
+        ]),
+      ),
     );
   }
 }

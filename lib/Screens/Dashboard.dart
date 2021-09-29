@@ -1,48 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:projeto_final_1/API/BedDataList.dart';
 import 'package:projeto_final_1/Components/AlertDialogPatient.dart';
 import 'package:projeto_final_1/Components/BedComponent.dart';
 import 'package:projeto_final_1/Components/BedComponentList.dart';
+import 'package:projeto_final_1/Components/LevelComponent.dart';
 import 'package:projeto_final_1/Screens/BedDetails.dart';
+import 'package:provider/provider.dart';
 
-var componentes = [
-  BedComponent(
-      "LEITO 1", Colors.yellow, Color.fromRGBO(230, 178, 47, 1.0), "SEVERO"),
-  BedComponent("LEITO 2", Colors.blue, Colors.blue, "PREOCUPANTE"),
-  BedComponent("LEITO 3", Colors.green, Colors.green, "ESTÁVEL"),
-  BedComponent("LEITO 4", Colors.red, Colors.red, "CRÍTICO"),
-  BedComponent("LEITO 1", Colors.yellow, Colors.yellow, "SEVERO"),
-  BedComponent("LEITO 2", Colors.blue, Colors.blue, "PREOCUPANTE"),
-  BedComponent("LEITO 3", Colors.green, Colors.green, "ESTÁVEL"),
-  BedComponent("LEITO 4", Colors.red, Colors.red, "CRÍTICO"),
-  BedComponent("LEITO 1", Colors.yellow, Colors.yellow, "SEVERO"),
-  BedComponent("LEITO 2", Colors.blue, Colors.blue, "PREOCUPANTE"),
-  BedComponent("LEITO 3", Colors.green, Colors.green, "ESTÁVEL"),
-  BedComponent("LEITO 4", Colors.red, Colors.red, "CRÍTICO"),
-  BedComponent("LEITO 1", Colors.yellow, Colors.yellow, "SEVERO"),
-  BedComponent("LEITO 2", Colors.blue, Colors.blue, "PREOCUPANTE"),
-  BedComponent("LEITO 3", Colors.green, Colors.green, "ESTÁVEL"),
-  BedComponent("LEITO 4", Colors.red, Colors.red, "CRÍTICO")
-];
 
 var componentesLista = [
   BedComponentList(
       "LEITO 1", Colors.yellow, Color.fromRGBO(230, 178, 47, 1.0), "SEVERO"),
   BedComponentList("LEITO 2", Colors.blue, Colors.blue, "PREOCUPANTE"),
   BedComponentList("LEITO 3", Colors.green, Colors.green, "ESTÁVEL"),
-  BedComponentList("LEITO 4", Colors.red, Colors.red, "CRÍTICO"),
-  BedComponentList("LEITO 1", Colors.yellow, Colors.yellow, "SEVERO"),
-  BedComponentList("LEITO 2", Colors.blue, Colors.blue, "PREOCUPANTE"),
-  BedComponentList("LEITO 3", Colors.green, Colors.green, "ESTÁVEL"),
-  BedComponentList("LEITO 4", Colors.red, Colors.red, "CRÍTICO"),
-  BedComponentList("LEITO 1", Colors.yellow, Colors.yellow, "SEVERO"),
-  BedComponentList("LEITO 2", Colors.blue, Colors.blue, "PREOCUPANTE"),
-  BedComponentList("LEITO 3", Colors.green, Colors.green, "ESTÁVEL"),
-  BedComponentList("LEITO 4", Colors.red, Colors.red, "CRÍTICO"),
-  BedComponentList("LEITO 1", Colors.yellow, Colors.yellow, "SEVERO"),
-  BedComponentList("LEITO 2", Colors.blue, Colors.blue, "PREOCUPANTE"),
-  BedComponentList("LEITO 3", Colors.green, Colors.green, "ESTÁVEL"),
-  BedComponentList("LEITO 4", Colors.red, Colors.red, "CRÍTICO")
 ];
 
 class Dashboard extends StatefulWidget {
@@ -52,12 +23,24 @@ class Dashboard extends StatefulWidget {
   _DashboardState createState() => _DashboardState();
 }
 
+void _getBedInfo(BuildContext context) async {
+  await Future.delayed(Duration(milliseconds: 200));
+  BedProvider bedProvider = Provider.of<BedProvider>(context, listen: false);
+  bedProvider.bedInfo = [];
+}
+
+void _updateBedInfo(int index, BedData bedData) {
+  print("Chamou update bed info");
+}
+
 class _DashboardState extends State<Dashboard> {
   var status = true;
   var container;
 
   @override
   Widget build(BuildContext context) {
+    _getBedInfo(context);
+
     if (status == true) {
       container = GridListView();
     } else if (status == false) {
@@ -149,23 +132,32 @@ class GridListView extends StatefulWidget {
 class _GridListViewState extends State<GridListView> {
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-        crossAxisCount: 3,
-        mainAxisSpacing: 20.0,
-        crossAxisSpacing: 2.0,
-        childAspectRatio: (130 / 177),
-        children: List.generate(componentes.length, (index) {
-          return GestureDetector(
-              onTap: () {
-                print(index = index); //index comeca em 0 BedDetails()
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => BedDetails(index + 1)),
-                );
-              },
-              child: Center(child: componentes[index]));
-        }));
+    return Consumer<BedProvider>(
+      builder: (__, model, _) {
+        return GridView.count(
+            crossAxisCount: 3,
+            mainAxisSpacing: 20.0,
+            crossAxisSpacing: 2.0,
+            childAspectRatio: (130 / 177),
+            children: List.generate(model.getBedListLen(), (index) {
+              return GestureDetector(
+                  onTap: () {
+                    print(index = index); //index comeca em 0 BedDetails()
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => BedDetails(index + 1)),
+                    );
+                  },
+                  child: BedComponent(
+                    index: index,
+                    bedInfo: model.bedInfo[index],
+                    updateCallback: _updateBedInfo,
+                    deleteCallback: () => model.removeBedInfo(index),
+                  ));
+            }));
+      },
+    );
   }
 }
 
@@ -200,3 +192,5 @@ class _ListViewPatientsState extends State<ListViewPatients> {
     );
   }
 }
+
+
