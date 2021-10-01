@@ -3,6 +3,55 @@ import 'package:flutter/material.dart';
 import 'package:projeto_final_1/API/BedDataList.dart';
 import 'package:projeto_final_1/Components/LevelComponent.dart';
 
+var bedSeverityColor;
+var bedSeverityStatus;
+
+//so = oxigenio
+// fc - frequencia cardiaca == pulso
+// te = temperatura
+// fr = frequencia respiratoria
+
+void checkInpatientStatus(BedData bedInfo) {
+  if (bedInfo.fr <= 8 || 
+      bedInfo.fr >= 25 || 
+      bedInfo.so >= 91 || 
+      bedInfo.fc <= 40 || 
+      bedInfo.fc >= 131 || 
+      bedInfo.te <= 35.0) {
+
+    bedSeverityColor = Colors.red;
+    bedSeverityStatus = "SEVERO";
+    return;
+
+  } else if (
+      bedInfo.fr >= 21 && bedInfo.fr <= 24 || 
+      bedInfo.so >= 92 && bedInfo.so <= 93 || 
+      bedInfo.fc >= 111 && bedInfo.fc <= 130 ||
+      bedInfo.te >= 39.1){
+
+    bedSeverityColor = Colors.orange;
+    bedSeverityStatus = "CRÍTICO";
+    return;
+
+  }else if (bedInfo.fr >= 9 && bedInfo.fr <= 11 || 
+            bedInfo.so >= 94 && bedInfo.so <= 95 || 
+            bedInfo.fc >= 41 && bedInfo.fc <= 50 || 
+            bedInfo.fc >= 91 && bedInfo.fc <= 110|| 
+            bedInfo.te >= 35.1 && bedInfo.te <= 36.0 ||
+            bedInfo.te >= 38.1 && bedInfo.te <= 39.0){
+
+    bedSeverityColor = Colors.yellow;
+    bedSeverityStatus = "ATENÇÃO";
+    return;
+
+  }else if (bedInfo.fr >= 12 && bedInfo.fr <= 20){
+
+    bedSeverityColor = Colors.white;
+    bedSeverityStatus = "ESTÁVEL";
+    return;
+    
+  }
+}
 
 class BedComponent extends StatelessWidget {
   final int index;
@@ -18,12 +67,15 @@ class BedComponent extends StatelessWidget {
   });
 
   @override
-   Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
+    checkInpatientStatus(bedInfo);
+
     return Container(
       height: 177.0,
       width: 130.0,
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.green, width: 4), color: Colors.grey[850]),
+          border: Border.all(color: bedSeverityColor, width: 4),
+          color: Colors.grey[850]),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
@@ -59,7 +111,8 @@ class BedComponent extends StatelessWidget {
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
-              Text(bedInfo.so.toString(), style: TextStyle(fontSize: 12, color: Colors.white))
+              Text(bedInfo.so.toString(),
+                  style: TextStyle(fontSize: 12, color: Colors.white))
             ]),
           ),
           Padding(
@@ -82,16 +135,17 @@ class BedComponent extends StatelessWidget {
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
-              Text(bedInfo.fr.toString(), style: TextStyle(fontSize: 12, color: Colors.white))
+              Text(bedInfo.fr.toString(),
+                  style: TextStyle(fontSize: 12, color: Colors.white))
             ]),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8, left: 1),
-            child: LevelComponentWidget(Colors.green),
+            child: LevelComponentWidget(bedSeverityColor),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8, left: 8),
-            child: Text("SEVERO",
+            child: Text(bedSeverityStatus,
                 style: TextStyle(fontSize: 12, color: Colors.white)),
           )
         ],

@@ -120,19 +120,22 @@ class _LoginFormState extends State<LoginForm> {
               labelText: "Password",
             ),
           ),
-          ElevatedButton(
-            onPressed: () => {
-              MQTTManager().initializeMQTTClient(widget._userNameCntl.text, widget._passwordCntl.text, context),
-              MQTTManager().connect(),
-            },
-            child: Text("Login"),
-            style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.grey[850]),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(40.0),
-                ))),
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: ElevatedButton(
+              onPressed: () => {
+                MQTTManager().initializeMQTTClient(widget._userNameCntl.text, widget._passwordCntl.text, context),
+                MQTTManager().connect(),
+              },
+              child: Text("Login"),
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.grey[850]),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(40.0),
+                  ))),
+            ),
           ),
           ElevatedButton(
             onPressed: () => {
