@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:projeto_final_1/Components/LoginBtn.dart';
+import 'package:projeto_final_1/API/mqttManager.dart';
 import 'package:projeto_final_1/Components/TextFieldLogin.dart';
+import 'package:projeto_final_1/Screens/InpatientPage/InpatientNavigation.dart';
+
+/*
+  TODO:
+  [x] Login recebendo inputo do teclado
+  [x] Casos de erro caso o input do teclado for errado
+  [] Casos input for vazio
+  [x] Tirar dependencia do checkbox -> mudar para botao no caso do paciente
+*/
 
 class Login extends StatefulWidget {
   @override
@@ -22,7 +31,8 @@ class _LoginState extends State<Login> {
             child: Column(children: [
               //Header da pagina
               LoginHeader(),
-              LoginForm(userNameCntl: _userNameCntl, passwordCntl: _passwordCntl),
+              LoginForm(
+                  userNameCntl: _userNameCntl, passwordCntl: _passwordCntl),
             ]),
           ),
         ]),
@@ -110,47 +120,35 @@ class _LoginFormState extends State<LoginForm> {
               labelText: "Password",
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 72),
-            child: SizedBox(
-              width: 350.0,
-              height: 50.0,
-              child: LoginButton(
-                isdoctor: isDoctor,
-                ispatient: isPatient,
-                login: widget._userNameCntl.text,
-                password: widget._passwordCntl.text,
-              ),
-            ),
+          ElevatedButton(
+            onPressed: () => {
+              MQTTManager().initializeMQTTClient(widget._userNameCntl.text, widget._passwordCntl.text, context),
+              MQTTManager().connect(),
+            },
+            child: Text("Login"),
+            style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.grey[850]),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40.0),
+                ))),
           ),
-          Row(
-            children: [
-              Checkbox(
-                value: isPatient,
-                onChanged: (value) {
-                  setState(() {
-                    isPatient = !isPatient;
-                    isDoctor = false;
-                  });
-                },
-              ),
-              Text("Paciente ", style: TextStyle(fontSize: 18)),
-            ],
-          ),
-          Row(
-            children: [
-              Checkbox(
-                value: isDoctor,
-                onChanged: (value) {
-                  setState(() {
-                    isDoctor = !isDoctor;
-                    isPatient = false;
-                  });
-                },
-              ),
-              Text("Médico / Enfermetiro ", style: TextStyle(fontSize: 18)),
-            ],
-          ),
+          ElevatedButton(
+            onPressed: () => {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return HomePatient();
+              }))
+            },
+            child: Text("Login Paciente"),
+            style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.grey[850]),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40.0),
+                ))),
+          )
         ],
       ),
     );
