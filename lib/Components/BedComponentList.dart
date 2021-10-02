@@ -1,34 +1,74 @@
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/API/BedDataList.dart';
 import 'package:projeto_final_1/Components/LevelComponent.dart';
 
+var bedSeverityColor;
+var bedSeverityStatus;
+
+void checkInpatientStatus(BedData bedInfo) {
+  if (bedInfo.fr <= 8 || 
+      bedInfo.fr >= 25 || 
+      bedInfo.so >= 91 || 
+      bedInfo.fc <= 40 || 
+      bedInfo.fc >= 131 || 
+      bedInfo.te <= 35.0) {
+
+    bedSeverityColor = Colors.red;
+    bedSeverityStatus = "SEVERO";
+    return;
+
+  } else if (
+      bedInfo.fr >= 21 && bedInfo.fr <= 24 || 
+      bedInfo.so >= 92 && bedInfo.so <= 93 || 
+      bedInfo.fc >= 111 && bedInfo.fc <= 130 ||
+      bedInfo.te >= 39.1){
+
+    bedSeverityColor = Colors.orange;
+    bedSeverityStatus = "CRÍTICO";
+    return;
+
+  }else if (bedInfo.fr >= 9 && bedInfo.fr <= 11 || 
+            bedInfo.so >= 94 && bedInfo.so <= 95 || 
+            bedInfo.fc >= 41 && bedInfo.fc <= 50 || 
+            bedInfo.fc >= 91 && bedInfo.fc <= 110|| 
+            bedInfo.te >= 35.1 && bedInfo.te <= 36.0 ||
+            bedInfo.te >= 38.1 && bedInfo.te <= 39.0){
+
+    bedSeverityColor = Colors.yellow;
+    bedSeverityStatus = "ATENÇÃO";
+    return;
+
+  }else if (bedInfo.fr >= 12 && bedInfo.fr <= 20){
+
+    bedSeverityColor = Colors.white;
+    bedSeverityStatus = "ESTÁVEL";
+    return;
+    
+  }
+}
+
 class BedComponentList extends StatefulWidget {
-  final String bedNumber;
-  final Color color;
-  final Color severitycolor;
-  final String severityState;
+ final BedData bedInfo;
 
   BedComponentList(
-      this.bedNumber, this.color, this.severitycolor, this.severityState);
+       {this.bedInfo});
 
   @override
   _BedComponentListState createState() => _BedComponentListState(
-      this.bedNumber, this.color, this.severitycolor, this.severityState);
+      this.bedInfo);
 }
 
 class _BedComponentListState extends State<BedComponentList> {
-  final String bedNumber;
-  final Color color;
-  final Color severitycolor;
-  final String severityState;
+  final BedData bedInfo;
 
   _BedComponentListState(
-      this.bedNumber, this.color, this.severitycolor, this.severityState);
+      this.bedInfo);
 
   @override
   Widget build(BuildContext context) {
+    checkInpatientStatus(bedInfo);
     return Container(
       height: 100.0,
       decoration: BoxDecoration(color: Colors.grey[300]),
@@ -40,7 +80,7 @@ class _BedComponentListState extends State<BedComponentList> {
             Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: Text(
-                bedNumber,
+                bedInfo.bedNumber.toString(),
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
             ),
@@ -53,7 +93,7 @@ class _BedComponentListState extends State<BedComponentList> {
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Colors.black)),
-                  Text("60 bpm",
+                  Text(bedInfo.fc.toString(),
                       style: TextStyle(fontSize: 14, color: Colors.black)),
                   Spacer(),
                   Text("SaO2: ",
@@ -61,7 +101,7 @@ class _BedComponentListState extends State<BedComponentList> {
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Colors.black)),
-                  Text("79%",
+                  Text(bedInfo.so.toString(),
                       style: TextStyle(fontSize: 14, color: Colors.black)),
                   Spacer(),
                   Text("Temp: ",
@@ -69,7 +109,7 @@ class _BedComponentListState extends State<BedComponentList> {
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Colors.black)),
-                  Text("36.1 C",
+                  Text(bedInfo.te.toString(),
                       style: TextStyle(fontSize: 14, color: Colors.black)),
                   Spacer(),
                   Text("FR: ",
@@ -77,17 +117,17 @@ class _BedComponentListState extends State<BedComponentList> {
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Colors.black)),
-                  Text("12pm",
+                  Text(bedInfo.fr.toString(),
                       style: TextStyle(fontSize: 14, color: Colors.black)),
                 ],
               ),
             ),
             Row(
               children: [
-                LevelComponentWidget(severitycolor),
+                LevelComponentWidget(bedSeverityColor),
                 Padding(
                   padding: const EdgeInsets.only(left: 8),
-                  child: Text(severityState, style: TextStyle(fontSize: 14)),
+                  child: Text(bedSeverityStatus, style: TextStyle(fontSize: 14)),
                 ),
                 Spacer(),
                 Text("Alarmes")

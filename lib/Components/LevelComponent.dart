@@ -11,7 +11,11 @@ checkSeverityBoxes(Color severitycolor) {
     return;
   } else if (severitycolor == Colors.red) {
     boxCount = 4;
-    return;}
+    return;
+  } else if (severitycolor == Colors.white){
+    boxCount = 1;
+    return;
+  }
 }
 
 class LevelComponentWidget extends StatelessWidget {
@@ -22,6 +26,7 @@ class LevelComponentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     checkSeverityBoxes(severitycolor);
+    
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -30,25 +35,29 @@ class LevelComponentWidget extends StatelessWidget {
           height: 30,
           width: 30,
           decoration: BoxDecoration(
-              border: Border.all(color: Colors.black), color: severitycolor),
+              border: Border.all(color: Colors.black),
+              color: boxCount >= 1 ? severitycolor : Colors.grey[600]),
         ),
         Container(
           height: 30,
           width: 30,
           decoration: BoxDecoration(
-              border: Border.all(color: Colors.black), color: boxCount >= 2 ? severitycolor : Colors.grey[350] ),
+              border: Border.all(color: Colors.black),
+              color: boxCount >= 2 ? severitycolor : Colors.grey[600]),
         ),
         Container(
           height: 30,
           width: 30,
           decoration: BoxDecoration(
-              border: Border.all(color: Colors.black), color: boxCount >= 3 ? severitycolor : Colors.grey[350]),
+              border: Border.all(color: Colors.black),
+              color: boxCount >= 3 ? severitycolor : Colors.grey[600]),
         ),
         Container(
           height: 30,
           width: 30,
           decoration: BoxDecoration(
-              border: Border.all(color: Colors.black), color: boxCount == 4 ? severitycolor : Colors.grey[350]),
+              border: Border.all(color: Colors.black),
+              color: boxCount == 4 ? severitycolor : Colors.grey[600]),
         ),
       ],
     );

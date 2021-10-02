@@ -9,13 +9,6 @@ import 'package:projeto_final_1/Screens/BedDetails.dart';
 import 'package:provider/provider.dart';
 
 
-var componentesLista = [
-  BedComponentList(
-      "LEITO 1", Colors.yellow, Color.fromRGBO(230, 178, 47, 1.0), "SEVERO"),
-  BedComponentList("LEITO 2", Colors.blue, Colors.blue, "PREOCUPANTE"),
-  BedComponentList("LEITO 3", Colors.green, Colors.green, "ESTÁVEL"),
-];
-
 class Dashboard extends StatefulWidget {
   Dashboard({Key key}) : super(key: key);
 
@@ -173,21 +166,25 @@ class ListViewPatients extends StatefulWidget {
 class _ListViewPatientsState extends State<ListViewPatients> {
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: componentesLista.length,
-      separatorBuilder: (BuildContext context, int index) => const Divider(
-        color: Colors.black,
-      ),
-      itemBuilder: (BuildContext context, int index) {
-        return GestureDetector(
-            onTap: () {
-              print(index = index); //index comeca em 0 BedDetails()
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => BedDetails(index + 1)),
-              );
-            },
-            child: componentesLista[index]);
+    return Consumer<BedProvider>(
+      builder: (__, model, _) {
+        return ListView.separated(
+          itemCount: model.getBedListLen(),
+          separatorBuilder: (BuildContext context, int index) => const Divider(
+            color: Colors.black,
+          ),
+          itemBuilder: (BuildContext context, int index) {
+            return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => BedDetails(index + 1)),
+                  );
+                },
+                child: BedComponentList(bedInfo: model.bedInfo[index]));
+          },
+        );
       },
     );
   }
