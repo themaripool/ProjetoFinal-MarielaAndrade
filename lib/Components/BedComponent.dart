@@ -20,7 +20,7 @@ void checkInpatientStatus(BedData bedInfo) {
       bedInfo.te <= 35.0) {
 
     bedSeverityColor = Colors.red;
-    bedSeverityStatus = "SEVERO";
+    bedSeverityStatus = "CRÍTICO";
     return;
 
   } else if (
@@ -29,8 +29,8 @@ void checkInpatientStatus(BedData bedInfo) {
       bedInfo.fc >= 111 && bedInfo.fc <= 130 ||
       bedInfo.te >= 39.1){
 
-    bedSeverityColor = Colors.orange;
-    bedSeverityStatus = "CRÍTICO";
+    bedSeverityColor = Colors.yellow;
+    bedSeverityStatus = "SEVERO";
     return;
 
   }else if (bedInfo.fr >= 9 && bedInfo.fr <= 11 || 
@@ -40,13 +40,13 @@ void checkInpatientStatus(BedData bedInfo) {
             bedInfo.te >= 35.1 && bedInfo.te <= 36.0 ||
             bedInfo.te >= 38.1 && bedInfo.te <= 39.0){
 
-    bedSeverityColor = Colors.yellow;
-    bedSeverityStatus = "ATENÇÃO";
+    bedSeverityColor = Colors.blue;
+    bedSeverityStatus = "PREOCUPANTE";
     return;
 
   }else if (bedInfo.fr >= 12 && bedInfo.fr <= 20){
 
-    bedSeverityColor = Colors.white;
+    bedSeverityColor = Colors.green;
     bedSeverityStatus = "ESTÁVEL";
     return;
     
