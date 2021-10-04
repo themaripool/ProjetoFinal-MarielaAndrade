@@ -10,8 +10,20 @@ class BedData {
   BedData({this.fc, this.fr, this.so, this.te, this.bedNumber});
 }
 
+class BedDataDetails {
+  int fc;
+  int fr;
+  int so;
+  double te;
+  int bedNumber;
+  DateTime dateDetails;
+
+  BedDataDetails({this.fc, this.fr, this.so, this.te, this.bedNumber, this.dateDetails});
+}
+
 class BedProvider extends ChangeNotifier {
   List<BedData> _bedDataList = [];
+  List<BedDataDetails> bedDataListHistoryBed4 = [];
 
   List<BedData> get bedInfo {
     return [..._bedDataList];
@@ -41,8 +53,18 @@ class BedProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  set bedInfoHistory(List<BedDataDetails> newBedData) {
+    bedDataListHistoryBed4 = newBedData;
+    notifyListeners();
+  }
+
   void addBedInfo(BedData newBedData) {
     _bedDataList.add(newBedData);
+    notifyListeners();
+  }
+
+  void addBedInfoHistory(BedDataDetails newBedData) {
+    bedDataListHistoryBed4.add(newBedData);
     notifyListeners();
   }
 

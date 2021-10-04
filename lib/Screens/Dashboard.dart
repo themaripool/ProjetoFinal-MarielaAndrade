@@ -139,7 +139,7 @@ class _GridListViewState extends State<GridListView> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => BedDetails(index + 1)),
+                          builder: (context) => BedDetails(model.bedDataListHistoryBed4)),
                     );
                   },
                   child: BedComponent(
@@ -179,7 +179,7 @@ class _ListViewPatientsState extends State<ListViewPatients> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => BedDetails(index + 1)),
+                        builder: (context) => BedDetails(model.bedDataListHistoryBed4)),
                   );
                 },
                 child: BedComponentList(bedInfo: model.bedInfo[index]));

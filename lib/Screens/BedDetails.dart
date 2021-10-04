@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/API/BedDataList.dart';
 import 'package:projeto_final_1/Screens/AlertScreen.dart';
 import 'package:projeto_final_1/Screens/DataScreen.dart';
 
 class BedDetails extends StatelessWidget {
-  final int bedNumber;
-  BedDetails(this.bedNumber);
+  final List<BedDataDetails> bedInfo;
+  BedDetails(this.bedInfo);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,7 +20,7 @@ class BedDetails extends StatelessWidget {
               onPressed: () => Navigator.of(context).pop(),
             ),
             backgroundColor: Colors.grey[700],
-            title: Text("Leito Número $bedNumber"),
+            title: Text("Leito Número ${bedInfo.first.bedNumber}"),
             bottom: TabBar(
               tabs: <Widget>[
                 Tab(
@@ -34,7 +35,12 @@ class BedDetails extends StatelessWidget {
             ),
           ),
           body: TabBarView(
-            children: <Widget>[DataScreen(), AlertScreen()],
+            children: <Widget>[
+              DataScreen(
+                bedInfo: bedInfo,
+              ),
+              AlertScreen()
+            ],
           )),
     ));
   }

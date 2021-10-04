@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:projeto_final_1/API/BedDataList.dart';
@@ -254,6 +255,20 @@ class MQTTManager {
           te: content['TE'],
           bedNumber: 4);
 
+      var now = new DateTime.now();
+      final f = new DateFormat.Hm();
+      String formattedDate = f.format(now);
+      DateTime tempDate = new DateFormat.Hm().parse(formattedDate);
+      print("AAAAAAA $formattedDate aaaa $tempDate");
+
+      BedDataDetails data2 = BedDataDetails(
+          fc: content['FC'],
+          fr: content['FR'],
+          so: content['SO'],
+          te: content['TE'],
+          bedNumber: 4,
+          dateDetails: tempDate);
+
       BedProvider bedProvider =
           Provider.of<BedProvider>(contextProvider, listen: false);
       var index = bedProvider.searchBedNumberInList(data1.bedNumber);
@@ -263,6 +278,10 @@ class MQTTManager {
       } else {
         bedProvider.addBedInfo(data1);
       }
+
+      // "HH:mm:ss"
+
+      bedProvider.addBedInfoHistory(data2);
     }
 
     if (bedId == "5") {
