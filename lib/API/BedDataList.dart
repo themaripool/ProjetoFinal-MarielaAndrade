@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class BedData {
   int fc;
@@ -16,7 +17,7 @@ class BedDataDetails {
   int so;
   double te;
   int bedNumber;
-  DateTime dateDetails;
+  String dateDetails;
 
   BedDataDetails({this.fc, this.fr, this.so, this.te, this.bedNumber, this.dateDetails});
 }

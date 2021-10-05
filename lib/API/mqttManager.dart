@@ -258,8 +258,8 @@ class MQTTManager {
       var now = new DateTime.now();
       final f = new DateFormat.Hm();
       String formattedDate = f.format(now);
-      DateTime tempDate = new DateFormat.Hm().parse(formattedDate);
-      print("AAAAAAA $formattedDate aaaa $tempDate");
+      //DateFormat tempDate = DateFormat.Hm(now);
+      print("AAAAAAA $formattedDate ");
 
       BedDataDetails data2 = BedDataDetails(
           fc: content['FC'],
@@ -267,7 +267,7 @@ class MQTTManager {
           so: content['SO'],
           te: content['TE'],
           bedNumber: 4,
-          dateDetails: tempDate);
+          dateDetails: formattedDate);
 
       BedProvider bedProvider =
           Provider.of<BedProvider>(contextProvider, listen: false);

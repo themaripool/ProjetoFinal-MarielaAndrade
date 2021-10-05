@@ -1,9 +1,14 @@
+import 'dart:async';
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:projeto_final_1/API/BedDataList.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
-_getSeriesData(List<BedDataDetails> bedInfo) {
+/* _getSeriesData(List<BedDataDetails> bedInfo) {
   /* List<charts.Series<BedDataDetails, int>> series = [
     charts.Series(
         id: "Sales",
@@ -24,6 +29,20 @@ _getSeriesData(List<BedDataDetails> bedInfo) {
   )];
   // ];
   //return series;
+} */
+
+var isDataVisible = false;
+ChartSeriesController _chartSeriesController;
+
+// ignore: missing_return
+Void _updateDataSource(List<BedDataDetails> bedInfo) {
+  print("============= tamanho ${bedInfo.length}=============");
+  if (bedInfo.length == 15) {
+    bedInfo.removeAt(0);
+    _chartSeriesController?.updateDataSource(
+        addedDataIndexes: <int>[bedInfo.length - 1],
+        removedDataIndexes: <int>[0]);
+  }
 }
 
 class DataScreen extends StatefulWidget {
@@ -121,13 +140,63 @@ class _DataScreenState extends State<DataScreen> {
 
         // Grafico
 
-        Consumer<BedProvider>(builder: (__, model, _) {
+        /* Consumer<BedProvider>(builder: (__, model, _) {
           return Expanded(
             child: new charts.TimeSeriesChart(
               _getSeriesData(bedInfo),
               animate: true,
             ),
           );
+        }), */
+
+        /* Consumer<BedProvider>(
+          builder: (__, model, _) {
+            return Expanded(
+                child: SfCartesianChart(
+              series: <LineSeries<BedDataDetails, String>>[
+                LineSeries<BedDataDetails, String>(
+                  onRendererCreated: (ChartSeriesController controller) {
+                    _chartSeriesController = controller;
+                  },
+                  // Binding the chartData to the dataSource of the line series.
+                  dataSource: bedInfo,
+                  xValueMapper: (BedDataDetails sales, _) => sales.dateDetails,
+                  yValueMapper: (BedDataDetails sales, _) => sales.fr,
+                )
+              ],
+            ));
+          },
+        ), */
+
+        Consumer<BedProvider>(builder: (__, model, _) {
+          _updateDataSource(bedInfo);
+          return Expanded(
+              child: SfCartesianChart(
+                  onPointTapped: (PointTapArgs details) {
+                    if (isDataVisible == true) {
+                      isDataVisible = false;
+                    } else {
+                      isDataVisible = true;
+                    }
+                  },
+                  primaryXAxis: CategoryAxis(
+                      autoScrollingMode: AutoScrollingMode.start,
+                      labelPosition: ChartDataLabelPosition.inside,
+                      tickPosition: TickPosition.inside),
+                  series: <ChartSeries>[
+                // Renders line chart
+                SplineSeries<BedDataDetails, String>(
+                    onRendererCreated: (ChartSeriesController controller) {
+                      _chartSeriesController = controller;
+                    },
+                    markerSettings: MarkerSettings(isVisible: true),
+                    dataLabelSettings: DataLabelSettings(
+                      isVisible: isDataVisible,
+                    ),
+                    dataSource: bedInfo,
+                    xValueMapper: (BedDataDetails data, _) => data.dateDetails,
+                    yValueMapper: (BedDataDetails data, _) => data.fr)
+              ]));
         }),
 
         OutlinedButton(
