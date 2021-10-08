@@ -1,239 +1,293 @@
-import 'dart:async';
-import 'dart:ffi';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:projeto_final_1/API/BedDataList.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
-/* _getSeriesData(List<BedDataDetails> bedInfo) {
-  /* List<charts.Series<BedDataDetails, int>> series = [
-    charts.Series(
-        id: "Sales",
-        data: bedInfo,
-        domainFn: (BedDataDetails series, _) => series.dateDetails, // eixo x
-        measureFn: (BedDataDetails series, _) => series.fc, // eixo y
-        colorFn: (BedDataDetails series, _) =>
-            charts.MaterialPalette.blue.shadeDefault)
-  ]; */
-
-  /// List<charts.Series<BedDataDetails, DateTime>> series = [
-  return [charts.Series<BedDataDetails, DateTime>(
-    id: 'FC',
-    colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-    domainFn: (BedDataDetails sales, _) => sales.dateDetails,
-    measureFn: (BedDataDetails sales, _) => sales.fr,
-    data: bedInfo,
-  )];
-  // ];
-  //return series;
-} */
-
-var isDataVisible = false;
-ChartSeriesController _chartSeriesController;
-
-// ignore: missing_return
-Void _updateDataSource(List<BedDataDetails> bedInfo) {
-  print("============= tamanho ${bedInfo.length}=============");
-  if (bedInfo.length == 15) {
-    bedInfo.removeAt(0);
-    _chartSeriesController?.updateDataSource(
-        addedDataIndexes: <int>[bedInfo.length - 1],
-        removedDataIndexes: <int>[0]);
-  }
-}
 
 class DataScreen extends StatefulWidget {
   final List<BedDataDetails> bedInfo;
-  DataScreen({Key key, this.bedInfo}) : super(key: key);
 
+  const DataScreen({Key key, this.bedInfo}) : super(key: key);
   @override
   _DataScreenState createState() => _DataScreenState(this.bedInfo);
 }
 
 class _DataScreenState extends State<DataScreen> {
-  final List<BedDataDetails> bedInfo;
-
-  bool _isCheckedSaOS = false;
-  bool _isCheckedFC = false;
-  bool _isCheckedTemp = false;
-  bool _isCheckedFR = false;
+  List<BedDataDetails> bedInfo;
+  List<bool> isChecked = List.generate(4, (index) => false);
 
   _DataScreenState(this.bedInfo);
-
+  @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    //_createSampleData();
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+
+          Column(
           children: [
-            Row(
-              children: [
-                Checkbox(
-                  value: _isCheckedSaOS,
-                  onChanged: (value) {
-                    setState(() {
-                      _isCheckedSaOS = !_isCheckedSaOS;
-                      print(
-                          "SaOS com valor de $_isCheckedSaOS com value$value");
-                    });
-                  },
-                ),
-                Text("SaOS: ", style: TextStyle(fontSize: 18)),
-                Text("${bedInfo.last.so} %",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18))
-              ],
+            Padding(
+              padding: const EdgeInsets.only(right: 10, left: 10),
+              child: Row(
+                children: [
+                  Image.asset('assets/images/respiratoryFreq.png',
+                      height: 35, width: 35),
+                  Checkbox(
+                    value: isChecked[0],
+                    onChanged: (val) {
+                      setState(
+                        () {
+                          isChecked[0] = val;
+                        },
+                      );
+                    },
+                  ),
+                  Text("Oxigênio: ${bedInfo.last.so} %")
+                ],
+              ),
             ),
-            Row(
-              children: [
-                Checkbox(
-                  value: _isCheckedFC,
-                  onChanged: (value) {
-                    setState(() {
-                      _isCheckedFC = !_isCheckedFC;
-                      print("FC com valor de $_isCheckedFC com value $value");
-                    });
-                  },
-                ),
-                Text("FC: ", style: TextStyle(fontSize: 18)),
-                Text("${bedInfo.last.fc} bpm",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18))
-              ],
-            ),
+            Visibility(
+              visible: isChecked[0],
+              child: cardWidgetSO(
+                bedInfo: bedInfo
+              ),
+            )
           ],
         ),
 
-        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          Row(
-            children: [
-              Checkbox(
-                value: _isCheckedTemp,
-                onChanged: (value) {
-                  setState(() {
-                    _isCheckedTemp = !_isCheckedTemp;
-                  });
-                },
-              ),
-              Text("Temp: ", style: TextStyle(fontSize: 18)),
-              Text("${bedInfo.last.te} C",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18))
-            ],
-          ),
-          Row(
-            children: [
-              Checkbox(
-                value: _isCheckedFR,
-                onChanged: (value) {
-                  setState(() {
-                    _isCheckedFR = !_isCheckedFR;
-                  });
-                },
-              ),
-              Text("FR: ", style: TextStyle(fontSize: 18)),
-              Text("${bedInfo.last.fr} pm",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18))
-            ],
-          ),
-        ]),
-
-        // Grafico
-
-        /* Consumer<BedProvider>(builder: (__, model, _) {
-          return Expanded(
-            child: new charts.TimeSeriesChart(
-              _getSeriesData(bedInfo),
-              animate: true,
-            ),
-          );
-        }), */
-
-        /* Consumer<BedProvider>(
-          builder: (__, model, _) {
-            return Expanded(
-                child: SfCartesianChart(
-              series: <LineSeries<BedDataDetails, String>>[
-                LineSeries<BedDataDetails, String>(
-                  onRendererCreated: (ChartSeriesController controller) {
-                    _chartSeriesController = controller;
-                  },
-                  // Binding the chartData to the dataSource of the line series.
-                  dataSource: bedInfo,
-                  xValueMapper: (BedDataDetails sales, _) => sales.dateDetails,
-                  yValueMapper: (BedDataDetails sales, _) => sales.fr,
-                )
-              ],
-            ));
-          },
-        ), */
-
-        Consumer<BedProvider>(builder: (__, model, _) {
-          _updateDataSource(bedInfo);
-          return Expanded(
-              child: SfCartesianChart(
-                  onPointTapped: (PointTapArgs details) {
-                    if (isDataVisible == true) {
-                      isDataVisible = false;
-                    } else {
-                      isDataVisible = true;
-                    }
-                  },
-                  primaryXAxis: CategoryAxis(
-                      autoScrollingMode: AutoScrollingMode.start,
-                      labelPosition: ChartDataLabelPosition.inside,
-                      tickPosition: TickPosition.inside),
-                  series: <ChartSeries>[
-                // Renders line chart
-                SplineSeries<BedDataDetails, String>(
-                    onRendererCreated: (ChartSeriesController controller) {
-                      _chartSeriesController = controller;
-                    },
-                    markerSettings: MarkerSettings(isVisible: true),
-                    dataLabelSettings: DataLabelSettings(
-                      isVisible: isDataVisible,
-                    ),
-                    dataSource: bedInfo,
-                    xValueMapper: (BedDataDetails data, _) => data.dateDetails,
-                    yValueMapper: (BedDataDetails data, _) => data.fr)
-              ]));
-        }),
-
-        OutlinedButton(
-            style: OutlinedButton.styleFrom(
-              backgroundColor: Colors.grey[850],
-            ),
-            onPressed: () {
-              print("Clicou no conferir paciente");
-            },
-            child: Container(
-              height: 35,
-              width: 140,
+        Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 10, left: 10),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Conferir Paciente',
-                    style: TextStyle(color: Colors.white),
+                  Image.asset('assets/images/temperature.png',
+                      height: 35, width: 35),
+                  Checkbox(
+                    value: isChecked[1],
+                    onChanged: (val) {
+                      setState(
+                        () {
+                          isChecked[1] = val;
+                        },
+                      );
+                    },
                   ),
-                  Icon(
-                    Icons.done,
-                    color: Colors.white,
-                  )
+                  Text("Temperatura: ${bedInfo.last.te} C")
                 ],
               ),
-            ))
-      ]),
+            ),
+            Visibility(
+              visible: isChecked[1],
+              child: cardWidgetTE(
+                bedInfo: bedInfo
+              ),
+            )
+          ],
+        ),
+
+        Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 10, left: 10),
+              child: Row(
+                children: [
+                  Image.asset('assets/images/pulse.png',
+                      height: 35, width: 35),
+                  Checkbox(
+                    value: isChecked[2],
+                    onChanged: (val) {
+                      setState(
+                        () {
+                          isChecked[2] = val;
+                        },
+                      );
+                    },
+                  ),
+                  Text("Pulso: ${bedInfo.last.fc} bpm")
+                ],
+              ),
+            ),
+            Visibility(
+              visible: isChecked[2],
+              child: cardWidgetFC(
+                bedInfo: bedInfo
+              ),
+            )
+          ],
+        ),
+
+        Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 10, left: 10),
+              child: Row(
+                children: [
+                  Image.asset('assets/images/respiratoryFreq.png',
+                      height: 35, width: 35),
+                  Checkbox(
+                    value: isChecked[3],
+                    onChanged: (val) {
+                      setState(
+                        () {
+                          isChecked[3] = val;
+                        },
+                      );
+                    },
+                  ),
+                  Text("Frequência respiratória: ${bedInfo.last.fr} pm")
+                ],
+              ),
+            ),
+            Visibility(
+              visible: isChecked[3],
+              child: cardWidgetFR(
+                bedInfo: bedInfo
+              ),
+            )
+          ],
+        )
+
+      ],),
     );
   }
 }
 
-class _PatientData {
-  _PatientData(this.saOS, this.fc, this.temp, this.fr, this.hour);
+class cardWidgetSO extends StatelessWidget {
+  const cardWidgetSO({
+    Key key,
+    @required this.bedInfo,
+  }) : super(key: key);
 
-  final double saOS;
-  final double fc;
-  final double temp;
-  final double fr;
-  final String hour;
+  final List<BedDataDetails> bedInfo;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: 250,
+        width: 350,
+        child: Card(
+          elevation: 10,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          color: Colors.white,
+          child: SfCartesianChart(
+              backgroundColor: Colors.transparent,
+              margin: EdgeInsets.fromLTRB(24, 24, 24, 24),
+              primaryXAxis: CategoryAxis(
+                  autoScrollingMode: AutoScrollingMode.start,
+                  labelPosition: ChartDataLabelPosition.outside,
+                  tickPosition: TickPosition.inside),
+              series: <ChartSeries>[
+                StepLineSeries<BedDataDetails, String>(
+                    dataSource: bedInfo,
+                    xValueMapper: (BedDataDetails data, _) => data.dateDetails,
+                    yValueMapper: (BedDataDetails data, _) => data.so)
+              ]),
+        ));
+  }
+}
+
+class cardWidgetFR extends StatelessWidget {
+  const cardWidgetFR({
+    Key key,
+    @required this.bedInfo,
+  }) : super(key: key);
+
+  final List<BedDataDetails> bedInfo;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: 250,
+        width: 350,
+        child: Card(
+          elevation: 10,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          color: Colors.white,
+          child: SfCartesianChart(
+              backgroundColor: Colors.transparent,
+              margin: EdgeInsets.fromLTRB(24, 24, 24, 24),
+              primaryXAxis: CategoryAxis(
+                  autoScrollingMode: AutoScrollingMode.start,
+                  labelPosition: ChartDataLabelPosition.outside,
+                  tickPosition: TickPosition.inside),
+              series: <ChartSeries>[
+                StepLineSeries<BedDataDetails, String>(
+                    dataSource: bedInfo,
+                    xValueMapper: (BedDataDetails data, _) => data.dateDetails,
+                    yValueMapper: (BedDataDetails data, _) => data.fr)
+              ]),
+        ));
+  }
+}
+
+class cardWidgetTE extends StatelessWidget {
+  const cardWidgetTE({
+    Key key,
+    @required this.bedInfo,
+  }) : super(key: key);
+
+  final List<BedDataDetails> bedInfo;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: 250,
+        width: 350,
+        child: Card(
+          elevation: 10,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          color: Colors.white,
+          child: SfCartesianChart(
+              backgroundColor: Colors.transparent,
+              margin: EdgeInsets.fromLTRB(24, 24, 24, 24),
+              primaryXAxis: CategoryAxis(
+                  autoScrollingMode: AutoScrollingMode.start,
+                  labelPosition: ChartDataLabelPosition.outside,
+                  tickPosition: TickPosition.inside),
+              series: <ChartSeries>[
+                StepLineSeries<BedDataDetails, String>(
+                    dataSource: bedInfo,
+                    xValueMapper: (BedDataDetails data, _) => data.dateDetails,
+                    yValueMapper: (BedDataDetails data, _) => data.te)
+              ]),
+        ));
+  }
+}
+
+class cardWidgetFC extends StatelessWidget {
+  const cardWidgetFC({
+    Key key,
+    @required this.bedInfo,
+  }) : super(key: key);
+
+  final List<BedDataDetails> bedInfo;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: 250,
+        width: 350,
+        child: Card(
+          elevation: 10,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          color: Colors.white,
+          child: SfCartesianChart(
+              backgroundColor: Colors.transparent,
+              margin: EdgeInsets.fromLTRB(24, 24, 24, 24),
+              primaryXAxis: CategoryAxis(
+                  autoScrollingMode: AutoScrollingMode.start,
+                  labelPosition: ChartDataLabelPosition.outside,
+                  tickPosition: TickPosition.inside),
+              series: <ChartSeries>[
+                StepLineSeries<BedDataDetails, String>(
+                    dataSource: bedInfo,
+                    xValueMapper: (BedDataDetails data, _) => data.dateDetails,
+                    yValueMapper: (BedDataDetails data, _) => data.fc)
+              ]),
+        ));
+  }
 }
