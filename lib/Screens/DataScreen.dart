@@ -1,7 +1,20 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/API/BedDataList.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+
+ChartSeriesController _chartSeriesController;
+void _updateDataSource(bedInfo) {
+  if (bedInfo.length == 30) {
+    bedInfo.removeAt(0);
+    _chartSeriesController?.updateDataSource(
+        addedDataIndexes: <int>[bedInfo.length - 1],
+        removedDataIndexes: <int>[0]);
+  }
+}
 
 class DataScreen extends StatefulWidget {
   final List<BedDataDetails> bedInfo;
@@ -18,136 +31,131 @@ class _DataScreenState extends State<DataScreen> {
   _DataScreenState(this.bedInfo);
   @override
   Widget build(BuildContext context) {
-    //_createSampleData();
     return SingleChildScrollView(
       child: Column(
         children: [
-
           Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 10, left: 10),
-              child: Row(
-                children: [
-                  Image.asset('assets/images/respiratoryFreq.png',
-                      height: 35, width: 35),
-                  Checkbox(
-                    value: isChecked[0],
-                    onChanged: (val) {
-                      setState(
-                        () {
-                          isChecked[0] = val;
-                        },
-                      );
-                    },
-                  ),
-                  Text("Oxigênio: ${bedInfo.last.so} %")
-                ],
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 10, left: 10),
+                child: Row(
+                  children: [
+                    Image.asset('assets/images/respiratoryFreq.png',
+                        height: 35, width: 35),
+                    Checkbox(
+                      value: isChecked[0],
+                      onChanged: (val) {
+                        setState(
+                          () {
+                            isChecked[0] = val;
+                          },
+                        );
+                      },
+                    ),
+                    Text("Oxigênio: ${bedInfo.last.so} %")
+                  ],
+                ),
               ),
-            ),
-            Visibility(
-              visible: isChecked[0],
-              child: cardWidgetSO(
-                bedInfo: bedInfo
+              Consumer<BedProvider>(builder: (__, model, _) {
+                return Visibility(
+                  visible: isChecked[0],
+                  child: cardWidgetSO(bedInfo: bedInfo),
+                );
+              })
+            ],
+          ),
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 10, left: 10),
+                child: Row(
+                  children: [
+                    Image.asset('assets/images/temperature.png',
+                        height: 35, width: 35),
+                    Checkbox(
+                      value: isChecked[1],
+                      onChanged: (val) {
+                        setState(
+                          () {
+                            isChecked[1] = val;
+                          },
+                        );
+                      },
+                    ),
+                    Text("Temperatura: ${bedInfo.last.te} C")
+                  ],
+                ),
               ),
-            )
-          ],
-        ),
-
-        Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 10, left: 10),
-              child: Row(
-                children: [
-                  Image.asset('assets/images/temperature.png',
-                      height: 35, width: 35),
-                  Checkbox(
-                    value: isChecked[1],
-                    onChanged: (val) {
-                      setState(
-                        () {
-                          isChecked[1] = val;
-                        },
-                      );
-                    },
-                  ),
-                  Text("Temperatura: ${bedInfo.last.te} C")
-                ],
+              Consumer<BedProvider>(builder: (__, model, _) {
+                return Visibility(
+                  visible: isChecked[1],
+                  child: cardWidgetTE(bedInfo: bedInfo),
+                );
+              })
+            ],
+          ),
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 10, left: 10),
+                child: Row(
+                  children: [
+                    Image.asset('assets/images/pulse.png',
+                        height: 35, width: 35),
+                    Checkbox(
+                      value: isChecked[2],
+                      onChanged: (val) {
+                        setState(
+                          () {
+                            isChecked[2] = val;
+                          },
+                        );
+                      },
+                    ),
+                    Text("Pulso: ${bedInfo.last.fc} bpm")
+                  ],
+                ),
               ),
-            ),
-            Visibility(
-              visible: isChecked[1],
-              child: cardWidgetTE(
-                bedInfo: bedInfo
+              Consumer<BedProvider>(builder: (__, model, _) {
+                return Visibility(
+                  visible: isChecked[2],
+                  child: cardWidgetFC(bedInfo: bedInfo),
+                );
+              })
+            ],
+          ),
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 10, left: 10),
+                child: Row(
+                  children: [
+                    Image.asset('assets/images/respiratoryFreq.png',
+                        height: 35, width: 35),
+                    Checkbox(
+                      value: isChecked[3],
+                      onChanged: (val) {
+                        setState(
+                          () {
+                            isChecked[3] = val;
+                          },
+                        );
+                      },
+                    ),
+                    Text("Frequência respiratória: ${bedInfo.last.fr} pm")
+                  ],
+                ),
               ),
-            )
-          ],
-        ),
-
-        Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 10, left: 10),
-              child: Row(
-                children: [
-                  Image.asset('assets/images/pulse.png',
-                      height: 35, width: 35),
-                  Checkbox(
-                    value: isChecked[2],
-                    onChanged: (val) {
-                      setState(
-                        () {
-                          isChecked[2] = val;
-                        },
-                      );
-                    },
-                  ),
-                  Text("Pulso: ${bedInfo.last.fc} bpm")
-                ],
-              ),
-            ),
-            Visibility(
-              visible: isChecked[2],
-              child: cardWidgetFC(
-                bedInfo: bedInfo
-              ),
-            )
-          ],
-        ),
-
-        Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 10, left: 10),
-              child: Row(
-                children: [
-                  Image.asset('assets/images/respiratoryFreq.png',
-                      height: 35, width: 35),
-                  Checkbox(
-                    value: isChecked[3],
-                    onChanged: (val) {
-                      setState(
-                        () {
-                          isChecked[3] = val;
-                        },
-                      );
-                    },
-                  ),
-                  Text("Frequência respiratória: ${bedInfo.last.fr} pm")
-                ],
-              ),
-            ),
-            Visibility(
-              visible: isChecked[3],
-              child: cardWidgetFR(
-                bedInfo: bedInfo
-              ),
-            )
-          ],
-        )
-
-      ],),
+              Consumer<BedProvider>(builder: (__, model, _) {
+                return Visibility(
+                  visible: isChecked[3],
+                  child: cardWidgetFR(bedInfo: bedInfo),
+                );
+              })
+            ],
+          )
+        ],
+      ),
     );
   }
 }
@@ -179,6 +187,9 @@ class cardWidgetSO extends StatelessWidget {
                   tickPosition: TickPosition.inside),
               series: <ChartSeries>[
                 StepLineSeries<BedDataDetails, String>(
+                    onRendererCreated: (ChartSeriesController controller) {
+                      _updateDataSource(bedInfo);
+                    },
                     dataSource: bedInfo,
                     xValueMapper: (BedDataDetails data, _) => data.dateDetails,
                     yValueMapper: (BedDataDetails data, _) => data.so)
