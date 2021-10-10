@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:projeto_final_1/API/BedDataList.dart';
+import 'package:projeto_final_1/API/mqttManager.dart';
 import 'package:projeto_final_1/Components/AlertDialogPatient.dart';
 import 'package:projeto_final_1/Components/BedComponent.dart';
 import 'package:projeto_final_1/Components/BedComponentList.dart';
 import 'package:projeto_final_1/Components/LevelComponent.dart';
 import 'package:projeto_final_1/Screens/BedDetails.dart';
+import 'package:projeto_final_1/Screens/Login.dart';
 import 'package:provider/provider.dart';
-
 
 class Dashboard extends StatefulWidget {
   Dashboard({Key key}) : super(key: key);
@@ -56,12 +57,12 @@ class _DashboardState extends State<Dashboard> {
                         color: Colors.black,
                       )),
                       onPressed: () {
-                        showDialog(
+                        /* showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialogPatient();
                           },
-                        );
+                        ); */
                       },
                       child: const Text(
                         'Alarmes',
@@ -139,7 +140,8 @@ class _GridListViewState extends State<GridListView> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => BedDetails(model.bedDataListHistoryBed4)),
+                          builder: (context) =>
+                              BedDetails(model.bedDataListHistoryBed4)),
                     );
                   },
                   child: BedComponent(
@@ -179,7 +181,8 @@ class _ListViewPatientsState extends State<ListViewPatients> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => BedDetails(model.bedDataListHistoryBed4)),
+                        builder: (context) =>
+                            BedDetails(model.bedDataListHistoryBed4)),
                   );
                 },
                 child: BedComponentList(bedInfo: model.bedInfo[index]));
@@ -189,5 +192,3 @@ class _ListViewPatientsState extends State<ListViewPatients> {
     );
   }
 }
-
-

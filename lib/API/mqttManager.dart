@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:projeto_final_1/API/BedDataList.dart';
+import 'package:projeto_final_1/Components/AlertDialogPatient.dart';
 import 'package:projeto_final_1/Components/ErrorLoginAlertDialog.dart';
 import 'package:projeto_final_1/Screens/Home.dart';
 import 'package:provider/provider.dart';
@@ -71,7 +73,7 @@ class MQTTManager {
     _client.port = port;
     _client.keepAlivePeriod = 20;
     _client.secure = false;
-    _client.logging(on: true);
+    //_client.logging(on: true);
 
     /// Add the successful connection callback
     _client.onConnected = onConnected;
@@ -153,13 +155,23 @@ class MQTTManager {
       } else if (c[0].topic == clientInitialData) {
         receive_InitialData(contentPayload);
       } else {
+        print("---- ENTROU ELSE COM TOPICO ${c[0].topic} -----");
         var subTopics = c[0].topic.split("/");
 
         if (c[0].topic.contains(TOPIC_200)) {
           receive_data(contentPayload, subTopics);
+        } else if (c[0].topic.contains(TOPIC_301)) {
+          print("---- CHAMOU ALARME -----");
+          recv_alarm_new(contentPayload, subTopics);
+        } else if (c[0].topic.contains(TOPIC_302)) {
+          print("---- RECONHECEU ALARME -----");
         }
       }
     });
+  }
+
+  void app_request_logout() {
+    _client.disconnect();
   }
 
   void app_request_login() {
@@ -303,5 +315,68 @@ class MQTTManager {
         bedProvider.addBedInfo(data1);
       }
     }
+  }
+
+  void recv_alarm_new(contentPayload, subTopics) {
+    print("------------------------ ALARM NEW --------------------------");
+
+    String clinicalStatus = subTopics.removeLast();
+    String patientId = subTopics.removeLast();
+    String bedId = subTopics.removeLast();
+    String sectorId = subTopics.removeLast();
+
+    print(
+        "clinicalStatus $clinicalStatus, patientId $patientId, bedId $bedId, sectorId $sectorId ");
+
+    var content = jsonDecode(contentPayload);
+    print("content = $content");
+
+    showDialog(
+        context: contextNavigation,
+        builder: (context) => AlertDialogPatient(bedId, content));
+  }
+
+  // ignore: non_constant_identifier_names
+  void send_alarm_recognition(id) {
+    /* const nameBed = "bedNumber" + id;
+    const nameAlarm = "bedAlarm" + id;
+    let seconds = new Date().getTime() / 1000;
+    seconds = Math.round(seconds);
+
+    bedId = theForm[nameBed].value;
+    alarmId = theForm[nameAlarm].value;
+
+    let msg = {"ID": alarmId, "DT": seconds, "UI": MyUserId};
+    msg = JSON.stringify(msg);
+
+    let RECOGNIZED_TOPIC = TOPIC_302 + "/" + MySectorId + "/" + bedId;
+
+    console.log("Sending RECOGNIZE " + msg + " to " + RECOGNIZED_TOPIC);
+    let message = new Paho.MQTT.Message(msg);
+    message.destinationName = RECOGNIZED_TOPIC;
+    mqtt.send(message); */
+
+    //-------------------------------------------------------
+
+    var nameBed = "bedNumber" + id; // id = numero da cama ou bedId
+    var nameAlarm = "bedAlarm" + id;
+
+    Map<String, dynamic> str = {
+      "ID": Random.secure().nextInt(1000),
+      "DT": 2313435,
+      "UI": 2
+    };
+
+    String json = jsonEncode(str);
+
+    Uint8List data = utf8.encode(json);
+    Uint8Buffer dataBuffer = Uint8Buffer();
+    dataBuffer.addAll(data);
+
+    var RECOGNIZED_TOPIC = TOPIC_302 + '3' + "/" + id;
+
+    print("-------- topic aaaaa $RECOGNIZED_TOPIC e $alarmRecognized");
+
+    _client.publishMessage(RECOGNIZED_TOPIC, MqttQos.atLeastOnce, dataBuffer);
   }
 }

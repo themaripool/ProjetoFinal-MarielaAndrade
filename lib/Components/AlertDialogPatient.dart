@@ -1,14 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/API/BedDataList.dart';
 import 'package:projeto_final_1/Components/LevelComponent.dart';
+import 'package:projeto_final_1/API/mqttManager.dart';
+import 'package:projeto_final_1/Screens/BedDetails.dart';
+import 'package:provider/provider.dart';
 
 class AlertDialogPatient extends StatefulWidget {
-  final Function(String password) onConfirm;
+  final String bedId;
+  final dynamic content;
 
-  AlertDialogPatient({@required this.onConfirm});
+  AlertDialogPatient(this.bedId, this.content);
 
   @override
-  _AlertDialogPatientState createState() => _AlertDialogPatientState();
+  _AlertDialogPatientState createState() =>
+      _AlertDialogPatientState(this.bedId, this.content);
 }
 
 const TWO_PI = 3.14 * 2;
@@ -16,6 +22,10 @@ const TWO_PI = 3.14 * 2;
 //decoration: BoxDecoration(color: Color.fromRGBO(230, 178, 47, 1.0))
 
 class _AlertDialogPatientState extends State<AlertDialogPatient> {
+  final String bedId;
+  final dynamic content;
+
+  _AlertDialogPatientState(this.bedId, this.content);
 //216 176 63
   @override
   Widget build(BuildContext context) {
@@ -33,7 +43,7 @@ class _AlertDialogPatientState extends State<AlertDialogPatient> {
                   Spacer(),
                   Padding(
                     padding: const EdgeInsets.only(top: 8, left: 52),
-                    child: Text("LEITO X",
+                    child: Text("LEITO $bedId",
                         style: TextStyle(
                             fontSize: 26, fontWeight: FontWeight.bold)),
                   ),
@@ -73,7 +83,7 @@ class _AlertDialogPatientState extends State<AlertDialogPatient> {
                     Text("SaO2",
                         style: TextStyle(
                             fontSize: 26, fontWeight: FontWeight.bold)),
-                    Text(" 79%", style: TextStyle(fontSize: 26)),
+                    Text(" ${content['SO']}", style: TextStyle(fontSize: 26)),
                     Icon(Icons.arrow_upward, size: 32)
                   ],
                 ),
@@ -89,19 +99,22 @@ class _AlertDialogPatientState extends State<AlertDialogPatient> {
                           Text("FC: ",
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
-                          Text("60 bpm", style: TextStyle(fontSize: 20))
+                          Text("${content['FC']} bpm",
+                              style: TextStyle(fontSize: 20))
                         ]),
                         Row(children: [
                           Text("Temp: ",
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
-                          Text("36.1 C", style: TextStyle(fontSize: 20))
+                          Text("${content['TE']} C",
+                              style: TextStyle(fontSize: 20))
                         ]),
                         Row(children: [
                           Text("FR: ",
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
-                          Text("12pm", style: TextStyle(fontSize: 20))
+                          Text("${content['FR']} pm",
+                              style: TextStyle(fontSize: 20))
                         ]),
                       ],
                     ),
@@ -116,8 +129,13 @@ class _AlertDialogPatientState extends State<AlertDialogPatient> {
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 Colors.grey[900])),
                         onPressed: () {
-                          print("On pressed do cancelar");
-                          Navigator.pop(context);
+                            return Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      BedDetails(Provider.of<BedProvider>(context, listen: false).bedDataListHistoryBed4)),
+                            );
+                          ;
                         },
                         child: Text("VER DADOS",
                             style: TextStyle(color: Colors.white))),
@@ -128,6 +146,7 @@ class _AlertDialogPatientState extends State<AlertDialogPatient> {
                               BorderSide(color: Colors.black)),
                         ),
                         onPressed: () {
+                          MQTTManager().send_alarm_recognition(bedId);
                           Navigator.pop(context);
                         },
                         child: Row(

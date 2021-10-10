@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/API/mqttManager.dart';
 import 'package:projeto_final_1/Components/HeaderDrawer.dart';
 import 'package:projeto_final_1/Enums/DrawerSections.dart';
-import 'package:projeto_final_1/Screens/BedDetails.dart';
 import 'package:projeto_final_1/Screens/DashBoard.dart';
 import 'package:projeto_final_1/Screens/Search.dart';
 import 'package:projeto_final_1/Screens/Settings.dart';
@@ -50,7 +50,27 @@ class _HomePageState extends State<HomePage> {
     }
 
     return Scaffold(
-        appBar: AppBar(title: title, centerTitle: true),
+        appBar: AppBar(
+          title: title,
+          centerTitle: true,
+          actions: [
+            Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    MQTTManager().app_request_logout();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Login()),
+                        );
+                  },
+                  child: Icon(
+                    Icons.logout,
+                    size: 26.0,
+                  ),
+                ))
+          ],
+        ),
         body: container,
         drawer: Drawer(
             child: SingleChildScrollView(
