@@ -19,117 +19,167 @@ class AlertDialogPatient extends StatefulWidget {
 
 const TWO_PI = 3.14 * 2;
 
-//decoration: BoxDecoration(color: Color.fromRGBO(230, 178, 47, 1.0))
-
 class _AlertDialogPatientState extends State<AlertDialogPatient> {
   final String bedId;
   final dynamic content;
-
   _AlertDialogPatientState(this.bedId, this.content);
-//216 176 63
   @override
   Widget build(BuildContext context) {
-    final size = 200.0;
-    return Column(
+    return SimpleDialog(
+      backgroundColor: Colors.transparent,
       children: [
         Container(
-          width: 300,
-          height: 580,
-          decoration: BoxDecoration(color: Color.fromRGBO(230, 178, 47, 1.0)),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8, left: 52),
-                    child: Text("LEITO $bedId",
-                        style: TextStyle(
-                            fontSize: 26, fontWeight: FontWeight.bold)),
-                  ),
-                  Spacer(),
-                  OutlinedButton(
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Colors.transparent)),
-                      onPressed: () {
-                        print("On pressed x");
-                        Navigator.pop(context);
-                      },
-                      child: Icon(
-                        Icons.close,
-                        color: Colors.black,
-                      ))
-                ],
-              ),
-
-              LevelComponentWidget(Colors.yellow),
-
-              Padding(
-                padding: const EdgeInsets.only(bottom: 32, top: 8),
-                child: Text("Estado Severo", style: TextStyle(fontSize: 20)),
-              ),
-
-              CircularGraph(size: size),
-
-              //texto abaixo do circulo
-              Padding(
-                padding: const EdgeInsets.only(top: 16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment
-                      .center, //Center Row contents vertically,
-                  children: [
-                    Text("SaO2",
-                        style: TextStyle(
-                            fontSize: 26, fontWeight: FontWeight.bold)),
-                    Text(" ${content['SO']}", style: TextStyle(fontSize: 26)),
-                    Icon(Icons.arrow_upward, size: 32)
-                  ],
+          width: 200,
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            color: Color.fromRGBO(230, 178, 47, 1.0),
+            elevation: 10,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                AlertCloseButton(),
+                AlertTitle(),
+                CircularGraph(
+                  size: 100,
                 ),
-              ),
+                AlertInfoLabel(content: content,),
+                AlertInfoDetails(content: content,),
+                AlertButtons(bedId: bedId,),
+              ],
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}
 
-              Padding(
-                  padding: const EdgeInsets.only(top: 32.0, left: 16),
-                  child: Container(
-                    child: Column(
-                      children: [
-                        Row(children: [
-                          Icon(Icons.arrow_downward, size: 20),
-                          Text("FC: ",
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold)),
-                          Text("${content['FC']} bpm",
-                              style: TextStyle(fontSize: 20))
-                        ]),
-                        Row(children: [
-                          Text("Temp: ",
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold)),
-                          Text("${content['TE']} C",
-                              style: TextStyle(fontSize: 20))
-                        ]),
-                        Row(children: [
-                          Text("FR: ",
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold)),
-                          Text("${content['FR']} pm",
-                              style: TextStyle(fontSize: 20))
-                        ]),
-                      ],
-                    ),
-                  )),
+class AlertCloseButton extends StatelessWidget {
+  const AlertCloseButton({
+    Key key,
+  }) : super(key: key);
 
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  children: [
-                    OutlinedButton(
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                Colors.grey[900])),
-                        onPressed: () {
-                          print("------ bed id $bedId -------");
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        IconButton(
+          icon: Icon(
+            Icons.close,
+          ),
+          iconSize: 24,
+          color: Colors.black,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class AlertInfoDetails extends StatelessWidget {
+  final dynamic content;
+  const AlertInfoDetails({
+    Key key, this.content,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(children: [
+            Text("FC: ",
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+            Text("${content['SO']} bpm", style: TextStyle(fontSize: 14))
+          ]),
+          Row(children: [
+            Text("Temp: ",
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+            Text("${content['SO']} C", style: TextStyle(fontSize: 14))
+          ]),
+          Row(children: [
+            Text("FR: ",
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+            Text("${content['SO']} pm", style: TextStyle(fontSize: 14))
+          ]),
+        ],
+      ),
+    );
+  }
+}
+
+class AlertInfoLabel extends StatelessWidget {
+  final dynamic content;
+  const AlertInfoLabel({
+    Key key, this.content,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment:
+            CrossAxisAlignment.center, //Center Row contents vertically,
+        children: [
+          Text("SaO2",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          Text("${content['SO']}%", style: TextStyle(fontSize: 18)),
+          Icon(Icons.arrow_upward, size: 20)
+        ],
+      ),
+    );
+  }
+}
+
+class AlertTitle extends StatelessWidget {
+  const AlertTitle({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Column(
+        children: [
+          Text("LEITO 1",
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+          Text("Estado Severo", style: TextStyle(fontSize: 20))
+        ],
+      ),
+    );
+  }
+}
+
+class AlertButtons extends StatelessWidget {
+
+  final String bedId;
+  const AlertButtons({
+    Key key, this.bedId,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          OutlinedButton(
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.grey[900])),
+              onPressed: () {
+                 print("------ bed id $bedId -------");
                           return Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -139,44 +189,34 @@ class _AlertDialogPatientState extends State<AlertDialogPatient> {
                                         .bedDataListHistoryBed4,
                                     bedId)),
                           );
-                          ;
-                        },
-                        child: Text("VER DADOS",
-                            style: TextStyle(color: Colors.white))),
-                    Spacer(),
-                    OutlinedButton(
-                        style: ButtonStyle(
-                          side: MaterialStateProperty.all(
-                              BorderSide(color: Colors.black)),
-                        ),
-                        onPressed: () {
-                          MQTTManager().send_alarm_recognition(bedId);
-                          Navigator.pop(context);
-                        },
-                        child: Row(
-                          children: [
-                            Column(
-                              children: [
-                                Text("CONFERIR",
-                                    style: TextStyle(color: Colors.black)),
-                                Text("PACIENTE",
-                                    style: TextStyle(color: Colors.black)),
-                              ],
-                            ),
-                            Icon(
-                              Icons.done,
-                              color: Colors.black,
-                              size: 32,
-                            )
-                          ],
-                        )),
-                  ],
-                ),
-              )
-            ],
-          ),
-        )
-      ],
+              },
+              child: Text("VER DADOS", style: TextStyle(color: Colors.white))),
+          OutlinedButton(
+              style: ButtonStyle(
+                side:
+                    MaterialStateProperty.all(BorderSide(color: Colors.black)),
+              ),
+              onPressed: () {
+                 MQTTManager().send_alarm_recognition(bedId);
+                 Navigator.pop(context);
+              },
+              child: Row(
+                children: [
+                  Column(
+                    children: [
+                      Text("CONFERIR", style: TextStyle(color: Colors.black)),
+                      Text("PACIENTE", style: TextStyle(color: Colors.black)),
+                    ],
+                  ),
+                  Icon(
+                    Icons.done,
+                    color: Colors.black,
+                    size: 24,
+                  )
+                ],
+              ))
+        ],
+      ),
     );
   }
 }
