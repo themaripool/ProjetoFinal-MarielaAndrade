@@ -6,7 +6,8 @@ import 'package:projeto_final_1/Screens/DataScreen.dart';
 
 class BedDetails extends StatelessWidget {
   final List<BedDataDetails> bedInfo;
-  BedDetails(this.bedInfo);
+  final String bedId;
+  BedDetails(this.bedInfo, this.bedId);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,7 +21,7 @@ class BedDetails extends StatelessWidget {
               onPressed: () => Navigator.of(context).pop(),
             ),
             backgroundColor: Colors.grey[700],
-            title: Text("Leito Número ${bedInfo.first.bedNumber}"),
+            title: Text("Leito Número $bedId"),
             bottom: TabBar(
               tabs: <Widget>[
                 Tab(
@@ -39,7 +40,9 @@ class BedDetails extends StatelessWidget {
               DataScreen(
                 bedInfo: bedInfo,
               ),
-              AlertScreen()
+              AlertScreen(
+                bedNumber: bedId,
+              )
             ],
           )),
     ));

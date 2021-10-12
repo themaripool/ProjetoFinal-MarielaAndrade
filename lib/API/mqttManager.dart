@@ -197,6 +197,7 @@ class MQTTManager {
     Uint8Buffer dataBuffer = Uint8Buffer();
     dataBuffer.addAll(data);
 
+    print('EXAMPLE::publishMessage ...$str');
     _client.publishMessage(serverLoginTopic, MqttQos.atLeastOnce, dataBuffer);
   }
 
@@ -348,10 +349,15 @@ class MQTTManager {
       String clinicalStatus, String patientId, String bedId, String sectorId) {
 
     var now = new DateTime.now();
-    final f = new DateFormat.Hm();
-    String formattedDate = f.format(now);
 
-    final alert = AlertModel(clinicalStatus, patientId, bedId, sectorId, formattedDate);
+    var diaEMes = DateFormat.yMd();
+    String formattedDiaEMes = diaEMes.format(now);
+
+    final f = new DateFormat.Hm();
+    String formattedDateHora = f.format(now);
+
+    final alert =
+        AlertModel(clinicalStatus, patientId, bedId, sectorId, formattedDiaEMes,formattedDateHora );
     alarmsDao.saveMessage(alert);
   }
 

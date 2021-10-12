@@ -129,12 +129,16 @@ class _AlertDialogPatientState extends State<AlertDialogPatient> {
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 Colors.grey[900])),
                         onPressed: () {
-                            return Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      BedDetails(Provider.of<BedProvider>(context, listen: false).bedDataListHistoryBed4)),
-                            );
+                          print("------ bed id $bedId -------");
+                          return Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BedDetails(
+                                    Provider.of<BedProvider>(context,
+                                            listen: false)
+                                        .bedDataListHistoryBed4,
+                                    bedId)),
+                          );
                           ;
                         },
                         child: Text("VER DADOS",

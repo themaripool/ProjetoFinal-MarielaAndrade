@@ -12,4 +12,9 @@ class AlarmsDao {
   Query getMessageQuery() {
     return _alarmRef;
   }
+
+  Query getAlarmsByBedQuery(String bedId) {
+    print("------- QUERY BED NUMBER $bedId -------");
+    return _alarmRef.orderByChild("bedId").equalTo(bedId);
+  }
 }
