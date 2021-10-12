@@ -9,6 +9,8 @@ import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:projeto_final_1/API/BedDataList.dart';
 import 'package:projeto_final_1/Components/AlertDialogPatient.dart';
 import 'package:projeto_final_1/Components/ErrorLoginAlertDialog.dart';
+import 'package:projeto_final_1/Data/alarmsDAO.dart';
+import 'package:projeto_final_1/Data/alarms.dart';
 import 'package:projeto_final_1/Screens/Home.dart';
 import 'package:provider/provider.dart';
 import 'package:typed_data/typed_data.dart';
@@ -58,11 +60,15 @@ BuildContext contextNavigation;
 var Beds = List(2);
 final _client = MqttServerClient.withPort(broker, clientIdentifier, port);
 
+AlarmsDao alarmsDao;
+
 // ====================================================
 
 class MQTTManager {
   var contentLoginRequest;
   void initializeMQTTClient(login, password, BuildContext context) {
+    alarmsDao = AlarmsDao();
+
     username = login;
     passwd = password;
 
@@ -334,30 +340,24 @@ class MQTTManager {
     showDialog(
         context: contextNavigation,
         builder: (context) => AlertDialogPatient(bedId, content));
+
+    _sendMessage(clinicalStatus, patientId, bedId, sectorId);
+  }
+
+  void _sendMessage(
+      String clinicalStatus, String patientId, String bedId, String sectorId) {
+
+    var now = new DateTime.now();
+    final f = new DateFormat.Hm();
+    String formattedDate = f.format(now);
+
+    final alert = AlertModel(clinicalStatus, patientId, bedId, sectorId, formattedDate);
+    alarmsDao.saveMessage(alert);
   }
 
   // ignore: non_constant_identifier_names
   void send_alarm_recognition(id) {
-    /* const nameBed = "bedNumber" + id;
-    const nameAlarm = "bedAlarm" + id;
-    let seconds = new Date().getTime() / 1000;
-    seconds = Math.round(seconds);
-
-    bedId = theForm[nameBed].value;
-    alarmId = theForm[nameAlarm].value;
-
-    let msg = {"ID": alarmId, "DT": seconds, "UI": MyUserId};
-    msg = JSON.stringify(msg);
-
-    let RECOGNIZED_TOPIC = TOPIC_302 + "/" + MySectorId + "/" + bedId;
-
-    console.log("Sending RECOGNIZE " + msg + " to " + RECOGNIZED_TOPIC);
-    let message = new Paho.MQTT.Message(msg);
-    message.destinationName = RECOGNIZED_TOPIC;
-    mqtt.send(message); */
-
-    //-------------------------------------------------------
-
+    print("------------------------ ALARM RECON --------------------------");
     var nameBed = "bedNumber" + id; // id = numero da cama ou bedId
     var nameAlarm = "bedAlarm" + id;
 

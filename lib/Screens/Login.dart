@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:projeto_final_1/API/mqttManager.dart';
 import 'package:projeto_final_1/Components/TextFieldLogin.dart';
 import 'package:projeto_final_1/Screens/InpatientPage/InpatientNavigation.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 /*
   TODO:
@@ -21,23 +22,51 @@ class _LoginState extends State<Login> {
   final TextEditingController _userNameCntl = TextEditingController();
   final TextEditingController _passwordCntl = TextEditingController();
 
+  bool _initialized = false;
+  bool _error = false;
+
+  void initializeFlutterFire() async {
+    try {
+      // Wait for Firebase to initialize and set `_initialized` state to true
+      await Firebase.initializeApp();
+      setState(() {
+        _initialized = true;
+      });
+    } catch (e) {
+      // Set `_error` state to true if Firebase initialization fails
+      setState(() {
+        _error = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    initializeFlutterFire();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      body: SingleChildScrollView(
-        child: Stack(children: <Widget>[
-          Container(
-            child: Column(children: [
-              //Header da pagina
-              LoginHeader(),
-              LoginForm(
-                  userNameCntl: _userNameCntl, passwordCntl: _passwordCntl),
-            ]),
-          ),
-        ]),
-      ),
-    );
+    if (!_initialized) {
+      return CircularProgressIndicator();
+    } else {
+      return Scaffold(
+        resizeToAvoidBottomInset: true,
+        body: SingleChildScrollView(
+          child: Stack(children: <Widget>[
+            Container(
+              child: Column(children: [
+                //Header da pagina
+                LoginHeader(),
+                LoginForm(
+                    userNameCntl: _userNameCntl, passwordCntl: _passwordCntl),
+              ]),
+            ),
+          ]),
+        ),
+      );
+    }
   }
 }
 
@@ -92,9 +121,6 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  var isPatient = false;
-  var isDoctor = false;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -124,7 +150,8 @@ class _LoginFormState extends State<LoginForm> {
             padding: const EdgeInsets.only(top: 16.0),
             child: ElevatedButton(
               onPressed: () => {
-                MQTTManager().initializeMQTTClient(widget._userNameCntl.text, widget._passwordCntl.text, context),
+                MQTTManager().initializeMQTTClient(widget._userNameCntl.text,
+                    widget._passwordCntl.text, context),
                 MQTTManager().connect(),
               },
               child: Text("Login"),

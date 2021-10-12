@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "852208253836",
+    "project_id": "projetofinal-mariandrade",
+    "storage_bucket": "projetofinal-mariandrade.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:852208253836:android:ad8b0e04a4dabf02f134a9",
+        "android_client_info": {
+          "package_name": "com.example.projeto_final_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "852208253836-1vbcph3rouei7gpjl0dmat0imjjq3f9i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCILKRSPrgyUdj8MeUuskSjv2eKDRdoxRg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "852208253836-1vbcph3rouei7gpjl0dmat0imjjq3f9i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

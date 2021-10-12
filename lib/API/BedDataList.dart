@@ -18,7 +18,8 @@ class BedDataDetails {
   int bedNumber;
   String dateDetails;
 
-  BedDataDetails({this.fc, this.fr, this.so, this.te, this.bedNumber, this.dateDetails});
+  BedDataDetails(
+      {this.fc, this.fr, this.so, this.te, this.bedNumber, this.dateDetails});
 }
 
 class BedProvider extends ChangeNotifier {
