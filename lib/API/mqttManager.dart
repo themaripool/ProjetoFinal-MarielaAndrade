@@ -89,8 +89,6 @@ class MQTTManager {
     final MqttConnectMessage connMess = MqttConnectMessage()
         .withClientIdentifier(appId)
         .keepAliveFor(60)
-        .withWillTopic('willtopic')
-        .withWillMessage('My Will message')
         .startClean()
         .withWillQos(MqttQos.atLeastOnce);
 
@@ -123,6 +121,8 @@ class MQTTManager {
   /// The unsolicited disconnect callback
   void onDisconnected() {
     print('EXAMPLE::OnDisconnected client callback - Client disconnection');
+    print(
+        ' -- return code ${_client.connectionStatus.returnCode} mqtt ${MqttConnectReturnCode.noneSpecified}');
     if (_client.connectionStatus.returnCode ==
         MqttConnectReturnCode.noneSpecified) {
       print('EXAMPLE::OnDisconnected callback is solicited, this is correct');
@@ -177,6 +177,9 @@ class MQTTManager {
   }
 
   void app_request_logout() {
+    BedProvider bedProvider =
+        Provider.of<BedProvider>(contextProvider, listen: false);
+    bedProvider.eraseLists();
     _client.disconnect();
   }
 
@@ -187,7 +190,7 @@ class MQTTManager {
 
     Map<String, dynamic> str = {
       'CD': '1',
-      'DT': '1632084398',
+      'DT': '1632084368',
       'UN': '$username',
       'PW': '$passwd'
     };
@@ -347,7 +350,6 @@ class MQTTManager {
 
   void _sendMessage(
       String clinicalStatus, String patientId, String bedId, String sectorId) {
-
     var now = new DateTime.now();
 
     var diaEMes = DateFormat.yMd();
@@ -356,8 +358,8 @@ class MQTTManager {
     final f = new DateFormat.Hm();
     String formattedDateHora = f.format(now);
 
-    final alert =
-        AlertModel(clinicalStatus, patientId, bedId, sectorId, formattedDiaEMes,formattedDateHora );
+    final alert = AlertModel(clinicalStatus, patientId, bedId, sectorId,
+        formattedDiaEMes, formattedDateHora);
     alarmsDao.saveMessage(alert);
   }
 

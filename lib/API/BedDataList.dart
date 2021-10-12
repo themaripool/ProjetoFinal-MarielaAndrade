@@ -49,6 +49,11 @@ class BedProvider extends ChangeNotifier {
     return -1;
   }
 
+  void eraseLists() {
+    _bedDataList = [];
+    bedDataListHistoryBed4 = [];
+  }
+
   set bedInfo(List<BedData> newBedData) {
     _bedDataList = newBedData;
     notifyListeners();
