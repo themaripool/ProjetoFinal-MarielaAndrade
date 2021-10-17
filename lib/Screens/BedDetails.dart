@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/API/BedDataList.dart';
 import 'package:projeto_final_1/Screens/AlertScreen.dart';
 import 'package:projeto_final_1/Screens/DataScreen.dart';
 
 class BedDetails extends StatelessWidget {
-  final List<BedDataDetails> bedInfo;
   final String bedId;
-  BedDetails(this.bedInfo, this.bedId);
+  BedDetails(this.bedId);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -38,7 +36,7 @@ class BedDetails extends StatelessWidget {
           body: TabBarView(
             children: <Widget>[
               DataScreen(
-                bedInfo: bedInfo,
+                bedId: bedId,
               ),
               AlertScreen(
                 bedNumber: bedId,

@@ -40,13 +40,19 @@ class _AlertDialogPatientState extends State<AlertDialogPatient> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 AlertCloseButton(),
-                AlertTitle(),
+                AlertTitle(bedId: bedId),
                 CircularGraph(
                   size: 100,
                 ),
-                AlertInfoLabel(content: content,),
-                AlertInfoDetails(content: content,),
-                AlertButtons(bedId: bedId,),
+                AlertInfoLabel(
+                  content: content,
+                ),
+                AlertInfoDetails(
+                  content: content,
+                ),
+                AlertButtons(
+                  bedId: bedId,
+                ),
               ],
             ),
           ),
@@ -84,7 +90,8 @@ class AlertCloseButton extends StatelessWidget {
 class AlertInfoDetails extends StatelessWidget {
   final dynamic content;
   const AlertInfoDetails({
-    Key key, this.content,
+    Key key,
+    this.content,
   }) : super(key: key);
 
   @override
@@ -118,7 +125,8 @@ class AlertInfoDetails extends StatelessWidget {
 class AlertInfoLabel extends StatelessWidget {
   final dynamic content;
   const AlertInfoLabel({
-    Key key, this.content,
+    Key key,
+    this.content,
   }) : super(key: key);
 
   @override
@@ -141,8 +149,10 @@ class AlertInfoLabel extends StatelessWidget {
 }
 
 class AlertTitle extends StatelessWidget {
+  final String bedId;
   const AlertTitle({
     Key key,
+    this.bedId,
   }) : super(key: key);
 
   @override
@@ -151,9 +161,9 @@ class AlertTitle extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 16),
       child: Column(
         children: [
-          Text("LEITO 1",
+          Text("LEITO $bedId",
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-          Text("Estado Severo", style: TextStyle(fontSize: 20))
+          Text("Estado tem que pegar ainda", style: TextStyle(fontSize: 20))
         ],
       ),
     );
@@ -161,10 +171,10 @@ class AlertTitle extends StatelessWidget {
 }
 
 class AlertButtons extends StatelessWidget {
-
   final String bedId;
   const AlertButtons({
-    Key key, this.bedId,
+    Key key,
+    this.bedId,
   }) : super(key: key);
 
   @override
@@ -179,16 +189,12 @@ class AlertButtons extends StatelessWidget {
                   backgroundColor:
                       MaterialStateProperty.all<Color>(Colors.grey[900])),
               onPressed: () {
-                 print("------ bed id $bedId -------");
-                          return Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => BedDetails(
-                                    Provider.of<BedProvider>(context,
-                                            listen: false)
-                                        .bedDataListHistoryBed4,
-                                    bedId)),
-                          );
+                print("------ bed id $bedId -------");
+                return Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => BedDetails(bedId),
+                ));
               },
               child: Text("VER DADOS", style: TextStyle(color: Colors.white))),
           OutlinedButton(
@@ -197,8 +203,8 @@ class AlertButtons extends StatelessWidget {
                     MaterialStateProperty.all(BorderSide(color: Colors.black)),
               ),
               onPressed: () {
-                 MQTTManager().send_alarm_recognition(bedId);
-                 Navigator.pop(context);
+                MQTTManager().send_alarm_recognition(bedId);
+                Navigator.pop(context);
               },
               child: Row(
                 children: [

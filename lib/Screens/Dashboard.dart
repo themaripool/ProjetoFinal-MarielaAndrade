@@ -5,9 +5,7 @@ import 'package:projeto_final_1/API/mqttManager.dart';
 import 'package:projeto_final_1/Components/AlertDialogPatient.dart';
 import 'package:projeto_final_1/Components/BedComponent.dart';
 import 'package:projeto_final_1/Components/BedComponentList.dart';
-import 'package:projeto_final_1/Components/LevelComponent.dart';
 import 'package:projeto_final_1/Screens/BedDetails.dart';
-import 'package:projeto_final_1/Screens/Login.dart';
 import 'package:provider/provider.dart';
 
 class Dashboard extends StatefulWidget {
@@ -17,23 +15,12 @@ class Dashboard extends StatefulWidget {
   _DashboardState createState() => _DashboardState();
 }
 
-void _getBedInfo(BuildContext context) async {
-  await Future.delayed(Duration(milliseconds: 200));
-  BedProvider bedProvider = Provider.of<BedProvider>(context, listen: false);
-  bedProvider.bedInfo = [];
-}
-
-void _updateBedInfo(int index, BedData bedData) {
-  print("Chamou update bed info");
-}
-
 class _DashboardState extends State<Dashboard> {
   var status = true;
   var container;
 
   @override
   Widget build(BuildContext context) {
-    _getBedInfo(context);
 
     if (status == true) {
       container = GridListView();
@@ -133,22 +120,17 @@ class _GridListViewState extends State<GridListView> {
             mainAxisSpacing: 20.0,
             crossAxisSpacing: 2.0,
             childAspectRatio: (130 / 177),
-            children: List.generate(model.getBedListLen(), (index) {
+            children: List.generate(model.holder.length, (index) {
+              var bedId = model.bedIds;
               return GestureDetector(
                   onTap: () {
-                    print(index = index); //index comeca em 0 BedDetails()
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              BedDetails(model.bedDataListHistoryBed4, "${index == 0 ? index+5 : index+3}")),
+                      MaterialPageRoute( builder: (context) => BedDetails(bedId[index])),
                     );
                   },
                   child: BedComponent(
-                    index: index,
-                    bedInfo: model.bedInfo[index],
-                    updateCallback: _updateBedInfo,
-                    deleteCallback: () => model.removeBedInfo(index),
+                    bedInfo: model.holder[bedId[index]].last,
                   ));
             }));
       },
@@ -171,21 +153,21 @@ class _ListViewPatientsState extends State<ListViewPatients> {
     return Consumer<BedProvider>(
       builder: (__, model, _) {
         return ListView.separated(
-          itemCount: model.getBedListLen(),
+          itemCount: model.holder.length,
           separatorBuilder: (BuildContext context, int index) => const Divider(
             color: Colors.black,
           ),
           itemBuilder: (BuildContext context, int index) {
+            var bedId = model.bedIds;
             return GestureDetector(
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            BedDetails(model.bedDataListHistoryBed4, "${index == 0 ? index+5 : index+3}")),
+                        builder: (context) => BedDetails(bedId[index])),
                   );
                 },
-                child: BedComponentList(bedInfo: model.bedInfo[index]));
+                child: BedComponentList(bedInfo: model.holder[bedId[index]].last));
           },
         );
       },

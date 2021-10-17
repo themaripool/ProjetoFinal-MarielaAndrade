@@ -1,16 +1,7 @@
+import 'dart:collection';
 import 'package:flutter/material.dart';
 
-class BedData {
-  int fc;
-  int fr;
-  int so;
-  double te;
-  int bedNumber;
-
-  BedData({this.fc, this.fr, this.so, this.te, this.bedNumber});
-}
-
-class BedDataDetails {
+class BedDataDetails extends LinkedListEntry<BedDataDetails> {
   int fc;
   int fr;
   int so;
@@ -23,64 +14,31 @@ class BedDataDetails {
 }
 
 class BedProvider extends ChangeNotifier {
-  List<BedData> _bedDataList = [];
-  List<BedDataDetails> bedDataListHistoryBed4 = [];
+  Map<String, LinkedList<BedDataDetails>> holder = {};
+  var bedIds = [];
 
-  List<BedData> get bedInfo {
-    return [..._bedDataList];
-  }
-
-  get bedNumber {
-    return this.bedNumber;
-  }
-
-  int getBedListLen() {
-    return _bedDataList.length;
-  }
-
-  searchBedNumberInList(int bedSearched) {
-    var i = 0;
-    for (var bed in _bedDataList) {
-      if (bed.bedNumber == bedSearched) {
-        return i;
-      }
-      i++;
+  void addToDataList(String bedId, BedDataDetails bedData) {
+    if (holder.containsKey(bedId) == false) {
+      holder[bedId] = LinkedList<BedDataDetails>();
+      bedIds.add(bedId);
     }
-    return -1;
+    holder[bedId].add(bedData);
+    if (holder[bedId].length == 30) {
+      holder[bedId].remove(holder[bedId].first);
+    }
+    notifyListeners();
+  }
+
+  BedDataDetails dashboardData(String bedId) {
+    return holder[bedId].last;
   }
 
   void eraseLists() {
-    _bedDataList = [];
-    bedDataListHistoryBed4 = [];
-  }
-
-  set bedInfo(List<BedData> newBedData) {
-    _bedDataList = newBedData;
-    notifyListeners();
-  }
-
-  set bedInfoHistory(List<BedDataDetails> newBedData) {
-    bedDataListHistoryBed4 = newBedData;
-    notifyListeners();
-  }
-
-  void addBedInfo(BedData newBedData) {
-    _bedDataList.add(newBedData);
-    notifyListeners();
-  }
-
-  void addBedInfoHistory(BedDataDetails newBedData) {
-    bedDataListHistoryBed4.add(newBedData);
-    notifyListeners();
-  }
-
-  void addBedAtIndex(int index, BedData newBedData) {
-    _bedDataList.insert(index, newBedData);
-    notifyListeners();
-  }
-
-  void removeBedInfo(int index) {
-    _bedDataList.removeAt(index);
-    notifyListeners();
+    //salvar no firebase
+    // apagar dados locais
+    /* holder.forEach((key, value) {
+      value.clear();
+    });
+    holder.clear(); */
   }
 }

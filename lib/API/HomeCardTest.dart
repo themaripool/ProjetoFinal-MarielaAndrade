@@ -3,7 +3,7 @@ import 'package:projeto_final_1/API/BedDataList.dart';
 
 class HomeCard extends StatelessWidget {
   final int index;
-  final BedData bedInfo;
+  final BedDataDetails bedInfo;
   final Function updateCallback;
   final Function deleteCallback;
 

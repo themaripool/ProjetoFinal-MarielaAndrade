@@ -11,7 +11,7 @@ var bedSeverityStatus;
 // te = temperatura
 // fr = frequencia respiratoria
 
-void checkInpatientStatus(BedData bedInfo) {
+void checkInpatientStatus(BedDataDetails bedInfo) {
   if (bedInfo.fr <= 8 || 
       bedInfo.fr >= 25 || 
       bedInfo.so >= 91 || 
@@ -54,16 +54,10 @@ void checkInpatientStatus(BedData bedInfo) {
 }
 
 class BedComponent extends StatelessWidget {
-  final int index;
-  final BedData bedInfo;
-  final Function updateCallback;
-  final Function deleteCallback;
+  final BedDataDetails bedInfo;
 
   BedComponent({
-    this.index,
     this.bedInfo,
-    this.updateCallback,
-    this.deleteCallback,
   });
 
   @override

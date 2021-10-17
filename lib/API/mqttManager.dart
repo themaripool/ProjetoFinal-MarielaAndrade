@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:math';
@@ -177,8 +178,7 @@ class MQTTManager {
   }
 
   void app_request_logout() {
-    BedProvider bedProvider =
-        Provider.of<BedProvider>(contextProvider, listen: false);
+    BedProvider bedProvider = Provider.of<BedProvider>(contextProvider, listen: false);
     bedProvider.eraseLists();
     _client.disconnect();
   }
@@ -268,63 +268,22 @@ class MQTTManager {
     var content = jsonDecode(contentPayload);
     print("content = $content");
 
-    if (bedId == "4") {
-      print("Entrou no if");
-      BedData data1 = BedData(
-          fc: content['FC'],
-          fr: content['FR'],
-          so: content['SO'],
-          te: content['TE'],
-          bedNumber: 4);
+    var now = new DateTime.now();
+    final f = new DateFormat.Hms();
+    String formattedDate = f.format(now);
 
-      var now = new DateTime.now();
-      final f = new DateFormat.Hm();
-      String formattedDate = f.format(now);
-      //DateFormat tempDate = DateFormat.Hm(now);
-      print("AAAAAAA $formattedDate ");
+    BedDataDetails data = BedDataDetails(
+        fc: content['FC'],
+        fr: content['FR'],
+        so: content['SO'],
+        te: content['TE'],
+        bedNumber: int.parse(bedId),
+        dateDetails: formattedDate);
 
-      BedDataDetails data2 = BedDataDetails(
-          fc: content['FC'],
-          fr: content['FR'],
-          so: content['SO'],
-          te: content['TE'],
-          bedNumber: 4,
-          dateDetails: formattedDate);
+    BedProvider bedProvider =
+        Provider.of<BedProvider>(contextProvider, listen: false);
 
-      BedProvider bedProvider =
-          Provider.of<BedProvider>(contextProvider, listen: false);
-      var index = bedProvider.searchBedNumberInList(data1.bedNumber);
-      if (index != -1) {
-        bedProvider.removeBedInfo(index);
-        bedProvider.addBedAtIndex(index, data1);
-      } else {
-        bedProvider.addBedInfo(data1);
-      }
-
-      // "HH:mm:ss"
-
-      bedProvider.addBedInfoHistory(data2);
-    }
-
-    if (bedId == "5") {
-      print("Entrou no if - 5");
-      BedData data1 = BedData(
-          fc: content['FC'],
-          fr: content['FR'],
-          so: content['SO'],
-          te: content['TE'],
-          bedNumber: 5);
-
-      BedProvider bedProvider =
-          Provider.of<BedProvider>(contextProvider, listen: false);
-      var index = bedProvider.searchBedNumberInList(data1.bedNumber);
-      if (index != -1) {
-        bedProvider.removeBedInfo(index);
-        bedProvider.addBedAtIndex(index, data1);
-      } else {
-        bedProvider.addBedInfo(data1);
-      }
-    }
+    bedProvider.addToDataList(bedId, data);
   }
 
   void recv_alarm_new(contentPayload, subTopics) {

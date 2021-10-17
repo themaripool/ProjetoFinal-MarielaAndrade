@@ -7,7 +7,7 @@ import 'package:projeto_final_1/Components/LevelComponent.dart';
 var bedSeverityColor;
 var bedSeverityStatus;
 
-void checkInpatientStatus(BedData bedInfo) {
+void checkInpatientStatus(BedDataDetails bedInfo) {
   if (bedInfo.fr <= 8 || 
       bedInfo.fr >= 25 || 
       bedInfo.so >= 91 || 
@@ -50,7 +50,7 @@ void checkInpatientStatus(BedData bedInfo) {
 }
 
 class BedComponentList extends StatefulWidget {
- final BedData bedInfo;
+ final BedDataDetails bedInfo;
 
   BedComponentList(
        {this.bedInfo});
@@ -61,7 +61,7 @@ class BedComponentList extends StatefulWidget {
 }
 
 class _BedComponentListState extends State<BedComponentList> {
-  final BedData bedInfo;
+  final BedDataDetails bedInfo;
 
   _BedComponentListState(
       this.bedInfo);
