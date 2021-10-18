@@ -172,13 +172,17 @@ class MQTTManager {
           recv_alarm_new(contentPayload, subTopics);
         } else if (c[0].topic.contains(TOPIC_302)) {
           print("---- RECONHECEU ALARME -----");
+        } else if (c[0].topic.contains(TOPIC_303)) {
+          print("---- CANCELOU ALARME -----");
+          recv_alarm_cancel(contentPayload, subTopics);
         }
       }
     });
   }
 
   void app_request_logout() {
-    BedProvider bedProvider = Provider.of<BedProvider>(contextProvider, listen: false);
+    BedProvider bedProvider =
+        Provider.of<BedProvider>(contextProvider, listen: false);
     bedProvider.eraseLists();
     _client.disconnect();
   }
@@ -286,6 +290,20 @@ class MQTTManager {
     bedProvider.addToDataList(bedId, data);
   }
 
+  void recv_alarm_cancel(content, subTopics) {
+    print(
+        "------------------------ ALARM CANCELLED --------------------------");
+    print("aaaa - content - $content");
+    print("aaaa - subtopics - $subTopics");
+    String clinicalStatus = subTopics.removeLast();
+    String patientId = subTopics.removeLast();
+
+    String bedId = '0';
+    String sectorId = '3';
+
+    _sendMessage(clinicalStatus, patientId, bedId, sectorId, true);
+  }
+
   void recv_alarm_new(contentPayload, subTopics) {
     print("------------------------ ALARM NEW --------------------------");
 
@@ -304,11 +322,11 @@ class MQTTManager {
         context: contextNavigation,
         builder: (context) => AlertDialogPatient(bedId, content));
 
-    _sendMessage(clinicalStatus, patientId, bedId, sectorId);
+    _sendMessage(clinicalStatus, patientId, bedId, sectorId, false);
   }
 
-  void _sendMessage(
-      String clinicalStatus, String patientId, String bedId, String sectorId) {
+  void _sendMessage(String clinicalStatus, String patientId, String bedId,
+      String sectorId, bool isCancelled) {
     var now = new DateTime.now();
 
     var diaEMes = DateFormat.yMd();
@@ -318,7 +336,7 @@ class MQTTManager {
     String formattedDateHora = f.format(now);
 
     final alert = AlertModel(clinicalStatus, patientId, bedId, sectorId,
-        formattedDiaEMes, formattedDateHora);
+        formattedDiaEMes, formattedDateHora, isCancelled);
     alarmsDao.saveMessage(alert);
   }
 
