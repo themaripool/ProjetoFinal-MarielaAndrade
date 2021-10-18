@@ -49,25 +49,13 @@ void checkInpatientStatus(BedDataDetails bedInfo) {
   }
 }
 
-class BedComponentList extends StatefulWidget {
+class BedComponentList extends StatelessWidget {
  final BedDataDetails bedInfo;
 
-  BedComponentList(
-       {this.bedInfo});
+  BedComponentList({this.bedInfo});
 
   @override
-  _BedComponentListState createState() => _BedComponentListState(
-      this.bedInfo);
-}
-
-class _BedComponentListState extends State<BedComponentList> {
-  final BedDataDetails bedInfo;
-
-  _BedComponentListState(
-      this.bedInfo);
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     checkInpatientStatus(bedInfo);
     return Container(
       height: 100.0,
@@ -93,7 +81,7 @@ class _BedComponentListState extends State<BedComponentList> {
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Colors.black)),
-                  Text("${bedInfo.fc} bpm",
+                  Text(bedInfo.fc.toString(),
                       style: TextStyle(fontSize: 14, color: Colors.black)),
                   Spacer(),
                   Text("SaO2: ",
@@ -101,7 +89,7 @@ class _BedComponentListState extends State<BedComponentList> {
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Colors.black)),
-                  Text("${bedInfo.so} %",
+                  Text(bedInfo.so.toString(),
                       style: TextStyle(fontSize: 14, color: Colors.black)),
                   Spacer(),
                   Text("Temp: ",
@@ -109,7 +97,7 @@ class _BedComponentListState extends State<BedComponentList> {
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Colors.black)),
-                  Text("${bedInfo.te} C",
+                  Text(bedInfo.te.toString(),
                       style: TextStyle(fontSize: 14, color: Colors.black)),
                   Spacer(),
                   Text("FR: ",
@@ -117,7 +105,7 @@ class _BedComponentListState extends State<BedComponentList> {
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Colors.black)),
-                  Text("${bedInfo.fr} pm",
+                  Text(bedInfo.fr.toString(),
                       style: TextStyle(fontSize: 14, color: Colors.black)),
                 ],
               ),
@@ -139,3 +127,4 @@ class _BedComponentListState extends State<BedComponentList> {
     );
   }
 }
+

@@ -21,7 +21,6 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-
     if (status == true) {
       container = GridListView();
     } else if (status == false) {
@@ -126,7 +125,8 @@ class _GridListViewState extends State<GridListView> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute( builder: (context) => BedDetails(bedId[index])),
+                      MaterialPageRoute(
+                          builder: (context) => BedDetails(bedId[index])),
                     );
                   },
                   child: BedComponent(
@@ -151,26 +151,25 @@ class _ListViewPatientsState extends State<ListViewPatients> {
   @override
   Widget build(BuildContext context) {
     return Consumer<BedProvider>(
-      builder: (__, model, _) {
-        return ListView.separated(
-          itemCount: model.holder.length,
-          separatorBuilder: (BuildContext context, int index) => const Divider(
-            color: Colors.black,
-          ),
-          itemBuilder: (BuildContext context, int index) {
-            var bedId = model.bedIds;
-            return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => BedDetails(bedId[index])),
-                  );
-                },
-                child: BedComponentList(bedInfo: model.holder[bedId[index]].last));
-          },
-        );
+        builder: (__, model, _) {
+          return ListView.separated(
+      itemCount: model.holder.length,
+      separatorBuilder: (BuildContext context, int index) => const Divider(
+        color: Colors.black,
+      ),
+      itemBuilder: (BuildContext context, int index) {
+        var bedId = model.bedIds;
+        return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => BedDetails(bedId[index])),
+              );
+            },
+            child: BedComponentList(bedInfo: model.holder[bedId[index]].last));
       },
-    );
+    );;
+        });
   }
 }
