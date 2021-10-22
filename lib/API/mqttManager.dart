@@ -47,7 +47,7 @@ var appHistory = TOPIC_604 + '2'; //"SmartAlarm/Client/Application/History"
 GLOBAIS
 ===================================================== */
 
-String broker = 'ws://192.168.0.4';
+String broker = 'ws://192.168.5.178';
 int port = 9001;
 String clientIdentifier = 'SmartAlarm';
 
@@ -273,8 +273,11 @@ class MQTTManager {
     print("content = $content");
 
     var now = new DateTime.now();
+    now.toUtc();
     final f = new DateFormat.Hms();
     String formattedDate = f.format(now);
+
+    print("[DEBUG]: $formattedDate");
 
     BedDataDetails data = BedDataDetails(
         fc: content['FC'],
@@ -295,11 +298,11 @@ class MQTTManager {
         "------------------------ ALARM CANCELLED --------------------------");
     print("aaaa - content - $content");
     print("aaaa - subtopics - $subTopics");
-    String clinicalStatus = subTopics.removeLast();
-    String patientId = subTopics.removeLast();
+    String bedId = subTopics.removeLast();
+    String sectorId = subTopics.removeLast();
 
-    String bedId = '0';
-    String sectorId = '3';
+    String clinicalStatus = content['CS'];
+    String patientId = '';
 
     _sendMessage(clinicalStatus, patientId, bedId, sectorId, true);
   }
@@ -328,6 +331,7 @@ class MQTTManager {
   void _sendMessage(String clinicalStatus, String patientId, String bedId,
       String sectorId, bool isCancelled) {
     var now = new DateTime.now();
+    now.toUtc();
 
     var diaEMes = DateFormat.yMd();
     String formattedDiaEMes = diaEMes.format(now);
