@@ -3,11 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/API/BedDataList.dart';
 import 'package:projeto_final_1/Components/LevelComponent.dart';
+import 'package:projeto_final_1/Models/BedModel.dart';
 
 var bedSeverityColor;
 var bedSeverityStatus;
 
-void checkInpatientStatus(BedDataDetails bedInfo) {
+void checkInpatientStatus(BedData bedInfo) {
   if (bedInfo.fr <= 8 || 
       bedInfo.fr >= 25 || 
       bedInfo.so >= 91 || 
@@ -50,7 +51,7 @@ void checkInpatientStatus(BedDataDetails bedInfo) {
 }
 
 class BedComponentList extends StatelessWidget {
- final BedDataDetails bedInfo;
+ final BedData bedInfo;
 
   BedComponentList({this.bedInfo});
 

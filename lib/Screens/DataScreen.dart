@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:projeto_final_1/API/BedDataList.dart';
+import 'package:projeto_final_1/Models/BedModel.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -115,12 +116,12 @@ class cardWidgetGeneral extends StatelessWidget {
     this.isChecked,
   }) : super(key: key);
 
-  final LinkedList<BedDataDetails> bedInfo;
+  final LinkedList<BedData> bedInfo;
   final List<bool> isChecked;
 
   @override
   Widget build(BuildContext context) {
-    List<BedDataDetails> graphInfo = List.from(bedInfo);
+    List<BedData> graphInfo = List.from(bedInfo);
 
     return Container(
         height: 250,
@@ -139,25 +140,25 @@ class cardWidgetGeneral extends StatelessWidget {
                   labelPosition: ChartDataLabelPosition.outside,
                   tickPosition: TickPosition.inside),
               series: <ChartSeries>[
-                StepLineSeries<BedDataDetails, String>(
+                StepLineSeries<BedData, String>(
                     dataSource: graphInfo,
-                    xValueMapper: (BedDataDetails data, _) => data.dateDetails,
-                    yValueMapper: (BedDataDetails data, _) =>
+                    xValueMapper: (BedData data, _) => data.dateDetails,
+                    yValueMapper: (BedData data, _) =>
                         isChecked[0] == true ? data.so : null),
-                StepLineSeries<BedDataDetails, String>(
+                StepLineSeries<BedData, String>(
                     dataSource: graphInfo,
-                    xValueMapper: (BedDataDetails data, _) => data.dateDetails,
-                    yValueMapper: (BedDataDetails data, _) =>
+                    xValueMapper: (BedData data, _) => data.dateDetails,
+                    yValueMapper: (BedData data, _) =>
                         isChecked[1] == true ? data.te : null),
-                StepLineSeries<BedDataDetails, String>(
+                StepLineSeries<BedData, String>(
                     dataSource: graphInfo,
-                    xValueMapper: (BedDataDetails data, _) => data.dateDetails,
-                    yValueMapper: (BedDataDetails data, _) =>
+                    xValueMapper: (BedData data, _) => data.dateDetails,
+                    yValueMapper: (BedData data, _) =>
                         isChecked[2] == true ? data.fc : null),
-                StepLineSeries<BedDataDetails, String>(
+                StepLineSeries<BedData, String>(
                     dataSource: graphInfo,
-                    xValueMapper: (BedDataDetails data, _) => data.dateDetails,
-                    yValueMapper: (BedDataDetails data, _) =>
+                    xValueMapper: (BedData data, _) => data.dateDetails,
+                    yValueMapper: (BedData data, _) =>
                         isChecked[3] == true ? data.fr : null)
               ]),
         ));

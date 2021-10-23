@@ -1,25 +1,14 @@
 import 'dart:collection';
 import 'package:flutter/material.dart';
-
-class BedDataDetails extends LinkedListEntry<BedDataDetails> {
-  int fc;
-  int fr;
-  int so;
-  double te;
-  int bedNumber;
-  String dateDetails;
-
-  BedDataDetails(
-      {this.fc, this.fr, this.so, this.te, this.bedNumber, this.dateDetails});
-}
+import 'package:projeto_final_1/Models/BedModel.dart';
 
 class BedProvider extends ChangeNotifier {
-  Map<String, LinkedList<BedDataDetails>> holder = {};
+  Map<String, LinkedList<BedData>> holder = {};
   var bedIds = [];
 
-  void addToDataList(String bedId, BedDataDetails bedData) {
+  void addToDataList(String bedId, BedData bedData) {
     if (holder.containsKey(bedId) == false) {
-      holder[bedId] = LinkedList<BedDataDetails>();
+      holder[bedId] = LinkedList<BedData>();
       bedIds.add(bedId);
     }
     holder[bedId].add(bedData);
@@ -29,7 +18,7 @@ class BedProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  BedDataDetails dashboardData(String bedId) {
+  BedData dashboardData(String bedId) {
     return holder[bedId].last;
   }
 

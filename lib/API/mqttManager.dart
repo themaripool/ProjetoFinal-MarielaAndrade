@@ -1,8 +1,6 @@
-import 'dart:collection';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mqtt_client/mqtt_client.dart';
@@ -11,7 +9,8 @@ import 'package:projeto_final_1/API/BedDataList.dart';
 import 'package:projeto_final_1/Components/AlertDialogPatient.dart';
 import 'package:projeto_final_1/Components/ErrorLoginAlertDialog.dart';
 import 'package:projeto_final_1/Data/alarmsDAO.dart';
-import 'package:projeto_final_1/Data/alarms.dart';
+import 'package:projeto_final_1/Models/AlertModel.dart';
+import 'package:projeto_final_1/Models/BedModel.dart';
 import 'package:projeto_final_1/Screens/Home.dart';
 import 'package:provider/provider.dart';
 import 'package:typed_data/typed_data.dart';
@@ -280,7 +279,7 @@ class MQTTManager {
 
     print("[DEBUG]: $formattedDate");
 
-    BedDataDetails data = BedDataDetails(
+    BedData data = BedData(
         fc: content['FC'],
         fr: content['FR'],
         so: content['SO'],
@@ -340,7 +339,7 @@ class MQTTManager {
     final f = new DateFormat.Hm();
     String formattedDateHora = f.format(now);
 
-    final alert = AlertModel(clinicalStatus, patientId, bedId, sectorId,
+    final alert = Alert(clinicalStatus, patientId, bedId, sectorId,
         formattedDiaEMes, formattedDateHora, isCancelled);
     alarmsDao.saveMessage(alert);
   }

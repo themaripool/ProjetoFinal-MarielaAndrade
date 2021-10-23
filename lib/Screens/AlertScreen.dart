@@ -1,7 +1,7 @@
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/Data/alarms.dart';
 import 'package:projeto_final_1/Data/alarmsDAO.dart';
+import 'package:projeto_final_1/Models/AlertModel.dart';
 
 class AlertScreen extends StatefulWidget {
   final String bedNumber;
@@ -22,7 +22,7 @@ class _AlertScreenState extends State<AlertScreen> {
       query: AlarmsDao().getAlarmsByBedQuery(bedNumber),
       itemBuilder: (context, snapshot, animation, index) {
         final json = snapshot.value as Map<dynamic, dynamic>;
-        final alert = AlertModel.fromJson(json);
+        final alert = Alert.fromJson(json);
         return AlertComponentList(alert.dateAndMonth, alert.hourAndMinute,
               alert.clinicalStatus, alert.bedId);
       },

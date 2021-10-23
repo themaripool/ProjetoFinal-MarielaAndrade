@@ -1,4 +1,5 @@
-class AlertModel {
+
+class Alert {
   String clinicalStatus;
   String patientId;
   String bedId;
@@ -7,10 +8,10 @@ class AlertModel {
   String hourAndMinute;
   bool isCancelled;
 
-  AlertModel(this.clinicalStatus, this.patientId, this.bedId, this.sectorId,
+  Alert(this.clinicalStatus, this.patientId, this.bedId, this.sectorId,
       this.dateAndMonth, this.hourAndMinute, this.isCancelled);
 
-  AlertModel.fromJson(Map<dynamic, dynamic> json)
+  Alert.fromJson(Map<dynamic, dynamic> json)
       : clinicalStatus = json['clinicalStatus'] as String,
         patientId = json['patientId'] as String,
         bedId = json['bedId'] as String,

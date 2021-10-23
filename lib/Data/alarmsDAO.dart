@@ -1,11 +1,11 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'alarms.dart';
+import '../Models/AlertModel.dart';
 
 class AlarmsDao {
   final DatabaseReference _alarmRef =
       FirebaseDatabase.instance.reference().child('alarms');
 
-  void saveMessage(AlertModel message) {
+  void saveMessage(Alert message) {
     _alarmRef.push().set(message.toJson());
   }
 
