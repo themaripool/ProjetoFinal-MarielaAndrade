@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:projeto_final_1/API/BedDataList.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -13,13 +14,6 @@ class DataScreen extends StatefulWidget {
   _DataScreenState createState() => _DataScreenState(this.bedId);
 }
 
-/*   Consumer<BedProvider>(builder: (__, model, _) {
-                return cardWidgetGeneral(
-                  bedInfo: bedInfo,
-                  isChecked: isChecked,
-                );
-              }) */
-
 class _DataScreenState extends State<DataScreen> {
   String bedId;
   List<bool> isChecked = List.generate(4, (index) => false);
@@ -31,114 +25,82 @@ class _DataScreenState extends State<DataScreen> {
       child: Consumer<BedProvider>(builder: (__, model, _) {
         return Column(
           children: [
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 10, left: 10),
-                  child: Row(
-                    children: [
-                      Image.asset('assets/images/respiratoryFreq.png',
-                          height: 35, width: 35),
-                      Checkbox(
-                        value: isChecked[0],
-                        onChanged: (val) {
-                          setState(
-                            () {
-                              isChecked[0] = val;
-                            },
-                          );
+            Padding(
+              padding: const EdgeInsets.only(right: 10, left: 10),
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: isChecked[0],
+                    onChanged: (val) {
+                      setState(
+                        () {
+                          isChecked[0] = val;
                         },
-                      ),
-                      Text("Oxigênio: ${model.holder[bedId].last.so} %")
-                    ],
+                      );
+                    },
                   ),
-                ),
-              ],
+                  Text("Oxigênio: ${model.holder[bedId].last.so} %")
+                ],
+              ),
             ),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 10, left: 10),
-                  child: Row(
-                    children: [
-                      Image.asset('assets/images/temperature.png',
-                          height: 35, width: 35),
-                      Checkbox(
-                        value: isChecked[1],
-                        onChanged: (val) {
-                          setState(
-                            () {
-                              isChecked[1] = val;
-                            },
-                          );
+            Padding(
+              padding: const EdgeInsets.only(right: 10, left: 10),
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: isChecked[1],
+                    onChanged: (val) {
+                      setState(
+                        () {
+                          isChecked[1] = val;
                         },
-                      ),
-                      Text("Temperatura: ${model.holder[bedId].last.te} C")
-                    ],
+                      );
+                    },
                   ),
-                ),
-              ],
+                  Text("Temperatura: ${model.holder[bedId].last.te} C")
+                ],
+              ),
             ),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 10, left: 10),
-                  child: Row(
-                    children: [
-                      Image.asset('assets/images/pulse.png',
-                          height: 35, width: 35),
-                      Checkbox(
-                        value: isChecked[2],
-                        onChanged: (val) {
-                          setState(
-                            () {
-                              isChecked[2] = val;
-                            },
-                          );
+            Padding(
+              padding: const EdgeInsets.only(right: 10, left: 10),
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: isChecked[2],
+                    onChanged: (val) {
+                      setState(
+                        () {
+                          isChecked[2] = val;
                         },
-                      ),
-                      Text("Pulso: ${model.holder[bedId].last.fc} bpm")
-                    ],
+                      );
+                    },
                   ),
-                ),
-              ],
+                  Text("Pulso: ${model.holder[bedId].last.fc} bpm")
+                ],
+              ),
             ),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 10, left: 10),
-                  child: Row(
-                    children: [
-                      Image.asset('assets/images/respiratoryFreq.png',
-                          height: 35, width: 35),
-                      Checkbox(
-                        value: isChecked[3],
-                        onChanged: (val) {
-                          setState(
-                            () {
-                              isChecked[3] = val;
-                            },
-                          );
+            Padding(
+              padding: const EdgeInsets.only(right: 10, left: 10),
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: isChecked[3],
+                    onChanged: (val) {
+                      setState(
+                        () {
+                          isChecked[3] = val;
                         },
-                      ),
-                      Text(
-                          "Frequência respiratória: ${model.holder[bedId].last.fr} pm")
-                    ],
+                      );
+                    },
                   ),
-                ),
-                cardWidgetGeneral(
-                  bedInfo: model.holder[bedId],
-                  isChecked: isChecked,
-                ),
-
-                /*   Consumer<BedProvider>(builder: (__, model, _) {
-                return cardWidgetGeneral(
-                  bedInfo: bedInfo,
-                  isChecked: isChecked,
-                );
-              }) */
-              ],
-            )
+                  Text("Frequência respiratória: ${model.holder[bedId].last.fr} pm")
+                ],
+              ),
+            ),
+            cardWidgetGeneral(
+              bedInfo: model.holder[bedId],
+              isChecked: isChecked,
+            ),
           ],
         );
       }),
@@ -180,19 +142,23 @@ class cardWidgetGeneral extends StatelessWidget {
                 StepLineSeries<BedDataDetails, String>(
                     dataSource: graphInfo,
                     xValueMapper: (BedDataDetails data, _) => data.dateDetails,
-                    yValueMapper: (BedDataDetails data, _) => isChecked[0] == true ? data.so : null),
+                    yValueMapper: (BedDataDetails data, _) =>
+                        isChecked[0] == true ? data.so : null),
                 StepLineSeries<BedDataDetails, String>(
                     dataSource: graphInfo,
                     xValueMapper: (BedDataDetails data, _) => data.dateDetails,
-                    yValueMapper: (BedDataDetails data, _) => isChecked[1] == true ? data.te : null),
+                    yValueMapper: (BedDataDetails data, _) =>
+                        isChecked[1] == true ? data.te : null),
                 StepLineSeries<BedDataDetails, String>(
                     dataSource: graphInfo,
                     xValueMapper: (BedDataDetails data, _) => data.dateDetails,
-                    yValueMapper: (BedDataDetails data, _) => isChecked[2] == true ? data.fc : null),
+                    yValueMapper: (BedDataDetails data, _) =>
+                        isChecked[2] == true ? data.fc : null),
                 StepLineSeries<BedDataDetails, String>(
                     dataSource: graphInfo,
                     xValueMapper: (BedDataDetails data, _) => data.dateDetails,
-                    yValueMapper: (BedDataDetails data, _) => isChecked[3] == true ? data.fr : null)
+                    yValueMapper: (BedDataDetails data, _) =>
+                        isChecked[3] == true ? data.fr : null)
               ]),
         ));
   }

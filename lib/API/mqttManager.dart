@@ -47,7 +47,8 @@ var appHistory = TOPIC_604 + '2'; //"SmartAlarm/Client/Application/History"
 GLOBAIS
 ===================================================== */
 
-String broker = 'ws://192.168.5.178';
+//String broker = 'ws://192.168.5.178'; //macos
+String broker = 'ws://192.168.0.3'; //windows //192.168.0.3
 int port = 9001;
 String clientIdentifier = 'SmartAlarm';
 
