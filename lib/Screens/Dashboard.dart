@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:projeto_final_1/API/BedDataList.dart';
-import 'package:projeto_final_1/API/mqttManager.dart';
-import 'package:projeto_final_1/Components/AlertDialogPatient.dart';
 import 'package:projeto_final_1/Components/BedComponent.dart';
 import 'package:projeto_final_1/Components/BedComponentList.dart';
 import 'package:projeto_final_1/Screens/BedDetails.dart';

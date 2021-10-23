@@ -302,7 +302,7 @@ class MQTTManager {
     String bedId = subTopics.removeLast();
     String sectorId = subTopics.removeLast();
 
-    String clinicalStatus = content['CS'];
+    String clinicalStatus = content['CS'].toString();
     String patientId = '';
 
     _sendMessage(clinicalStatus, patientId, bedId, sectorId, true);
