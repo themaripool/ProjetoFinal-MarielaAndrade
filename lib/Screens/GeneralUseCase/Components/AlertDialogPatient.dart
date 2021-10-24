@@ -3,25 +3,40 @@ import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Screens/MedicalTeamUseCase/Pages/BedDetails.dart';
 import 'package:projeto_final_1/Data/mqtt/mqttManager.dart';
 
-class AlertDialogPatient extends StatefulWidget {
-  final String bedId;
-  final dynamic content;
-
-  AlertDialogPatient(this.bedId, this.content);
-
-  @override
-  _AlertDialogPatientState createState() =>
-      _AlertDialogPatientState(this.bedId, this.content);
-}
-
+var bedSeverityStatus;
+var bedSeverityColor;
 const TWO_PI = 3.14 * 2;
 
-class _AlertDialogPatientState extends State<AlertDialogPatient> {
+void checkInpatientStatus(String clinicalStatus) {
+  if (clinicalStatus == "1") {
+    bedSeverityStatus = "CRÍTICO";
+    bedSeverityColor = Colors.red[700];
+    return;
+  } else if (clinicalStatus == "2") {
+    bedSeverityStatus = "SEVERO";
+    bedSeverityColor = Colors.yellow[700];
+    return;
+  } else if (clinicalStatus == "3") {
+    bedSeverityStatus = "PREOCUPANTE";
+    bedSeverityColor = Colors.blue[700];
+    return;
+  } else if (clinicalStatus == "4") {
+    bedSeverityStatus = "ESTÁVEL";
+    bedSeverityColor = Colors.green[700];
+    return;
+  }
+}
+
+class AlertDialogPatient extends StatelessWidget {
   final String bedId;
   final dynamic content;
-  _AlertDialogPatientState(this.bedId, this.content);
+  final String clinicalStatus;
+
+  AlertDialogPatient(this.clinicalStatus, this.bedId, this.content);
+
   @override
   Widget build(BuildContext context) {
+    checkInpatientStatus(clinicalStatus);
     return SimpleDialog(
       backgroundColor: Colors.transparent,
       children: [
@@ -31,7 +46,7 @@ class _AlertDialogPatientState extends State<AlertDialogPatient> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
             ),
-            color: Color.fromRGBO(230, 178, 47, 1.0),
+            color: bedSeverityColor,
             elevation: 10,
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -160,7 +175,7 @@ class AlertTitle extends StatelessWidget {
         children: [
           Text("LEITO $bedId",
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-          Text("Estado tem que pegar ainda", style: TextStyle(fontSize: 20))
+          Text("$bedSeverityStatus", style: TextStyle(fontSize: 20))
         ],
       ),
     );
@@ -188,10 +203,10 @@ class AlertButtons extends StatelessWidget {
               onPressed: () {
                 print("------ bed id $bedId -------");
                 return Navigator.push(
-                  context,
-                  MaterialPageRoute(
+                    context,
+                    MaterialPageRoute(
                       builder: (context) => BedDetails(bedId),
-                ));
+                    ));
               },
               child: Text("VER DADOS", style: TextStyle(color: Colors.white))),
           OutlinedButton(
@@ -260,7 +275,7 @@ class CircularGraph extends StatelessWidget {
                     height: size,
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Color.fromRGBO(216, 176, 63, 1.0)),
+                        color: bedSeverityColor),
                   ),
                 ),
                 Center(
@@ -269,7 +284,7 @@ class CircularGraph extends StatelessWidget {
                     width: size - 40,
                     height: size - 40,
                     decoration: BoxDecoration(
-                        color: Color.fromRGBO(216, 176, 63, 1.0),
+                        color: bedSeverityColor,
                         shape: BoxShape.circle),
                   ),
                 )

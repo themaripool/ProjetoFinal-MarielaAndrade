@@ -323,7 +323,7 @@ class MQTTManager {
 
     showDialog(
         context: contextNavigation,
-        builder: (context) => AlertDialogPatient(bedId, content));
+        builder: (context) => AlertDialogPatient(clinicalStatus, bedId, content));
 
     _sendMessage(clinicalStatus, patientId, bedId, sectorId, false);
   }
