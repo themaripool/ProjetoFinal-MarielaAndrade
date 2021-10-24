@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/Data/Provider/SymptomsProvider.dart';
+import 'package:projeto_final_1/Data/Data.dart';
 import 'package:projeto_final_1/Screens/InpatientUseCase/Components/InpatientRatingAlert.dart';
 import 'package:provider/provider.dart';
 

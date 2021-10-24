@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:projeto_final_1/Data/Provider/SymptomsProvider.dart';
+import 'package:projeto_final_1/Data/Data.dart';
 import 'package:projeto_final_1/Enums/InpatientSymptomsEnum.dart';
 import 'package:provider/provider.dart';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Data/Data.dart';
 import 'package:projeto_final_1/Enums/DrawerSections.dart';
 import 'package:projeto_final_1/Screens/GeneralUseCase/Components/HeaderDrawer.dart';
 import 'package:projeto_final_1/Screens/GeneralUseCase/Pages/Settings.dart';
-import 'package:projeto_final_1/Data/mqtt/mqttManager.dart';
 
 import 'Dashboard.dart';
 import 'Login.dart';

@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
-import 'package:projeto_final_1/Data/DAO/alarmsDAO.dart';
-import 'package:projeto_final_1/Data/Provider/BedProvider.dart';
 import 'package:projeto_final_1/Models/AlertModel.dart';
 import 'package:projeto_final_1/Models/BedModel.dart';
 import 'package:projeto_final_1/Screens/GeneralUseCase/Components/AlertDialogPatient.dart';
@@ -14,6 +12,7 @@ import 'package:projeto_final_1/Screens/GeneralUseCase/Components/ErrorLoginAler
 import 'package:projeto_final_1/Screens/GeneralUseCase/Pages/Home.dart';
 import 'package:provider/provider.dart';
 import 'package:typed_data/typed_data.dart';
+import '../Data.dart';
 
 /* ==================================================
 GLOBAIS

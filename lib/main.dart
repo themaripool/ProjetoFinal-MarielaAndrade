@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Screens/GeneralUseCase/Pages/Login.dart';
 import 'package:provider/provider.dart';
+import 'Data/Data.dart';
 
-import 'Data/Provider/BedProvider.dart';
-import 'Data/Provider/News2Provider.dart';
-import 'Data/Provider/SymptomsProvider.dart';
 
 void main() async {
   Provider.debugCheckInvalidValueType = null;

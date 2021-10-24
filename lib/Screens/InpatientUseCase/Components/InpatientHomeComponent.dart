@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/Data/Provider/News2Provider.dart';
+import 'package:projeto_final_1/Data/Data.dart';
 import 'package:provider/provider.dart';
 
 class InpatientHomeComponent extends StatefulWidget {
