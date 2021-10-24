@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/API/BedDataList.dart';
-import 'package:projeto_final_1/Screens/InpatientPage/Models/news2.dart';
-import 'package:projeto_final_1/Screens/InpatientPage/Models/symptoms.dart';
-import 'package:projeto_final_1/Screens/Login.dart';
+import 'package:projeto_final_1/Screens/GeneralUseCase/Pages/Login.dart';
 import 'package:provider/provider.dart';
 
-
+import 'Data/Provider/BedProvider.dart';
+import 'Data/Provider/News2Provider.dart';
+import 'Data/Provider/SymptomsProvider.dart';
 
 void main() async {
   Provider.debugCheckInvalidValueType = null;
-  runApp(
-    MultiProvider(
+  runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider<Symptoms>(create: (_) => Symptoms(-1, -1, -1, -1, -1, "")),
+      ChangeNotifierProvider<Symptoms>(
+          create: (_) => Symptoms(-1, -1, -1, -1, -1, "")),
       Provider<News2>(create: (_) => News2(32, 43, 54, 12, 32, 43)),
       ChangeNotifierProvider.value(value: BedProvider()),
     ],
@@ -36,4 +35,3 @@ class TccApp extends StatelessWidget {
     );
   }
 }
-

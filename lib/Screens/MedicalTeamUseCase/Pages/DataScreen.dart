@@ -1,8 +1,7 @@
 import 'dart:collection';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:projeto_final_1/API/BedDataList.dart';
+import 'package:projeto_final_1/Data/Provider/BedProvider.dart';
 import 'package:projeto_final_1/Models/BedModel.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -94,7 +93,8 @@ class _DataScreenState extends State<DataScreen> {
                       );
                     },
                   ),
-                  Text("Frequência respiratória: ${model.holder[bedId].last.fr} pm")
+                  Text(
+                      "Frequência respiratória: ${model.holder[bedId].last.fr} pm")
                 ],
               ),
             ),

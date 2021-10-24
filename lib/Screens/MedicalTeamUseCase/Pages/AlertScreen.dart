@@ -1,6 +1,6 @@
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/Data/alarmsDAO.dart';
+import 'package:projeto_final_1/Data/DAO/alarmsDAO.dart';
 import 'package:projeto_final_1/Models/AlertModel.dart';
 
 class AlertScreen extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/Screens/InpatientPage/Home/InpatientData.dart';
-import 'package:projeto_final_1/Screens/InpatientPage/Symptoms/InpatientSymptoms.dart';
+import 'InpatientData.dart';
+import 'InpatientSymptoms.dart';
 
 class HomePatient extends StatefulWidget {
 

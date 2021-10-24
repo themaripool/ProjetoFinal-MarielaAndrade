@@ -1,8 +1,7 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/Screens/InpatientPage/Home%20Details/InpatientDetails.dart';
-import 'package:projeto_final_1/Screens/InpatientPage/Home/InpatientHomeComponent.dart';
+import 'package:projeto_final_1/Screens/InpatientUseCase/Components/InpatientHomeComponent.dart';
+
+import 'InpatientDetails.dart';
 
 /* TELA DE HOME DO PACIENTE
 

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:projeto_final_1/API/mqttManager.dart';
-import 'package:projeto_final_1/Components/TextFieldLogin.dart';
-import 'package:projeto_final_1/Screens/InpatientPage/InpatientNavigation.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:projeto_final_1/Screens/InpatientUseCase/Pages/InpatientNavigation.dart';
+import 'package:projeto_final_1/Data/mqtt/mqttManager.dart';
+
+import '../Components/TextFieldLogin.dart';
 
 /*
   TODO:

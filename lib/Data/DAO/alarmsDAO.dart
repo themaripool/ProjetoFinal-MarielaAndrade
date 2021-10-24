@@ -1,5 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
-import '../Models/AlertModel.dart';
+import '../../Models/AlertModel.dart';
 
 class AlarmsDao {
   final DatabaseReference _alarmRef =

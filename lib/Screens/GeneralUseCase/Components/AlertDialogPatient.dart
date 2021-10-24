@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/API/mqttManager.dart';
-import 'package:projeto_final_1/Screens/BedDetails.dart';
+import 'package:projeto_final_1/Screens/MedicalTeamUseCase/Pages/BedDetails.dart';
+import 'package:projeto_final_1/Data/mqtt/mqttManager.dart';
 
 class AlertDialogPatient extends StatefulWidget {
   final String bedId;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/Screens/InpatientPage/Home/InpatientData.dart';
+import 'package:projeto_final_1/Screens/InpatientUseCase/Pages/InpatientData.dart';
 
 // ignore: must_be_immutable
 class InpatientDetails extends StatefulWidget {

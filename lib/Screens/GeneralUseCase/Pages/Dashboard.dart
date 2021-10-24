@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:projeto_final_1/API/BedDataList.dart';
-import 'package:projeto_final_1/Components/BedComponent.dart';
-import 'package:projeto_final_1/Components/BedComponentList.dart';
-import 'package:projeto_final_1/Screens/BedDetails.dart';
+import 'package:projeto_final_1/Data/Provider/BedProvider.dart';
 import 'package:provider/provider.dart';
+import '../../MedicalTeamUseCase/Components/BedComponent.dart';
+import '../../MedicalTeamUseCase/Components/BedComponentList.dart';
+import '../../MedicalTeamUseCase/Pages/BedDetails.dart';
 
 class Dashboard extends StatefulWidget {
   Dashboard({Key key}) : super(key: key);
