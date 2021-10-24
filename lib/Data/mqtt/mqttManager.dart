@@ -7,7 +7,6 @@ import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:projeto_final_1/Models/Models.dart';
 import 'package:projeto_final_1/Screens/GeneralUseCase/GeneralUseCase.dart';
-import 'package:provider/provider.dart';
 import 'package:typed_data/typed_data.dart';
 import '../Data.dart';
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
-import 'package:projeto_final_1/Screens/InpatientUseCase/Components/InpatientRatingAlert.dart';
-import 'package:provider/provider.dart';
+import '../InpatientUseCase.dart';
 
 /* TELA DE SINTOMAS DO PACIENTE
 

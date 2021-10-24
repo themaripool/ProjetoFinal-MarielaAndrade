@@ -4,3 +4,4 @@ export 'mqtt/mqttManager.dart';
 export 'Provider/BedProvider.dart';
 export 'Provider/News2Provider.dart';
 export 'Provider/SymptomsProvider.dart';
+export 'package:provider/provider.dart';

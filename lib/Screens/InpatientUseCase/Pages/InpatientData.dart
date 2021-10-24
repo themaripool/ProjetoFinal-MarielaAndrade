@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/Screens/InpatientUseCase/Components/InpatientHomeComponent.dart';
-
+import '../InpatientUseCase.dart';
 import 'InpatientDetails.dart';
 
 /* TELA DE HOME DO PACIENTE
