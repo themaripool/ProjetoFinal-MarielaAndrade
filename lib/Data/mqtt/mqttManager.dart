@@ -16,33 +16,6 @@ import 'package:provider/provider.dart';
 import 'package:typed_data/typed_data.dart';
 
 /* ==================================================
-CONSTANTES DOS TOPICOS
-===================================================== */
-String TOPIC_200 = "SmartAlarm/Data/";
-String TOPIC_301 = "SmartAlarm/Alarms/Issued/";
-String TOPIC_302 = "SmartAlarm/Alarms/Recognized/";
-String TOPIC_303 = "SmartAlarm/Alarms/Cancelled/";
-String TOPIC_401 = "SmartAlarm/Server/Application/Login/";
-String TOPIC_402 = "SmartAlarm/Server/Application/InitialData/";
-String TOPIC_601 = "SmartAlarm/Client/Application/Login/";
-String TOPIC_602 = "SmartAlarm/Client/Application/InitialData/";
-String TOPIC_604 = "SmartAlarm/Client/Application/History/";
-
-var clientInitialData =
-    TOPIC_602 + appId; //"SmartAlarm/Client/Application/InitialData/teste1"
-var serverInitialData =
-    TOPIC_402 + appId; //"SmartAlarm/Server/Application/InitialData/teste1"
-var clientLoginTopic =
-    TOPIC_601 + appId; //"SmartAlarm/Client/Application/Login/teste1";
-var serverLoginTopic =
-    TOPIC_401 + appId; //"SmartAlarm/Server/Application/Login/teste1"
-var sectorData = TOPIC_200 + '3' + '/#'; //SmartAlarm/Data/SectorId/3/#
-var alarmIssued = TOPIC_301 + '3' + '/#'; //"SmartAlarm/Alarms/Issued"/3/#
-var alarmRecognized = TOPIC_302 + '3' + '/#'; //"SmartAlarm/Alarms/Recognized"
-var alarmCancelled = TOPIC_303 + '3' + '/#'; //"SmartAlarm/Alarms/Cancelled";
-var appHistory = TOPIC_604 + '2'; //"SmartAlarm/Client/Application/History"
-
-/* ==================================================
 GLOBAIS
 ===================================================== */
 
@@ -63,7 +36,33 @@ final _client = MqttServerClient.withPort(broker, clientIdentifier, port);
 
 AlarmsDao alarmsDao;
 
+String sectorId;
+String userId;
+
 // ====================================================
+
+/* ==================================================
+CONSTANTES DOS TOPICOS
+===================================================== */
+String TOPIC_200 = "SmartAlarm/Data/";
+String TOPIC_301 = "SmartAlarm/Alarms/Issued/";
+String TOPIC_302 = "SmartAlarm/Alarms/Recognized/";
+String TOPIC_303 = "SmartAlarm/Alarms/Cancelled/";
+String TOPIC_401 = "SmartAlarm/Server/Application/Login/";
+String TOPIC_402 = "SmartAlarm/Server/Application/InitialData/";
+String TOPIC_601 = "SmartAlarm/Client/Application/Login/";
+String TOPIC_602 = "SmartAlarm/Client/Application/InitialData/";
+String TOPIC_604 = "SmartAlarm/Client/Application/History/";
+
+var clientInitialData =
+    TOPIC_602 + appId; //"SmartAlarm/Client/Application/InitialData/teste1"
+var serverInitialData =
+    TOPIC_402 + appId; //"SmartAlarm/Server/Application/InitialData/teste1"
+var clientLoginTopic =
+    TOPIC_601 + appId; //"SmartAlarm/Client/Application/Login/teste1";
+var serverLoginTopic =
+    TOPIC_401 + appId; //"SmartAlarm/Server/Application/Login/teste1"
+var appHistory = TOPIC_604 + '2'; //"SmartAlarm/Client/Application/History"
 
 class MQTTManager {
   var contentLoginRequest;
@@ -150,6 +149,9 @@ class MQTTManager {
         contentLoginRequest = content['CD'];
 
         if (contentLoginRequest == "2") {
+          userId = content['UI'].toString();
+          sectorId = content['SI'].toString();
+          print("[DEBUG]: SECTORID = $sectorId, userid= $userId");
           login_accepted();
           Navigator.push(contextNavigation,
               MaterialPageRoute(builder: (contextNavigation) {
@@ -214,9 +216,13 @@ class MQTTManager {
     _client.subscribe(clientInitialData, MqttQos.atLeastOnce);
     _client.unsubscribe(clientLoginTopic);
 
-    Map<String, dynamic> str = {'UI': 2, 'SI': 3};
+    Map<String, dynamic> str = {
+      'UI': int.parse(userId),
+      'SI': int.parse(sectorId)
+    };
 
     String json = jsonEncode(str);
+    print('EXAMPLE::publishMessage ...$str');
 
     Uint8List data = utf8.encode(json);
     Uint8Buffer dataBuffer = Uint8Buffer();
@@ -231,7 +237,10 @@ class MQTTManager {
 
     print("content = $content");
 
-    var l_bedNums = content['BN'];
+    // Get the number of beds per Sector.
+    // It is a list separated by ';' with the sector number, number of beds
+    // Example: 1,5; 2,1   (Sector 1 has 5 beds, and sector 2 has one bed)
+    var l_bedNums = content['BN']; // 3,2
 
     if (l_bedNums.contains(";")) {
       l_bedNums = l_bedNums.split(';');
@@ -244,10 +253,32 @@ class MQTTManager {
       var tmp = l_bedNums[i].split(",");
       SECTOR_NUMBEDS[tmp[0]] = tmp[1];
 
-      _client.subscribe(sectorData, MqttQos.atLeastOnce);
-      _client.subscribe(alarmIssued, MqttQos.atLeastOnce);
-      _client.subscribe(alarmRecognized, MqttQos.atLeastOnce);
-      _client.subscribe(alarmCancelled, MqttQos.atLeastOnce);
+      sectorId = tmp[0];
+
+      print("[DEBUG]: SECTORNUMBED $SECTOR_NUMBEDS");
+      print("[DEBUG]: sectorid $sectorId ${tmp[0]}");
+
+      var sectorData = TOPIC_200 + sectorId + '/#';
+      var alarmIssued = TOPIC_301 + sectorId + '/#';
+      var alarmRecognized = TOPIC_302 + sectorId + '/#';
+      var alarmCancelled = TOPIC_303 + sectorId + '/#';
+
+      _client.subscribe(
+          sectorData,
+          MqttQos
+              .atLeastOnce); //mqtt.subscribe(TOPIC_200 + "/" + MySectorId + "/#");
+      _client.subscribe(
+          alarmIssued,
+          MqttQos
+              .atLeastOnce); // mqtt.subscribe(TOPIC_301 + "/" + MySectorId + "/#");
+      _client.subscribe(
+          alarmRecognized,
+          MqttQos
+              .atLeastOnce); // mqtt.subscribe(TOPIC_302 + "/" + MySectorId + "/#");
+      _client.subscribe(
+          alarmCancelled,
+          MqttQos
+              .atLeastOnce); // mqtt.subscribe(TOPIC_303 + "/" + MySectorId + "/#");
     }
     _client.subscribe(appHistory, MqttQos.atLeastOnce);
     _client.unsubscribe(serverInitialData);
@@ -285,11 +316,15 @@ class MQTTManager {
         so: content['SO'],
         te: content['TE'],
         bedNumber: int.parse(bedId),
-        dateDetails: formattedDate);
+        dateDetails: formattedDate,
+        sector: sectorId);
+
+    print("[DEBUG]: BED DATA ${data.sector}");
 
     BedProvider bedProvider =
         Provider.of<BedProvider>(contextProvider, listen: false);
 
+    bedProvider.addToSectorMap(bedId, sectorId);
     bedProvider.addToDataList(bedId, data);
   }
 
@@ -323,7 +358,8 @@ class MQTTManager {
 
     showDialog(
         context: contextNavigation,
-        builder: (context) => AlertDialogPatient(clinicalStatus, bedId, content));
+        builder: (context) =>
+            AlertDialogPatient(clinicalStatus, bedId, content));
 
     _sendMessage(clinicalStatus, patientId, bedId, sectorId, false);
   }
@@ -364,7 +400,7 @@ class MQTTManager {
 
     var RECOGNIZED_TOPIC = TOPIC_302 + '3' + "/" + id;
 
-    print("-------- topic aaaaa $RECOGNIZED_TOPIC e $alarmRecognized");
+    print("-------- topic aaaaa $RECOGNIZED_TOPIC");
 
     _client.publishMessage(RECOGNIZED_TOPIC, MqttQos.atLeastOnce, dataBuffer);
   }

@@ -1,4 +1,3 @@
-
 import 'dart:collection';
 
 class BedData extends LinkedListEntry<BedData> {
@@ -7,8 +6,9 @@ class BedData extends LinkedListEntry<BedData> {
   int so;
   double te;
   int bedNumber;
+  String sector;
   String dateDetails;
 
   BedData(
-      {this.fc, this.fr, this.so, this.te, this.bedNumber, this.dateDetails});
+      {this.fc, this.fr, this.so, this.te, this.bedNumber, this.dateDetails, this.sector});
 }
