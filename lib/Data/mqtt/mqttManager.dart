@@ -306,9 +306,9 @@ class MQTTManager {
     var now = new DateTime.now();
     now.toUtc();
     final f = new DateFormat.Hms();
-    String formattedDate = f.format(now);
+    String formattedDate = f.format(now.subtract(Duration(hours: 3)));
 
-    print("[DEBUG]: $formattedDate");
+    print("[DEBUG]: aAA $formattedDate ${now.timeZoneName}");
 
     BedData data = BedData(
         fc: content['FC'],
@@ -373,7 +373,7 @@ class MQTTManager {
     String formattedDiaEMes = diaEMes.format(now);
 
     final f = new DateFormat.Hm();
-    String formattedDateHora = f.format(now);
+    String formattedDateHora = f.format(now.subtract(Duration(hours: 3)));
 
     final alert = Alert(clinicalStatus, patientId, bedId, sectorId,
         formattedDiaEMes, formattedDateHora, isCancelled);
