@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
 import 'package:projeto_final_1/Enums/Enums.dart';
-import 'package:projeto_final_1/Screens/GeneralUseCase/Components/HeaderDrawer.dart';
-import 'package:projeto_final_1/Screens/GeneralUseCase/Pages/Settings.dart';
 
+import '../GeneralUseCase.dart';
 import 'Dashboard.dart';
 import 'Login.dart';
 import 'Settings.dart';
