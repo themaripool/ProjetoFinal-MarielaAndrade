@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:projeto_final_1/Data/Data.dart';
-import '../../MedicalTeamUseCase/Components/BedComponent.dart';
-import '../../MedicalTeamUseCase/Components/BedComponentList.dart';
-import '../../MedicalTeamUseCase/Pages/BedDetails.dart';
+import 'package:projeto_final_1/Screens/MedicalTeamUseCase/MedicalTeamUseCase.dart';
 
 class Dashboard extends StatefulWidget {
   Dashboard({Key key}) : super(key: key);

@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
-import 'package:projeto_final_1/Screens/MedicalTeamUseCase/Components/GraphComponent.dart';
+
+import '../MedicalTeamUseCase.dart';
 
 class DataScreen extends StatefulWidget {
   final String bedId;

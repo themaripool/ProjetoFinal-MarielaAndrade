@@ -1,17 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Models/Models.dart';
-import 'package:projeto_final_1/Screens/MedicalTeamUseCase/Components/LevelComponent.dart';
 
-var bedSeverityColor;
-var bedSeverityStatus;
+import '../MedicalTeamUseCase.dart';
+
+var severityColor;
+var severityStatus;
 
 //so = oxigenio
 // fc - frequencia cardiaca == pulso
 // te = temperatura
 // fr = frequencia respiratoria
 
-void checkInpatientStatus(BedData bedInfo) {
+void checkInpatientStatusGrid(BedData bedInfo) {
   if (bedInfo.fr <= 8 || 
       bedInfo.fr >= 25 || 
       bedInfo.so >= 91 || 
@@ -19,8 +20,8 @@ void checkInpatientStatus(BedData bedInfo) {
       bedInfo.fc >= 131 || 
       bedInfo.te <= 35.0) {
 
-    bedSeverityColor = Colors.red;
-    bedSeverityStatus = "CRÍTICO";
+    severityColor = Colors.red;
+    severityStatus = "CRÍTICO";
     return;
 
   } else if (
@@ -29,8 +30,8 @@ void checkInpatientStatus(BedData bedInfo) {
       bedInfo.fc >= 111 && bedInfo.fc <= 130 ||
       bedInfo.te >= 39.1){
 
-    bedSeverityColor = Colors.yellow;
-    bedSeverityStatus = "SEVERO";
+    severityColor = Colors.yellow;
+    severityStatus = "SEVERO";
     return;
 
   }else if (bedInfo.fr >= 9 && bedInfo.fr <= 11 || 
@@ -40,14 +41,14 @@ void checkInpatientStatus(BedData bedInfo) {
             bedInfo.te >= 35.1 && bedInfo.te <= 36.0 ||
             bedInfo.te >= 38.1 && bedInfo.te <= 39.0){
 
-    bedSeverityColor = Colors.blue;
-    bedSeverityStatus = "PREOCUPANTE";
+    severityColor = Colors.blue;
+    severityStatus = "PREOCUPANTE";
     return;
 
   }else if (bedInfo.fr >= 12 && bedInfo.fr <= 20){
 
-    bedSeverityColor = Colors.green;
-    bedSeverityStatus = "ESTÁVEL";
+    severityColor = Colors.green;
+    severityStatus = "ESTÁVEL";
     return;
     
   }
@@ -62,13 +63,13 @@ class BedComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    checkInpatientStatus(bedInfo);
+    checkInpatientStatusGrid(bedInfo);
 
     return Container(
       height: 177.0,
       width: 130.0,
       decoration: BoxDecoration(
-          border: Border.all(color: bedSeverityColor, width: 4),
+          border: Border.all(color: severityColor, width: 4),
           color: Colors.grey[850]),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,11 +136,11 @@ class BedComponent extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8, left: 1),
-            child: LevelComponentWidget(bedSeverityColor),
+            child: LevelComponentWidget(severityColor),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8, left: 8),
-            child: Text(bedSeverityStatus,
+            child: Text(severityStatus,
                 style: TextStyle(fontSize: 12, color: Colors.white)),
           )
         ],

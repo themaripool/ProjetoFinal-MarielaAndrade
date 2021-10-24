@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
-import 'package:projeto_final_1/Screens/MedicalTeamUseCase/Pages/BedDetails.dart';
+import 'package:projeto_final_1/Screens/MedicalTeamUseCase/MedicalTeamUseCase.dart';
 
 var bedSeverityStatus;
 var bedSeverityColor;
