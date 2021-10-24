@@ -1,7 +1,7 @@
 
 import 'dart:collection';
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/Models/BedModel.dart';
+import 'package:projeto_final_1/Models/Models.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class cardWidgetGeneral extends StatelessWidget {

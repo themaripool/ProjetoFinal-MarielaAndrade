@@ -1,5 +1,5 @@
+import 'package:projeto_final_1/Models/Models.dart';
 import '../Data.dart';
-import '../../Models/AlertModel.dart';
 
 class AlarmsDao {
   final DatabaseReference _alarmRef =

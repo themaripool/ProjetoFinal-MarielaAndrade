@@ -1,6 +1,6 @@
 import 'dart:collection';
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/Models/BedModel.dart';
+import 'package:projeto_final_1/Models/Models.dart';
 
 class BedProvider extends ChangeNotifier {
   Map<String, LinkedList<BedData>> holder = {};

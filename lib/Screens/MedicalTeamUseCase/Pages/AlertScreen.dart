@@ -1,7 +1,7 @@
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
-import 'package:projeto_final_1/Models/AlertModel.dart';
+import 'package:projeto_final_1/Models/Models.dart';
 import '../Components/AlertComponentList.dart';
 
 class AlertScreen extends StatelessWidget {
