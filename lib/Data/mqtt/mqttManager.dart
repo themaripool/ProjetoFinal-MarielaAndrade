@@ -340,10 +340,10 @@ class MQTTManager {
     String sectorId = subTopics.removeLast();
 
     print(
-        "clinicalStatus $clinicalStatus, patientId $patientId, bedId $bedId, sectorId $sectorId ");
+        "ALARM NEW clinicalStatus $clinicalStatus, patientId $patientId, bedId $bedId, sectorId $sectorId ");
 
     var content = jsonDecode(contentPayload);
-    print("content = $content");
+    print("ALARM NEW  content = $content");
 
     showDialog(
         context: contextNavigation,

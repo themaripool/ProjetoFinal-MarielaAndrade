@@ -53,9 +53,9 @@ class AlertDialogPatient extends StatelessWidget {
               children: <Widget>[
                 AlertCloseButton(),
                 AlertTitle(bedId: bedId),
-                CircularGraph(
-                  size: 100,
-                ),
+                // CircularGraph(
+                //   size: 100,
+                // ),
                 AlertInfoLabel(
                   content: content,
                 ),
@@ -109,25 +109,25 @@ class AlertInfoDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(16.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Row(children: [
             Text("FC: ",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-            Text("${content['SO']} bpm", style: TextStyle(fontSize: 14))
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text("${content['FC']} bpm", style: TextStyle(fontSize: 18))
           ]),
           Row(children: [
             Text("Temp: ",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-            Text("${content['SO']} C", style: TextStyle(fontSize: 14))
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text("${content['TE']} C", style: TextStyle(fontSize: 18))
           ]),
-          Row(children: [
-            Text("FR: ",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-            Text("${content['SO']} pm", style: TextStyle(fontSize: 14))
-          ]),
+          // Row(children: [
+          //   Text("FR: ",
+          //       style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+          //   Text("${content['SO']} pm", style: TextStyle(fontSize: 14))
+          // ]),
         ],
       ),
     );
@@ -146,14 +146,22 @@ class AlertInfoLabel extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 16.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment:
             CrossAxisAlignment.center, //Center Row contents vertically,
         children: [
-          Text("SaO2",
+          Row(children: [
+          Text("SaO2: ",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           Text("${content['SO']}%", style: TextStyle(fontSize: 18)),
-          Icon(Icons.arrow_upward, size: 20)
+          //Icon(Icons.arrow_upward, size: 20)
+          ]),
+
+          Row(children: [
+            Text("FR: ",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text("${content['FR']} pm", style: TextStyle(fontSize: 18))
+          ]),
         ],
       ),
     );
@@ -274,8 +282,7 @@ class CircularGraph extends StatelessWidget {
                     width: size,
                     height: size,
                     decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: bedSeverityColor),
+                        shape: BoxShape.circle, color: bedSeverityColor),
                   ),
                 ),
                 Center(
@@ -284,8 +291,7 @@ class CircularGraph extends StatelessWidget {
                     width: size - 40,
                     height: size - 40,
                     decoration: BoxDecoration(
-                        color: bedSeverityColor,
-                        shape: BoxShape.circle),
+                        color: bedSeverityColor, shape: BoxShape.circle),
                   ),
                 )
               ],
