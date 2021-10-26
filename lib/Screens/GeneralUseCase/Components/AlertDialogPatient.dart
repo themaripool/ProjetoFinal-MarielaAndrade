@@ -56,6 +56,7 @@ class AlertDialogPatient extends StatelessWidget {
                 // CircularGraph(
                 //   size: 100,
                 // ),
+                Image.asset('assets/images/warningIcon.png', height: 60, width: 60),
                 AlertInfoLabel(
                   content: content,
                 ),
