@@ -4,13 +4,14 @@ import '../MedicalTeamUseCase.dart';
 
 class BedDetails extends StatelessWidget {
   final String bedId;
-  BedDetails(this.bedId);
+  final int initialIndex;
+  BedDetails(this.bedId, this.initialIndex);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         home: DefaultTabController(
       length: 2,
-      initialIndex: 0,
+      initialIndex: initialIndex != -1 ? initialIndex : 0,
       child: Scaffold(
           appBar: AppBar(
             leading: new IconButton(

@@ -205,7 +205,7 @@ class AlertButtons extends StatelessWidget {
                 return Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => BedDetails(bedId),
+                      builder: (context) => BedDetails(bedId, -1),
                     ));
               },
               child: Text("VER DADOS", style: TextStyle(color: Colors.white))),
