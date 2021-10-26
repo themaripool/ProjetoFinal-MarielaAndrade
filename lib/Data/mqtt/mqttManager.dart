@@ -345,6 +345,8 @@ class MQTTManager {
     var content = jsonDecode(contentPayload);
     print("ALARM NEW  content = $content");
 
+    NotificationApi.showNotification(title: 'Alerta! Leito $bedId', body: 'FC = ${content['FC']} bpm  FR = ${content['FR']} pm  TE: ${content['TE']} C  SO: ${content['SO']} %', payload: 'sarah.abs');
+
     showDialog(
         context: contextNavigation,
         builder: (context) =>
