@@ -17,4 +17,9 @@ class AlarmsDao {
     print("------- QUERY BED NUMBER $bedId -------");
     return _alarmRef.orderByChild("bedId").equalTo(bedId);
   }
+
+  Query getAllAlarms() {
+    print("------- QUERY ALL BEDS ALAMS -------");
+    return _alarmRef.orderByChild("bedId");
+  }
 }

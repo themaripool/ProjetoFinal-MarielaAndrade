@@ -39,6 +39,7 @@ class BedDetails extends StatelessWidget {
               ),
               AlertScreen(
                 bedNumber: bedId,
+                isAllAlarms: false,
               )
             ],
           )),

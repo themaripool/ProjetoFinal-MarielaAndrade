@@ -38,12 +38,10 @@ class _DashboardState extends State<Dashboard> {
                         color: Colors.black,
                       )),
                       onPressed: () {
-                        /* showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialogPatient();
-                          },
-                        ); */
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return DashboardAlermView();
+                        }));
                       },
                       child: const Text(
                         'Alarmes',
@@ -97,6 +95,29 @@ class _DashboardState extends State<Dashboard> {
   }
 }
 
+class DashboardAlermView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(primaryColor: Color.fromRGBO(236, 234, 234, 1.0)),
+      home: Scaffold(
+        appBar: AppBar(
+          leading: new IconButton(
+          icon: new Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text("Alarmes enfermaria 1"),
+        centerTitle: true,
+        ),
+        body: AlertScreen(
+          bedNumber: "0",
+          isAllAlarms: true,
+        ),
+      ),
+    );
+  }
+}
+
 class GridListView extends StatefulWidget {
   GridListView({Key key}) : super(key: key);
 
@@ -145,26 +166,26 @@ class ListViewPatients extends StatefulWidget {
 class _ListViewPatientsState extends State<ListViewPatients> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<BedProvider>(
-        builder: (__, model, _) {
-          return ListView.separated(
-      itemCount: model.holder.length,
-      separatorBuilder: (BuildContext context, int index) => const Divider(
-        color: Colors.black,
-      ),
-      itemBuilder: (BuildContext context, int index) {
-        var bedId = model.bedIds;
-        return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => BedDetails(bedId[index])),
-              );
-            },
-            child: BedComponentList(bedInfo: model.holder[bedId[index]].last));
-      },
-    );;
-        });
+    return Consumer<BedProvider>(builder: (__, model, _) {
+      return ListView.separated(
+        itemCount: model.holder.length,
+        separatorBuilder: (BuildContext context, int index) => const Divider(
+          color: Colors.black,
+        ),
+        itemBuilder: (BuildContext context, int index) {
+          var bedId = model.bedIds;
+          return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => BedDetails(bedId[index])),
+                );
+              },
+              child:
+                  BedComponentList(bedInfo: model.holder[bedId[index]].last));
+        },
+      );
+    });
   }
 }

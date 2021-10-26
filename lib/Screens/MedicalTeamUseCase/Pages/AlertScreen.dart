@@ -6,19 +6,32 @@ import '../Components/AlertComponentList.dart';
 
 class AlertScreen extends StatelessWidget {
   final String bedNumber;
+  final bool isAllAlarms;
 
-  const AlertScreen({Key key, this.bedNumber}) : super(key: key);
+  const AlertScreen({Key key, this.bedNumber, this.isAllAlarms})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return FirebaseAnimatedList(
-      query: AlarmsDao().getAlarmsByBedQuery(bedNumber),
-      itemBuilder: (context, snapshot, animation, index) {
-        final json = snapshot.value as Map<dynamic, dynamic>;
-        final alert = Alert.fromJson(json);
-        return AlertComponentList(alert.dateAndMonth, alert.hourAndMinute,
-            alert.clinicalStatus, alert.bedId);
-      },
-    );
+    if (isAllAlarms == true) {
+      return FirebaseAnimatedList(
+        query: AlarmsDao().getAllAlarms(),
+        itemBuilder: (context, snapshot, animation, index) {
+          final json = snapshot.value as Map<dynamic, dynamic>;
+          final alert = Alert.fromJson(json);
+          return AlertComponentList(alert.dateAndMonth, alert.hourAndMinute,
+              alert.clinicalStatus, alert.bedId);
+        },
+      );
+    } else {
+      return FirebaseAnimatedList(
+        query: AlarmsDao().getAlarmsByBedQuery(bedNumber),
+        itemBuilder: (context, snapshot, animation, index) {
+          final json = snapshot.value as Map<dynamic, dynamic>;
+          final alert = Alert.fromJson(json);
+          return AlertComponentList(alert.dateAndMonth, alert.hourAndMinute,
+              alert.clinicalStatus, alert.bedId);
+        },
+      );
+    }
   }
 }
-
