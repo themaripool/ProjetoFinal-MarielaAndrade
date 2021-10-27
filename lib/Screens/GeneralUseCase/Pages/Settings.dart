@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Settings extends StatefulWidget {
@@ -6,47 +7,101 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  bool _toggleAirplaneMode = false;
-  bool _toggleWifi = false;
-  bool _toggleBluetooth = false;
+  bool _toggleDarkMode = false;
+  bool _toggleSoundMode = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final _platform = Theme.of(context).platform;
+
+    if (_platform == TargetPlatform.iOS) {
+      return Scaffold(
       body: Column(
         children: [
-          SwitchListTile(
-            title: Text('Airplane Mode'),
-            secondary: Icon(Icons.airplanemode_active),
-            onChanged: (value) {
-              setState(() {
-                _toggleAirplaneMode = value;
-              });
-            },
-            value: _toggleAirplaneMode,
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: Icon(CupertinoIcons.moon),
+                    ),
+                    Text('Modo Escuro'),
+                  ],
+                ), 
+                CupertinoSwitch(
+                  onChanged: (value) {
+                    setState(() {
+                      _toggleDarkMode = value;
+                    });
+                  },
+                  value: _toggleDarkMode,
+                ),
+              ],
+            ),
           ),
-          SwitchListTile(
-            title: Text('Wi-Fi'),
-            secondary: Icon(Icons.wifi),
-            onChanged: (value) {
-              setState(() {
-                _toggleWifi = value;
-              });
-            },
-            value: _toggleWifi,
+
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: Icon(CupertinoIcons.speaker_2),
+                    ),
+                    Text('Som do alarme'),
+                  ],
+                ), 
+                CupertinoSwitch(
+                  onChanged: (value) {
+                    setState(() {
+                      _toggleSoundMode = value;
+                    });
+                  },
+                  value: _toggleSoundMode,
+                ),
+              ],
+            ),
           ),
-          SwitchListTile(
-            title: Text('Bluetooth'),
-            secondary: Icon(Icons.bluetooth),
-            onChanged: (value) {
-              setState(() {
-                _toggleBluetooth = value;
-              });
-            },
-            value: _toggleBluetooth,
-          )
         ],
       ),
     );
+
+    } else {
+      return Scaffold(
+      body: Column(
+        children: [
+          SwitchListTile(
+            title: Text('Modo Escuro'),
+            secondary: Icon(Icons.dark_mode),
+            onChanged: (value) {
+              setState(() {
+                _toggleDarkMode = value;
+              });
+            },
+            value: _toggleDarkMode,
+          ),
+          SwitchListTile(
+            title: Text('Som do alarme'),
+            secondary: Icon(Icons.music_note),
+            onChanged: (value) {
+              setState(() {
+                _toggleSoundMode = value;
+              });
+            },
+            value: _toggleSoundMode,
+          ),
+        ],
+      ),
+    );
+    }
   }
 }
