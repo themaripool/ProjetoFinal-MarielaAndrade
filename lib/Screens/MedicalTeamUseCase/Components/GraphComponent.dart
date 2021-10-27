@@ -19,14 +19,15 @@ class cardWidgetGeneral extends StatelessWidget {
     List<BedData> graphInfo = List.from(bedInfo);
 
     return Container(
-        height: 250,
-        width: 350,
+        height: 300,
+        width: 390,
         child: Card(
           elevation: 10,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          color: Colors.white,
+          // shape: RoundedRectangleBorder(
+
+          //   borderRadius: BorderRadius.circular(15.0),
+          // ),
+          color: Colors.grey[300],
           child: SfCartesianChart(
               backgroundColor: Colors.transparent,
               margin: EdgeInsets.fromLTRB(24, 24, 24, 24),

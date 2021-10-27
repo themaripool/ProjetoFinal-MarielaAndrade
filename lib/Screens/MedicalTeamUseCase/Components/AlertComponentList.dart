@@ -12,7 +12,6 @@ class AlertComponentList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 50.0,
-      decoration: BoxDecoration(color: Colors.grey[400]),
       child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Row(

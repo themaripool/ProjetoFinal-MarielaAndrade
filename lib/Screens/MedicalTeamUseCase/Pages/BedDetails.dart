@@ -44,6 +44,7 @@ class _BedDetailsState extends State<BedDetails> {
         theriGroupVakue = initialIndex;
       }
       return Scaffold(
+        backgroundColor: Colors.grey[300],
         body: bodies[theriGroupVakue],
         appBar: AppBar(
           elevation: 2.0,
@@ -64,6 +65,8 @@ class _BedDetailsState extends State<BedDetails> {
                   ),
                   Expanded(
                     child: CupertinoSegmentedControl(
+                      borderColor: Colors.black,
+                      selectedColor: Colors.grey[850],
                       groupValue: theriGroupVakue,
                       onValueChanged: (changeFromGroupValue) {
                         setState(() {
