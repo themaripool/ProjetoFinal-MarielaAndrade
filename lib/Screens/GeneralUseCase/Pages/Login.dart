@@ -63,10 +63,19 @@ class _LoginState extends State<Login> {
               child: Column(children: [
                 //Header da pagina
                 LoginHeader(),
-                _platform == TargetPlatform.iOS ? LoginFormCupertino(passwordCntl: _passwordCntl,userNameCntl: _userNameCntl,) 
-                                                : LoginForm(userNameCntl: _userNameCntl, passwordCntl: _passwordCntl),
+                _platform == TargetPlatform.iOS
+                    ? LoginFormCupertino(
+                        passwordCntl: _passwordCntl,
+                        userNameCntl: _userNameCntl,
+                      )
+                    : LoginForm(
+                        userNameCntl: _userNameCntl,
+                        passwordCntl: _passwordCntl),
                 LoginInpatient(),
-                LoginMedicalTeam(passwordCntl: _passwordCntl, userNameCntl: _userNameCntl,)
+                LoginMedicalTeam(
+                  passwordCntl: _passwordCntl,
+                  userNameCntl: _userNameCntl,
+                )
               ]),
             ),
           ]),
@@ -191,11 +200,9 @@ class _LoginCupertinoFormState extends State<LoginFormCupertino> {
           Padding(
             padding: const EdgeInsets.only(top: 32),
             child: CupertinoTextField(
-              controller: widget._passwordCntl,
-              keyboardType: TextInputType.number,
-              
-              placeholder: "Password"
-            ),
+                controller: widget._passwordCntl,
+                keyboardType: TextInputType.number,
+                placeholder: "Password"),
           ),
         ],
       ),
@@ -210,21 +217,33 @@ class LoginInpatient extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () => {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return HomePatient();
-        }))
-      },
-      child: Text("Login Paciente"),
-      style: ButtonStyle(
-          backgroundColor:
-              MaterialStateProperty.all<Color>(Colors.grey[850]),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(40.0),
-          ))),
-    );
+    final _platform = Theme.of(context).platform;
+    if (_platform == TargetPlatform.iOS) {
+      return CupertinoButton(
+        child: Text("Login Paciente"),
+        color: CupertinoColors.systemGrey,
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return HomePatient();
+          }));
+        },
+      );
+    } else {
+      return ElevatedButton(
+        onPressed: () => {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return HomePatient();
+          }))
+        },
+        child: Text("Login Paciente"),
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.grey[850]),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(40.0),
+            ))),
+      );
+    }
   }
 }
 
@@ -233,7 +252,7 @@ class LoginMedicalTeam extends StatelessWidget {
     Key key,
     @required TextEditingController userNameCntl,
     @required TextEditingController passwordCntl,
-  }) :  _userNameCntl = userNameCntl,
+  })  : _userNameCntl = userNameCntl,
         _passwordCntl = passwordCntl,
         super(key: key);
 
@@ -242,25 +261,39 @@ class LoginMedicalTeam extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 16.0),
-      child: ElevatedButton(
-        onPressed: () => {
-          MQTTManager().initializeMQTTClient(_userNameCntl.text,
-              _passwordCntl.text, context),
-          MQTTManager().connect(),
-        },
-        child: Text("Login"),
-        style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.all<Color>(Colors.grey[850]),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(40.0),
-            ))),
-      ),
-    );
+    final _platform = Theme.of(context).platform;
+    if (_platform == TargetPlatform.iOS) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 16),
+        child: CupertinoButton(
+          child: Text("Login Médico"),
+          color: CupertinoColors.systemGrey,
+          onPressed: () {
+            MQTTManager().initializeMQTTClient(
+                _userNameCntl.text, _passwordCntl.text, context);
+            MQTTManager().connect();
+          },
+        ),
+      );
+    } else {
+      return Padding(
+        padding: const EdgeInsets.only(top: 16.0),
+        child: ElevatedButton(
+          onPressed: () => {
+            MQTTManager().initializeMQTTClient(
+                _userNameCntl.text, _passwordCntl.text, context),
+            MQTTManager().connect(),
+          },
+          child: Text("Login"),
+          style: ButtonStyle(
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(Colors.grey[850]),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(40.0),
+              ))),
+        ),
+      );
+    }
   }
 }
-
-
