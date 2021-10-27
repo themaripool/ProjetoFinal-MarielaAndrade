@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
 import 'package:projeto_final_1/Enums/Enums.dart';
@@ -29,8 +30,16 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final _platform = Theme.of(context).platform;
+    var _currentTab = 0;
+
     var container;
     var title;
+
+    List<Widget> _tabs = [
+      Dashboard(), // see the HomeTab class below
+      Settings() // see the SettingsTab class below
+    ];
 
     if (currentPage == DrawerSections.dashboard) {
       container = Dashboard();
@@ -40,12 +49,11 @@ class _HomePageState extends State<HomePage> {
       title = Text("AJUSTES");
     }
 
-    return Scaffold(
-        appBar: AppBar(
-          title: title,
-          centerTitle: true,
-          actions: [
-            Padding(
+    if (_platform == TargetPlatform.iOS) {
+      return Scaffold(
+        appBar: CupertinoNavigationBar(
+            middle:  _currentTab == 0 ? Text("ENFERMARIA 1") : Text("AJUSTES") ,
+            trailing: Padding(
                 padding: EdgeInsets.only(right: 20.0),
                 child: GestureDetector(
                   onTap: () {
@@ -59,93 +67,128 @@ class _HomePageState extends State<HomePage> {
                     Icons.logout,
                     size: 26.0,
                   ),
-                ))
-          ],
-        ),
-        body: container,
-        drawer: Drawer(
-            child: SingleChildScrollView(
-                child: Container(
-                    color: Colors.grey[700],
-                    child: Column(children: [
-                      HeaderDrawer(),
+                ))),
 
-                      // inicio primeiro elemento menu
+        body: CupertinoTabScaffold(
+            tabBar: CupertinoTabBar(
+              items: [
+                BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Dashboard'),
+                BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings')
+              ],
+            ),
+            tabBuilder: (BuildContext context, index) {
+              _currentTab = index;
+              return _tabs[index];
+            }),
+      );
+    } else {
+      return Scaffold(
+          appBar: AppBar(
+            title: title,
+            centerTitle: true,
+            actions: [
+              Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      MQTTManager().app_request_logout();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Login()),
+                      );
+                    },
+                    child: Icon(
+                      Icons.logout,
+                      size: 26.0,
+                    ),
+                  ))
+            ],
+          ),
+          body: container,
+          drawer: Drawer(
+              child: SingleChildScrollView(
+                  child: Container(
+                      color: Colors.grey[700],
+                      child: Column(children: [
+                        HeaderDrawer(),
 
-                      Container(
-                          child: Column(children: [
-                        Material(
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.pop(context);
-                              setState(() {
-                                currentPage = DrawerSections.dashboard;
-                              });
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.all(15.0),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Icon(
-                                      Icons.dashboard_outlined,
-                                      size: 20,
-                                      color: Colors.grey[700],
+                        // inicio primeiro elemento menu
+
+                        Container(
+                            child: Column(children: [
+                          Material(
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pop(context);
+                                setState(() {
+                                  currentPage = DrawerSections.dashboard;
+                                });
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.all(15.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Icon(
+                                        Icons.dashboard_outlined,
+                                        size: 20,
+                                        color: Colors.grey[700],
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    flex: 3,
-                                    child: Text(
-                                      "DashBoard",
-                                      style: TextStyle(color: Colors.black),
+                                    Expanded(
+                                      flex: 3,
+                                      child: Text(
+                                        "DashBoard",
+                                        style: TextStyle(color: Colors.black),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ])),
+                        ])),
 
-                      //fim 1 elemento menu
+                        //fim 1 elemento menu
 
-                      //inicio 2 elemento menu
-                      Container(
-                          child: Column(children: [
-                        Material(
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.pop(context);
-                              setState(() {
-                                currentPage = DrawerSections.settings;
-                              });
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.all(15.0),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Icon(
-                                      Icons.notifications,
-                                      size: 20,
-                                      color: Colors.grey[700],
+                        //inicio 2 elemento menu
+                        Container(
+                            child: Column(children: [
+                          Material(
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pop(context);
+                                setState(() {
+                                  currentPage = DrawerSections.settings;
+                                });
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.all(15.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Icon(
+                                        Icons.notifications,
+                                        size: 20,
+                                        color: Colors.grey[700],
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    flex: 3,
-                                    child: Text(
-                                      "Ajustes",
-                                      style: TextStyle(color: Colors.black),
+                                    Expanded(
+                                      flex: 3,
+                                      child: Text(
+                                        "Ajustes",
+                                        style: TextStyle(color: Colors.black),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ])),
+                        ])),
 
-                      //fim 2 elemento menu
-                    ])))));
+                        //fim 2 elemento menu
+                      ])))));
+    }
   }
 }
