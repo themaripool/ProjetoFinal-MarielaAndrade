@@ -49,7 +49,7 @@ class BedComponentList extends StatelessWidget {
   Widget build(BuildContext context) {
     checkInpatientStatus(bedInfo);
     return Container(
-      height: 115.0,
+      height: 120.0,
       decoration: BoxDecoration(color: Colors.grey[300]),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
