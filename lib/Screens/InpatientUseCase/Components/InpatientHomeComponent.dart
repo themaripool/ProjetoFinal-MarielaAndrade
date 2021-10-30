@@ -1,38 +1,75 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
 import 'package:projeto_final_1/Models/Models.dart';
 
 var color;
 
-void checkInpatient(BedData bedInfo) {
-  if (bedInfo.fr <= 8 ||
-      bedInfo.fr >= 25 ||
-      bedInfo.so >= 91 ||
-      bedInfo.fc <= 40 ||
-      bedInfo.fc >= 131 ||
-      bedInfo.te <= 35.0) {
-    color = Colors.red;
-    return;
-  } else if (bedInfo.fr >= 21 && bedInfo.fr <= 24 ||
-      bedInfo.so >= 92 && bedInfo.so <= 93 ||
-      bedInfo.fc >= 111 && bedInfo.fc <= 130 ||
-      bedInfo.te >= 39.1) {
-    color = Colors.yellow;
-    return;
-  } else if (bedInfo.fr >= 9 && bedInfo.fr <= 11 ||
-      bedInfo.so >= 94 && bedInfo.so <= 95 ||
-      bedInfo.fc >= 41 && bedInfo.fc <= 50 ||
-      bedInfo.fc >= 91 && bedInfo.fc <= 110 ||
-      bedInfo.te >= 35.1 && bedInfo.te <= 36.0 ||
+void checkInpatient(BedData bedInfo, int index) {
+  switch (index) {
+
+    case 0:
+      if (bedInfo.fr <= 8 || bedInfo.fr >= 25) {
+        color = Colors.red;
+      }
+      else if (bedInfo.fr >= 21 && bedInfo.fr <= 24) {
+        color = Colors.yellow;
+      }
+      else if (bedInfo.fr >= 9 && bedInfo.fr <= 11) {
+        color = Colors.blue;
+      }
+      else {
+        color = Colors.green;
+      }
+      break;
+
+    case 1:
+      if (bedInfo.fc <= 40 || bedInfo.fc >= 131 ) {
+        color = Colors.red;
+      }
+      else if (bedInfo.fc >= 111 && bedInfo.fc <= 130) {
+        color = Colors.yellow;
+      }
+      else if (bedInfo.fc >= 41 && bedInfo.fc <= 50 ||
+      bedInfo.fc >= 91 && bedInfo.fc <= 110 ) {
+        color = Colors.blue;
+      }
+      else {
+        color = Colors.green;
+      }
+      break;
+
+      case 2:
+      if (bedInfo.te <= 35.0) {
+        color = Colors.red;
+      }
+      else if (bedInfo.te >= 39.1) {
+        color = Colors.yellow;
+      }
+      else if (bedInfo.te >= 35.1 && bedInfo.te <= 36.0 ||
       bedInfo.te >= 38.1 && bedInfo.te <= 39.0) {
-    color = Colors.blue;
-    return;
-  } else if (bedInfo.fr >= 12 && bedInfo.fr <= 20) {
-    color = Colors.green;
-    return;
+        color = Colors.blue;
+      }
+      else {
+        color = Colors.green;
+      }
+      break;
+
+      case 3:
+      if (bedInfo.so >= 91) {
+        color = Colors.red;
+      }
+      else if (bedInfo.so >= 92 && bedInfo.so <= 93) {
+        color = Colors.yellow;
+      }
+      else if (bedInfo.so >= 94 && bedInfo.so <= 95) {
+        color = Colors.blue;
+      }
+      else {
+        color = Colors.green;
+      }
+      break;
   }
+
 }
 
 // ignore: must_be_immutable
@@ -49,7 +86,7 @@ class InpatientHomeComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<BedProvider>(builder: (__, model, _) {
-      checkInpatient(model.holder[bedId].last);
+      checkInpatient(model.holder[bedId].last, index);
       switch (index) {
         case 0:
           icon = Image.asset('assets/images/respiratoryFreq.png',
@@ -78,9 +115,7 @@ class InpatientHomeComponent extends StatelessWidget {
           height: 160.0,
           width: 130.0,
           decoration: BoxDecoration(
-              border: Border.all(
-                  color: color,
-                  width: 4),
+              border: Border.all(color: color, width: 4),
               borderRadius: new BorderRadius.all(Radius.circular(15))),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
