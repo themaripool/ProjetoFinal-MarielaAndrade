@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Models/Models.dart';
 import 'package:projeto_final_1/Screens/GeneralUseCase/GeneralUseCase.dart';
+import 'package:projeto_final_1/Screens/InpatientUseCase/InpatientUseCase.dart';
 import 'package:typed_data/typed_data.dart';
 import '../Data.dart';
 
@@ -8,14 +9,14 @@ import '../Data.dart';
 GLOBAIS
 ===================================================== */
 
-String broker = 'ws://192.168.5.178'; //macos
-//String broker = 'ws://192.168.0.3'; //windows //192.168.0.3
+//String broker = 'ws://192.168.5.178'; //macos
+String broker = 'ws://192.168.0.3'; //windows //192.168.0.3
 int port = 9001;
 String clientIdentifier = 'SmartAlarm';
 
 String username; //= 'teste';
 String passwd; //= '123';
-String appId = "teste1";
+String appId = "pacTeste"; //"teste1";
 
 BuildContext contextProvider;
 BuildContext contextNavigation;
@@ -142,10 +143,18 @@ class MQTTManager {
           sectorId = content['SI'].toString();
           print("[DEBUG]: SECTORID = $sectorId, userid= $userId");
           login_accepted();
-          Navigator.push(contextNavigation,
-              MaterialPageRoute(builder: (contextNavigation) {
-            return Home();
-          }));
+          if (appId == "teste1") {
+            print("--------------------AQUI TESTE 1------------------");
+            Navigator.push(contextNavigation,
+                MaterialPageRoute(builder: (contextNavigation) {
+              return Home();
+            }));
+          } else {
+            Navigator.push(contextNavigation,
+                MaterialPageRoute(builder: (contextNavigation) {
+              return HomePatient();
+            }));
+          }
         } else if (contentLoginRequest != "2") {
           _client.disconnect();
           showErrorLoginAlertDialog(contextNavigation);
@@ -179,7 +188,7 @@ class MQTTManager {
   }
 
   void app_request_login() {
-    print('EXAMPLE::Subscribing to ...Application/Login/teste1 topic');
+    print('EXAMPLE::Subscribing to ...$clientLoginTopic topic');
 
     _client.subscribe(clientLoginTopic, MqttQos.atLeastOnce);
 
@@ -189,6 +198,8 @@ class MQTTManager {
       'UN': '$username',
       'PW': '$passwd'
     };
+
+    print('EXAMPLE:: user $username password $passwd');
 
     String json = jsonEncode(str);
     Uint8List data = utf8.encode(json);
@@ -313,6 +324,8 @@ class MQTTManager {
     BedProvider bedProvider =
         Provider.of<BedProvider>(contextProvider, listen: false);
 
+    print("[DEBUG]: BED DATA add map $bedId no ${data.sector}");
+
     bedProvider.addToSectorMap(bedId, sectorId);
     bedProvider.addToDataList(bedId, data);
   }
@@ -345,7 +358,11 @@ class MQTTManager {
     var content = jsonDecode(contentPayload);
     print("ALARM NEW  content = $content");
 
-    NotificationApi.showNotification(title: 'Alerta! Leito $bedId', body: 'FC = ${content['FC']} bpm  FR = ${content['FR']} pm  TE: ${content['TE']} C  SO: ${content['SO']} %', payload: 'sarah.abs');
+    NotificationApi.showNotification(
+        title: 'Alerta! Leito $bedId',
+        body:
+            'FC = ${content['FC']} bpm  FR = ${content['FR']} pm  TE: ${content['TE']} C  SO: ${content['SO']} %',
+        payload: 'sarah.abs');
 
     showDialog(
         context: contextNavigation,

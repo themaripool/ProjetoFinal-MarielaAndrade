@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Data/Data.dart';
 import '../InpatientUseCase.dart';
 import 'InpatientDetails.dart';
 
@@ -11,24 +12,10 @@ import 'InpatientDetails.dart';
 - Os cards sao clicaveis e irão para tela de detalhes da cada um dos dados do News2
 
 TODO:
-[] Após receber dados do back, fazer dados do card como observaveis
-[x] Notifier do News2 criado
+[x] Após receber dados do back, fazer dados do card como observaveis
+[x] Notifier do News2 criado - nao sera mais usado
 [] Ver como mudar cor de acordo com dados recebidos
 */
-
-// ================== teste de tela ====================
-
-class teste {
-   String data;
-   String valor;
-   teste(this.data, this.valor);
- }
-
-var lista = [
-  teste("23:45", "23"), 
-  teste("23:55", "24")
-];
-// ================== teste de tela ====================
 
 
 class PatientData extends StatefulWidget {
@@ -37,37 +24,36 @@ class PatientData extends StatefulWidget {
 }
 
 class _PatientDataState extends State<PatientData> {
-
-  var componentes = [
-    InpatientHomeComponent(Colors.grey, "Frequência Respiratória", "respiratoryFreq"),
-    InpatientHomeComponent(Colors.yellow, "Pressão Arterial", "bloodPressure"),
-    InpatientHomeComponent(Colors.orange, "Pulso", "pulse"),
-    InpatientHomeComponent(Colors.grey, "Consciência", "conscience"),
-    InpatientHomeComponent(Colors.red, "Temperatura", "temperature"),
-    InpatientHomeComponent(Colors.grey, "SP 02", "sp"),
-  ];
-
   @override
   Widget build(BuildContext context) {
-
-    return GridView.count(
-      padding: EdgeInsets.only(top: 16),
-      crossAxisCount: 3,
-      mainAxisSpacing: 20.0,
-      crossAxisSpacing: 4.0,
-      childAspectRatio: (130 / 177),
-      children: List.generate(componentes.length, (index) {
-        return GestureDetector(
-            onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => InpatientDetails(dataList: lista,)),
-                );
-            },
-            child: Center(child: componentes[index]));
-        }));
+    return Consumer<BedProvider>(
+      builder: (__, model, _) {
+        if (model.holder.isEmpty) {
+          return Center(child: CircularProgressIndicator());
+        } else {
+          return GridView.count(
+              padding: EdgeInsets.all(16),
+              crossAxisCount: 2,
+              mainAxisSpacing: 20.0,
+              crossAxisSpacing: 4.0,
+              childAspectRatio: (130 / 177),
+              children: List.generate(4, (index) {
+                var bedId = model.bedIds;
+                return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => InpatientDetails(
+                                  bedId: bedId.first,
+                                  index: index,
+                                )),
+                      );
+                    },
+                    child: InpatientHomeComponent( index, bedId.first));
+              }));
+        }
+      },
+    );
   }
 }
-
-

@@ -1,5 +1,8 @@
 import 'dart:collection';
-
+//so = oxigenio
+// fc - frequencia cardiaca == pulso
+// te = temperatura
+// fr = frequencia respiratoria
 class BedData extends LinkedListEntry<BedData> {
   int fc;
   int fr;

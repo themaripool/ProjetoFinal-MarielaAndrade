@@ -71,7 +71,10 @@ class _LoginState extends State<Login> {
                     : LoginForm(
                         userNameCntl: _userNameCntl,
                         passwordCntl: _passwordCntl),
-                LoginInpatient(),
+                LoginInpatient(
+                  passwordCntl: _passwordCntl, 
+                  userNameCntl: _userNameCntl,
+                ),
                 LoginMedicalTeam(
                   passwordCntl: _passwordCntl,
                   userNameCntl: _userNameCntl,
@@ -213,7 +216,14 @@ class _LoginCupertinoFormState extends State<LoginFormCupertino> {
 class LoginInpatient extends StatelessWidget {
   const LoginInpatient({
     Key key,
-  }) : super(key: key);
+    @required TextEditingController userNameCntl,
+    @required TextEditingController passwordCntl,
+  })  : _userNameCntl = userNameCntl,
+        _passwordCntl = passwordCntl,
+        super(key: key);
+
+  final TextEditingController _userNameCntl;
+  final TextEditingController _passwordCntl;
 
   @override
   Widget build(BuildContext context) {
@@ -222,18 +232,18 @@ class LoginInpatient extends StatelessWidget {
       return CupertinoButton(
         child: Text("Login Paciente"),
         color: CupertinoColors.systemGrey,
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return HomePatient();
-          }));
+        onPressed: () => {
+          MQTTManager().initializeMQTTClient(
+              _userNameCntl.text, _passwordCntl.text, context),
+          MQTTManager().connect(),
         },
       );
     } else {
       return ElevatedButton(
         onPressed: () => {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return HomePatient();
-          }))
+          MQTTManager().initializeMQTTClient(
+              _userNameCntl.text, _passwordCntl.text, context),
+          MQTTManager().connect(),
         },
         child: Text("Login Paciente"),
         style: ButtonStyle(

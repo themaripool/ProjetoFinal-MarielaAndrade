@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
+import 'package:projeto_final_1/Models/Models.dart';
 import '../InpatientUseCase.dart';
 
 /* TELA DE SINTOMAS DO PACIENTE
@@ -30,6 +31,8 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
   bool nausea = false;
   bool diarrhea = false;
   bool other = false;
+
+  String formattedDateHora;
 
   TextEditingController _others = TextEditingController();
 
@@ -325,7 +328,22 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
                 padding: const EdgeInsets.only(top: 16),
                 child: ElevatedButton(
                   onPressed: () =>
-                      {print("Tocou no salvar sintomas"), _showToast(context)},
+                      {
+                        print("Tocou no salvar sintomas"),
+                        
+                        formattedDateHora = DateFormat.Hm().format(DateTime.now().subtract(Duration(hours: 3))),
+
+                        SymptomsDao().saveMessage(Symptom(Provider.of<Symptoms>(context, listen: false).headacheVal.toString(), 
+                        Provider.of<Symptoms>(context, listen: false).nauseaVal.toString(), 
+                        Provider.of<Symptoms>(context, listen: false).tirednessVal.toString(), 
+                        Provider.of<Symptoms>(context, listen: false).diarrheaVal.toString(), 
+                        Provider.of<Symptoms>(context, listen: false).painVal.toString(), 
+                        Provider.of<Symptoms>(context, listen: false).otherVal.toString(), 
+                        formattedDateHora)),
+
+                        _showToast(context),
+
+                      },
                   child: Text("Salvar Sintomas"),
                   style: ButtonStyle(
                       backgroundColor:
