@@ -5,3 +5,4 @@ export 'Pages/InpatientDetails.dart';
 export 'Pages/InpatientNavigation.dart';
 export 'Pages/InpatientSymptoms.dart';
 export 'InpatientViewModel.dart';
+export 'Pages/InpatientSymptomsHistory.dart';

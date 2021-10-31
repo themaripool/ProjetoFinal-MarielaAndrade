@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'InpatientData.dart';
-import 'InpatientSymptoms.dart';
+import 'package:projeto_final_1/Screens/InpatientUseCase/InpatientUseCase.dart';
 
 class HomePatient extends StatefulWidget {
 
@@ -14,7 +13,8 @@ class _HomePatientState extends State<HomePatient> {
 
   final List<Widget> _screens = [
     PatientData(),
-    PatientSymptoms()
+    PatientSymptoms(),
+    InpatientSymptomsHistory()
   ];
 
   void onTabTapped(int index) {
@@ -27,7 +27,7 @@ class _HomePatientState extends State<HomePatient> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: DefaultTabController(
-      length: 2,
+      length: 3,
       initialIndex: 0,
       child: Scaffold(
           appBar: AppBar(
@@ -49,10 +49,11 @@ class _HomePatientState extends State<HomePatient> {
             onTap: onTabTapped,
             items: [
               BottomNavigationBarItem(
-                  icon: Icon(Icons.addchart_sharp), label: "DADOS"),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.analytics_outlined),
-                  label: "SINTOMAS"),
+                icon: Icon(Icons.addchart_sharp), label: "Dados"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.analytics_outlined), label: "Sintomas"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.history), label: "Histórico"),
             ],
           ),
           body:  _screens[_pageIndex],

@@ -14,7 +14,7 @@ import 'InpatientDetails.dart';
 TODO:
 [x] Após receber dados do back, fazer dados do card como observaveis
 [x] Notifier do News2 criado - nao sera mais usado
-[] Ver como mudar cor de acordo com dados recebidos
+[x] Ver como mudar cor de acordo com dados recebidos
 */
 
 
@@ -44,10 +44,7 @@ class _PatientDataState extends State<PatientData> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => InpatientDetails(
-                                  bedId: bedId.first,
-                                  index: index,
-                                )),
+                            builder: (context) => InpatientDetails(index, bedId.first)),
                       );
                     },
                     child: InpatientHomeComponent( index, bedId.first));

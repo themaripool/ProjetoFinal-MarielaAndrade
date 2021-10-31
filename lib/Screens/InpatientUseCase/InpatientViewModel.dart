@@ -3,7 +3,6 @@ import 'package:projeto_final_1/Data/Data.dart';
 import 'package:projeto_final_1/Models/Models.dart';
 
 class InpatientViewModel {
-
   MaterialColor checkInpatient(BedData bedInfo, int index) {
     switch (index) {
       case 0:
@@ -59,67 +58,75 @@ class InpatientViewModel {
     return Colors.grey;
   }
 
-  String setTitle(int index){
+  String setTitle(int index) {
     switch (index) {
-        case 0:
-          return "Frequencia Respiratoria";
-          break;
-        case 1:
-          return "Frequencia Cardiaca";
-          break;
-        case 2:
-          return "Temperatura";
-          break;
-        default:
-          return "Oxigênio";
-          break;
-      }
+      case 0:
+        return "Frequência Respiratoria";
+        break;
+      case 1:
+        return "Frequência Cardiaca";
+        break;
+      case 2:
+        return "Temperatura";
+        break;
+      default:
+        return "Oxigênio";
+        break;
+    }
   }
 
-  Image setIcon(int index){
+  Image setIcon(int index) {
     switch (index) {
-        case 0:
-          return  Image.asset('assets/images/respiratoryFreq.png', height: 40, width: 40);
-          break;
-        case 1:
-          return Image.asset('assets/images/pulse.png', height: 40, width: 40);
-          break;
-        case 2:
-          return Image.asset('assets/images/temperature.png', height: 40, width: 40);
-          break;
-        default:
-          return Image.asset('assets/images/respiratoryFreq.png', height: 40, width: 40);
-          break;
-      }
+      case 0:
+        return Image.asset('assets/images/respiratoryFreq.png',
+            height: 40, width: 40);
+        break;
+      case 1:
+        return Image.asset('assets/images/pulse.png', height: 40, width: 40);
+        break;
+      case 2:
+        return Image.asset('assets/images/temperature.png',
+            height: 40, width: 40);
+        break;
+      default:
+        return Image.asset('assets/images/respiratoryFreq.png',
+            height: 40, width: 40);
+        break;
+    }
   }
 
-  dynamic setDisplayData(BedProvider model, String bedId, int index){
+  dynamic setDisplayData(BedProvider model, String bedId, int index) {
     switch (index) {
-        case 0:
-          return model.holder[bedId].last.fr.toString();
-          break;
-        case 1:
-          return model.holder[bedId].last.fc.toString();
-          break;
-        case 2:
-          return model.holder[bedId].last.te.toString();
-          break;
-        default:
-          return model.holder[bedId].last.so.toString();
-          break;
-      }
+      case 0:
+        return model.holder[bedId].last.fr.toString();
+        break;
+      case 1:
+        return model.holder[bedId].last.fc.toString();
+        break;
+      case 2:
+        return model.holder[bedId].last.te.toString();
+        break;
+      default:
+        return model.holder[bedId].last.so.toString();
+        break;
+    }
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
+  String detailsTitle(int index) {
+    switch (index) {
+      case 0:
+        return "Frequência Respiratoria";
+        break;
+      case 1:
+        return "Frequência Cardiaca";
+        break;
+      case 2:
+        return "Temperatura";
+        break;
+      case 3:
+        return "Oxigênio";
+        break;
+    }
+    return "";
+  }
 }
