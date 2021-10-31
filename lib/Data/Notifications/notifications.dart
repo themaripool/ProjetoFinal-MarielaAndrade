@@ -1,15 +1,15 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final _notification = FlutterLocalNotificationsPlugin();
-
+SharedPreferences prefs;
 //SOm customizado -> https://youtu.be/X3tAGnGc_t0?t=313
 
 Future _notificationDetails() async {
   return NotificationDetails(
     android: AndroidNotificationDetails('channel id', 'channel name',
-        importance: Importance.max, 
-        playSound: true),
-    iOS: IOSNotificationDetails(presentSound: true),
+        importance: Importance.max,),
+    iOS: IOSNotificationDetails(),
   );
 }
 

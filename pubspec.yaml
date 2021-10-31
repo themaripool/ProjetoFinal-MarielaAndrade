@@ -38,6 +38,7 @@ dependencies:
   firebase_database: "7.1.1"
   flutter_local_notifications: ^9.0.1
   pmvvm: ^2.3.0
+  shared_preferences: ^2.0.0
 
 
 dev_dependencies:

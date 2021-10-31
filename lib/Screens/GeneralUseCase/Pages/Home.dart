@@ -52,28 +52,15 @@ class _HomePageState extends State<HomePage> {
     if (_platform == TargetPlatform.iOS) {
       return Scaffold(
         appBar: CupertinoNavigationBar(
-            middle:  _currentTab == 0 ? Text("ENFERMARIA 1") : Text("AJUSTES") ,
-            trailing: Padding(
-                padding: EdgeInsets.only(right: 20.0),
-                child: GestureDetector(
-                  onTap: () {
-                    MQTTManager().app_request_logout();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Login()),
-                    );
-                  },
-                  child: Icon(
-                    Icons.logout,
-                    size: 26.0,
-                  ),
-                ))),
-
+            middle: _currentTab == 0 ? Text("ENFERMARIA 1") : Text("AJUSTES"),
+        ),
         body: CupertinoTabScaffold(
             tabBar: CupertinoTabBar(
               items: [
-                BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Dashboard'),
-                BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings')
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.home), label: 'Dashboard'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.settings), label: 'Settings')
               ],
             ),
             tabBuilder: (BuildContext context, index) {
@@ -86,23 +73,6 @@ class _HomePageState extends State<HomePage> {
           appBar: AppBar(
             title: title,
             centerTitle: true,
-            actions: [
-              Padding(
-                  padding: EdgeInsets.only(right: 20.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      MQTTManager().app_request_logout();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Login()),
-                      );
-                    },
-                    child: Icon(
-                      Icons.logout,
-                      size: 26.0,
-                    ),
-                  ))
-            ],
           ),
           body: container,
           drawer: Drawer(
@@ -188,6 +158,45 @@ class _HomePageState extends State<HomePage> {
                         ])),
 
                         //fim 2 elemento menu
+
+                        Container(
+                            child: Column(children: [
+                          Material(
+                            child: InkWell(
+                              onTap: () {
+                              Navigator.pop(context);
+                              MQTTManager().app_request_logout();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Login()),
+                              );
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.all(15.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Icon(
+                                        Icons.exit_to_app,
+                                        size: 20,
+                                        color: Colors.grey[700],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 3,
+                                      child: Text(
+                                        "Sair",
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ])),
+                        //fim 3 elemento menu
                       ])))));
     }
   }
