@@ -47,42 +47,31 @@ class _SettingsState extends State<Settings> {
       return Scaffold(
         body: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10.0),
-                        child: Icon(CupertinoIcons.moon),
-                      ),
-                      Text('Modo Escuro'),
-                    ],
-                  ),
-                  CupertinoSwitch(
-                    onChanged: (value) {
-                      setState(() {
-                        _toggleDarkMode = value;
-                      });
-                    },
-                    value: _toggleDarkMode,
-                  ),
-                ],
-              ),
-            ),
             ListTile(
-                title: Text('Sair'),
-                leading: Icon(Icons.exit_to_app),
-                onTap: () {
+                title: Text('Modo escuro'),
+                leading: Icon(CupertinoIcons.moon),
+                trailing: CupertinoSwitch(
+                  onChanged: (value) {
+                    setState(() {
+                      _toggleDarkMode = value;
+                    });
+                  },
+                  value: _toggleDarkMode,
+                ),
+                onTap: () {}),
+            Padding(
+              padding: const EdgeInsets.only(top: 32.0),
+              child: CupertinoButton(
+                child: Text('Log Out'),
+                onPressed: () {
                   MQTTManager().app_request_logout();
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => Login()),
                   );
-                })
+                },
+              ),
+            )
           ],
         ),
       );
