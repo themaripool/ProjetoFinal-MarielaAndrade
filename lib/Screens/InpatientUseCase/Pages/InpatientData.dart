@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
 import '../InpatientUseCase.dart';
 import 'InpatientDetails.dart';
+import 'package:flutter/cupertino.dart';
+
 
 /* TELA DE HOME DO PACIENTE
 
@@ -26,17 +28,22 @@ class PatientData extends StatefulWidget {
 class _PatientDataState extends State<PatientData> {
   @override
   Widget build(BuildContext context) {
+    final _platform = Theme.of(context).platform;
     return Consumer<BedProvider>(
       builder: (__, model, _) {
         if (model.holder.isEmpty) {
-          return Center(child: CircularProgressIndicator());
+          if (_platform == TargetPlatform.iOS) {
+            return Center(child: CupertinoActivityIndicator());
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
         } else {
           return GridView.count(
               padding: EdgeInsets.all(16),
               crossAxisCount: 2,
               mainAxisSpacing: 20.0,
-              crossAxisSpacing: 4.0,
-              childAspectRatio: (130 / 177),
+              crossAxisSpacing: 16.0,
+              childAspectRatio: (170 / 170),
               children: List.generate(4, (index) {
                 var bedId = model.bedIds;
                 return GestureDetector(

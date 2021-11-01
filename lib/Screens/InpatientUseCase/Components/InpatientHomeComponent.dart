@@ -37,7 +37,7 @@ class InpatientHomeComponent extends StatelessWidget {
             children: [
               icon,
               Padding(
-                  padding: const EdgeInsets.all(8), child: Text(displayData)),
+                  padding: const EdgeInsets.all(8), child: Text(displayData, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,))),
               Text(
                 title,
                 style: TextStyle(

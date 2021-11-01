@@ -89,7 +89,7 @@ class InpatientViewModel {
             height: 40, width: 40);
         break;
       default:
-        return Image.asset('assets/images/respiratoryFreq.png',
+        return Image.asset('assets/images/airIcon.png',
             height: 40, width: 40);
         break;
     }

@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 showErrorLoginAlertDialog(BuildContext context) {
+  final _platform = Theme.of(context).platform;
+
   // set up the button
   Widget okButton = TextButton(
     child: Text("OK"),
@@ -18,11 +21,29 @@ showErrorLoginAlertDialog(BuildContext context) {
     ],
   );
 
+  CupertinoAlertDialog alertIos = CupertinoAlertDialog(
+  title: new Text("Erro no login"),
+  content: new Text("Por favor tente novamente"),
+  actions: <Widget>[
+    CupertinoDialogAction(
+      isDefaultAction: true,
+      child: Text("Ok"),
+      onPressed: (){
+        Navigator.pop(context);
+      }
+    ),
+  ],
+);
+
   // show the dialog
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return alert;
+      if (_platform == TargetPlatform.iOS) {
+        return alertIos;
+      }else {
+        return alert;
+      }
     },
   );
 }
