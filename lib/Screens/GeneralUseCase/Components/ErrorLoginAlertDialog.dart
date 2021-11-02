@@ -1,3 +1,6 @@
+/*
+  showErrorLoginAlertDialog: Dialog de erro de login de acordo com o so
+*/
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

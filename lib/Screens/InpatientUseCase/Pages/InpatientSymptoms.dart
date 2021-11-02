@@ -1,24 +1,13 @@
+/* PatientSymptoms: TELA DE SINTOMAS DO PACIENTE
+- Cada card possui dado observado e titulo
+- Dado observado mudará de acordo com as mudanças do usuário
+- Os cards sao clicáveis e abre um stepper de 1 a 5 com a severidade da dor
+*/
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
-import 'package:projeto_final_1/Models/Models.dart';
 import '../InpatientUseCase.dart';
-
-/* TELA DE SINTOMAS DO PACIENTE
-
-- Possui cards com sintomas
-- Cada card possui dado observado e titulo
-- Dado observado mudará de acordo com as mudancas do usuario
-- Os cards sao clicaveis e abre um stepper de 1 a 5 com a severidade da dor
-
-TODO:
-[x] Notifier do Sintomas criado
-[] Ver como mudar cor de acordo com dados recebidos
-[] Ver como que ficar os dialogs com mais de uma opcao de Dor
-[] ver como que salva no clique do botao
-[] Alerta: espacamento + cor + tamanho
-
-*/
 
 class PatientSymptoms extends StatefulWidget {
   @override
@@ -34,6 +23,7 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
   bool other = false;
 
   String formattedDateHora;
+  var viewModel = InpatientViewModel();
 
   TextEditingController _others = TextEditingController();
 
@@ -60,8 +50,21 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
                   padding: const EdgeInsets.only(top: 16),
                   child: CupertinoButton(
                     color: CupertinoColors.systemGrey,
-                    onPressed: () => {_saveData()},
+                    onPressed: () => {viewModel.saveData(context)},
                     child: Text("Salvar Sintomas"),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: CupertinoButton(
+                    color: CupertinoColors.systemGrey,
+                    onPressed: () => {
+                      Navigator.push(contextNavigation,
+                          MaterialPageRoute(builder: (contextNavigation) {
+                        return InpatientSymptomsHistory();
+                      }))
+                    },
+                    child: Text("Ver histórico"),
                   ),
                 )
               ],
@@ -90,8 +93,28 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
                 Padding(
                   padding: const EdgeInsets.only(top: 16),
                   child: ElevatedButton(
-                    onPressed: () => {_saveData()},
+                    onPressed: () => {viewModel.saveData(context)},
                     child: Text("Salvar Sintomas"),
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.grey[850]),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40.0),
+                        ))),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: ElevatedButton(
+                    onPressed: () => {
+                      Navigator.push(contextNavigation,
+                          MaterialPageRoute(builder: (contextNavigation) {
+                        return InpatientSymptomsHistory();
+                      }))
+                    },
+                    child: Text("Ver histórico"),
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.grey[850]),
@@ -108,35 +131,6 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
         ),
       );
     }
-  }
-
-  void _showToast(BuildContext context) {
-    final scaffold = ScaffoldMessenger.of(context);
-    scaffold.showSnackBar(
-      SnackBar(
-        content: const Text('Dados Salvos'),
-        action: SnackBarAction(
-            label: 'ok', onPressed: scaffold.hideCurrentSnackBar),
-      ),
-    );
-  }
-
-  void _saveData() {
-    print("Tocou no salvar sintomas");
-
-    formattedDateHora =
-        DateFormat.Hm().format(DateTime.now().subtract(Duration(hours: 3)));
-
-    SymptomsDao().saveMessage(Symptom(
-        Provider.of<Symptoms>(context, listen: false).headacheVal.toString(),
-        Provider.of<Symptoms>(context, listen: false).nauseaVal.toString(),
-        Provider.of<Symptoms>(context, listen: false).tirednessVal.toString(),
-        Provider.of<Symptoms>(context, listen: false).diarrheaVal.toString(),
-        Provider.of<Symptoms>(context, listen: false).painVal.toString(),
-        Provider.of<Symptoms>(context, listen: false).otherVal.toString(),
-        formattedDateHora));
-
-    _showToast(context);
   }
 }
 

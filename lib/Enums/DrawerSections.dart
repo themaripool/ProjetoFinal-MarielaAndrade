@@ -1,5 +1,0 @@
-
-enum DrawerSections {
-  dashboard,
-  settings,
-}

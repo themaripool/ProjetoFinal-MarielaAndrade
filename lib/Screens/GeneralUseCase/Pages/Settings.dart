@@ -1,3 +1,7 @@
+/*
+  Settings: Tela de ajustes, com botões de sair e de modo escuro
+*/
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
@@ -44,9 +48,38 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     final _platform = Theme.of(context).platform;
     if (_platform == TargetPlatform.iOS) {
+      /* Ajustes no modo cupertino */
       return Scaffold(
         body: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 16, bottom: 8),
+              child: Column(
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.center,
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          'https://i.pinimg.com/originals/c9/85/9c/c9859c3719f1328d1795df856940ddfd.jpg'),
+                      radius: 30.0,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'John Doe',
+                      style: TextStyle(fontSize: 20.0),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Médico',
+                    ),
+                  ),
+                ]
+              ),
+            ),
             ListTile(
                 title: Text('Modo escuro'),
                 leading: Icon(CupertinoIcons.moon),
@@ -75,10 +108,40 @@ class _SettingsState extends State<Settings> {
           ],
         ),
       );
-    } else {
+    } 
+    /* Ajustes no modo material */
+    else {
       return Scaffold(
         body: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 16, bottom: 8),
+              child: Column(
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.center,
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          'https://i.pinimg.com/originals/c9/85/9c/c9859c3719f1328d1795df856940ddfd.jpg'),
+                      radius: 30.0,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'John Doe',
+                      style: TextStyle(fontSize: 20.0),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Médico',
+                    ),
+                  ),
+                ]
+              ),
+            ),
             SwitchListTile(
               title: Text('Modo Escuro'),
               secondary: Icon(Icons.dark_mode),
@@ -88,6 +151,17 @@ class _SettingsState extends State<Settings> {
                 });
               },
               value: _toggleDarkMode,
+            ),
+            ListTile(
+              title: Text("Sair",style: TextStyle(color: Colors.black),),
+              leading: Icon(Icons.exit_to_app,size: 20,color: Colors.grey[700],),
+              onTap: () {
+                MQTTManager().app_request_logout();
+                Navigator.push(
+                  context,
+                   MaterialPageRoute(builder: (context) => Login()),
+                );
+              }
             ),
           ],
         ),

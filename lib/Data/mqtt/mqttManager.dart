@@ -9,8 +9,8 @@ import '../Data.dart';
 GLOBAIS
 ===================================================== */
 
-String broker = 'ws://192.168.5.178'; //macos
-//String broker = 'ws://192.168.0.3'; //windows //192.168.0.3
+//String broker = 'ws://192.168.5.178'; //macos
+String broker = 'ws://192.168.0.3'; //windows //192.168.0.3
 int port = 9001;
 String clientIdentifier = 'SmartAlarm';
 
@@ -319,7 +319,7 @@ class MQTTManager {
         dateDetails: formattedDate,
         sector: sectorId);
 
-    print("[DEBUG]: BED DATA ${data.sector}");
+    print("[DEBUG]: BED DATA ${data.sector} bedid = $bedId");
 
     BedProvider bedProvider =
         Provider.of<BedProvider>(contextProvider, listen: false);

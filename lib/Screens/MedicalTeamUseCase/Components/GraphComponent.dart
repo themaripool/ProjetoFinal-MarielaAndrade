@@ -23,6 +23,7 @@ class cardWidgetGeneral extends StatelessWidget {
         width: 390,
         child: Card(
           elevation: 10,
+          color: Colors.grey[300],
           child: SfCartesianChart(
               backgroundColor: Colors.transparent,
               margin: EdgeInsets.fromLTRB(24, 24, 24, 24),
