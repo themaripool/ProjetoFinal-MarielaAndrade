@@ -15,5 +15,15 @@ Seguindo o layout de https://xd.adobe.com/view/6189fad1-97b4-4fdf-5113-8d7b8c8a3
   <img src="/Images_git/CasoPaciente-ios/ajustes.png" alt="Size Limit CLI" width="180">
 </p>
 
+<br> Caso de uso: equipe médica - iOS
+<p align="left">
+  <img src="/Images_git/CasoMedico-ios/home.png" alt="Size Limit CLI" width="180">
+  <img src="/Images_git/CasoMedico-ios/alertaCama.png" alt="Size Limit CLI" width="180">
+  <img src="/Images_git/CasoMedico-ios/detalhes.png" alt="Size Limit CLI" width="180">
+  <img src="/Images_git/CasoMedico-ios/detalhes_alertas.png" alt="Size Limit CLI" width="180">
+  <img src="/Images_git/CasoMedico-ios/todosAlertas.png" alt="Size Limit CLI" width="180">
+  <img src="/Images_git/CasoMedico-ios/ajustes.png" alt="Size Limit CLI" width="180">
+</p>
+
 
 
