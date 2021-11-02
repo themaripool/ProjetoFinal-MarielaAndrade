@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:projeto_final_1/Data/Data.dart';
@@ -95,10 +96,36 @@ class _DashboardState extends State<Dashboard> {
   }
 }
 
+// CupertinoNavigationBarBackButton(
+//               color: CupertinoColors.black,
+//               onPressed: () => Navigator.of(context).pop(),
+//             )
+
 class DashboardAlermView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final _platform = Theme.of(context).platform;
+    if (_platform == TargetPlatform.iOS) {
+      return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          leading: CupertinoNavigationBarBackButton(
+              color: CupertinoColors.black,
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          elevation: 2.0,
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          title: Text("Alarmes enfermaria 1", style: TextStyle(color: Colors.black))
+        ),
+        body: AlertScreen(
+          bedNumber: "0",
+          isAllAlarms: true,
+        ),
+      )
+    );
+    } else {
+      return MaterialApp(
       theme: ThemeData(primaryColor: Color.fromRGBO(236, 234, 234, 1.0)),
       home: Scaffold(
         appBar: AppBar(
@@ -115,6 +142,7 @@ class DashboardAlermView extends StatelessWidget {
         ),
       ),
     );
+    }
   }
 }
 

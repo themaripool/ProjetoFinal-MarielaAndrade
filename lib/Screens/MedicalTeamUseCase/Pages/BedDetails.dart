@@ -47,6 +47,10 @@ class _BedDetailsState extends State<BedDetails> {
         backgroundColor: Colors.grey[300],
         body: bodies[theriGroupVakue],
         appBar: AppBar(
+          leading: CupertinoNavigationBarBackButton(
+              color: CupertinoColors.black,
+              onPressed: () => Navigator.of(context).pop(),
+            ),
           elevation: 2.0,
           backgroundColor: Colors.white,
           centerTitle: true,
@@ -71,7 +75,6 @@ class _BedDetailsState extends State<BedDetails> {
                       onValueChanged: (changeFromGroupValue) {
                         setState(() {
                           theriGroupVakue = changeFromGroupValue;
-                          print("bbbb $theriGroupVakue");
                         });
                       },
                       children: logoWidgets,
