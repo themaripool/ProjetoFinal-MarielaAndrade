@@ -1,24 +1,16 @@
+/*
+  PatientData: TELA DE HOME DO PACIENTE
+  - Cada card possui ícone, nome e dado observado
+  - Dado observado mudará de acordo com as mensagens recebidas do mqtt
+  - Dependendo da severidade, borda do card mudará
+  - Os cards sao clicaveis e irão para tela de detalhes da cada um dos dados
+*/
+
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
 import '../InpatientUseCase.dart';
 import 'InpatientDetails.dart';
 import 'package:flutter/cupertino.dart';
-
-
-/* TELA DE HOME DO PACIENTE
-
-- Possui cards com os dados do News2
-- Cada card possui Icone, nome e dado observado
-- Dado observado mudará de acordo com as mensagens recebidas do mqtt
-- Dependendo da severidade, borda do card mudará
-- Os cards sao clicaveis e irão para tela de detalhes da cada um dos dados do News2
-
-TODO:
-[x] Após receber dados do back, fazer dados do card como observaveis
-[x] Notifier do News2 criado - nao sera mais usado
-[x] Ver como mudar cor de acordo com dados recebidos
-*/
-
 
 class PatientData extends StatefulWidget {
   @override

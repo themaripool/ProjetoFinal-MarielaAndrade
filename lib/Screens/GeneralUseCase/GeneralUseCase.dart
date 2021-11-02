@@ -4,7 +4,6 @@
 
 export 'Components/AlertDialogPatient.dart';
 export 'Components/ErrorLoginAlertDialog.dart';
-export 'Components/HeaderDrawer.dart';
 export 'Components/TextFieldLogin.dart';
 export 'Pages/Dashboard/Dashboard.dart';
 export 'Pages/Dashboard/DashboardAlarmView.dart';

@@ -1,3 +1,9 @@
+/*
+  AlertDialogPatient: Dialog com alerta de estado da cama
+   - Botão VER DADOS: Redireciona para a cama do alerta
+   - Botão CONFERIR PACIENTE: Manda uma msg de reconhecimento do alarme no mqtt
+*/
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';

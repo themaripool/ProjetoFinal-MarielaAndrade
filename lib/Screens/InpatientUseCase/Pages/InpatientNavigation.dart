@@ -1,3 +1,8 @@
+/*
+  HomePatient: TELA DE NAVEGAÇÃO
+  - Define a navigation bar de acordo com o sistema que está sendo usado
+*/
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Screens/GeneralUseCase/GeneralUseCase.dart';
@@ -36,21 +41,13 @@ class _HomePatientState extends State<HomePatient> {
           initialIndex: 0,
           child: Scaffold(
               appBar: CupertinoNavigationBar(
-                leading: Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      'https://i.pinimg.com/originals/c9/85/9c/c9859c3719f1328d1795df856940ddfd.jpg'),
-                  radius: 18.0,
-              ),
-                ),
-              middle: Text("Bem Vindo John Doe"),
+              middle: _pageIndex == 0 ? Text("Dados") : _pageIndex == 1 ? Text("Sintomas") : Text("Ajustes"),
         ),
         body: CupertinoTabScaffold(
             tabBar: CupertinoTabBar(
               items: [
                 BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.house), label: 'Home'),
+                    icon: Icon(CupertinoIcons.house), label: 'Dados'),
                 BottomNavigationBarItem(
                     icon: Icon(CupertinoIcons.exclamationmark_circle_fill), label: 'Sintomas'),
                     BottomNavigationBarItem(
@@ -73,18 +70,8 @@ class _HomePatientState extends State<HomePatient> {
       initialIndex: 0,
       child: Scaffold(
           appBar: AppBar(
-            actions: [
-              CircleAvatar(
-                backgroundImage: NetworkImage(
-                    'https://i.pinimg.com/originals/c9/85/9c/c9859c3719f1328d1795df856940ddfd.jpg'),
-                radius: 18.0,
-              ),
-            ],
             backgroundColor: Colors.grey[700],
-            title: Text(
-              "Bem Vindo John Doe",
-              style: TextStyle(color: Colors.grey[350]),
-            ),
+            title: _pageIndex == 0 ? Text("Home") : _pageIndex == 1 ? Text("Sintomas") : Text("Ajustes")
           ),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: _pageIndex, 
@@ -95,7 +82,7 @@ class _HomePatientState extends State<HomePatient> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.analytics_outlined), label: "Sintomas"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.history), label: "Histórico"),
+                icon: Icon(Icons.settings), label: "Ajustes"),
             ],
           ),
           body:  _screens[_pageIndex],

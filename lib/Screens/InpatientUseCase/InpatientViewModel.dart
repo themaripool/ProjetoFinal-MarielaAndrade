@@ -1,8 +1,49 @@
+/*
+  InpatientViewModel: Funções auxiliares do caso de uso do paciente:
+    - showToast: mostra pro usuário um toast de confirmação de dados salvos
+    - saveData: Salva dados dos sintomas no firebase
+    - checkInpatient: Retorna a cor de acordo com a severidade dos dados recebidos
+    - setTitle: Retorna o título de acordo com o index recebido
+    - setIcon: Retorna o ícone de acordo com o index recebido
+    - setDisplayData: Retorna qual dado será exibido no gráfico
+    - detailsTitle: Retorna título da página de detalhes
+*/
+
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
 import 'package:projeto_final_1/Models/Models.dart';
 
 class InpatientViewModel {
+  
+  void showToast(BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('Dados Salvos'),
+        action: SnackBarAction(
+            label: 'ok', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
+
+  void saveData(BuildContext context) {
+    print("Tocou no salvar sintomas");
+
+    var formattedDateHora =
+        DateFormat.Hm().format(DateTime.now().subtract(Duration(hours: 3)));
+
+    SymptomsDao().saveMessage(Symptom(
+        Provider.of<Symptoms>(context, listen: false).headacheVal.toString(),
+        Provider.of<Symptoms>(context, listen: false).nauseaVal.toString(),
+        Provider.of<Symptoms>(context, listen: false).tirednessVal.toString(),
+        Provider.of<Symptoms>(context, listen: false).diarrheaVal.toString(),
+        Provider.of<Symptoms>(context, listen: false).painVal.toString(),
+        Provider.of<Symptoms>(context, listen: false).otherVal.toString(),
+        formattedDateHora));
+
+    showToast(context);
+  }
+
   MaterialColor checkInpatient(BedData bedInfo, int index) {
     switch (index) {
       case 0:
@@ -89,8 +130,7 @@ class InpatientViewModel {
             height: 40, width: 40);
         break;
       default:
-        return Image.asset('assets/images/airIcon.png',
-            height: 40, width: 40);
+        return Image.asset('assets/images/airIcon.png', height: 40, width: 40);
         break;
     }
   }

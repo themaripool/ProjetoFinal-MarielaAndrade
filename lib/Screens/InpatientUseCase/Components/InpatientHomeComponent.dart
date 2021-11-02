@@ -1,3 +1,7 @@
+/*
+  InpatientHomeComponent: Card da home do páciente com os dados observados
+*/
+
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
 import '../InpatientUseCase.dart';

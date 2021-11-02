@@ -147,7 +147,7 @@ class MQTTManager {
             print("--------------------AQUI TESTE 1------------------");
             Navigator.push(contextNavigation,
                 MaterialPageRoute(builder: (contextNavigation) {
-              return Home();
+              return HomePatient();//Home();
             }));
           } else {
             Navigator.push(contextNavigation,
@@ -321,7 +321,8 @@ class MQTTManager {
 
     print("[DEBUG]: BED DATA ${data.sector} bedid = $bedId");
 
-    BedProvider bedProvider = Provider.of<BedProvider>(contextProvider, listen: false);
+    BedProvider bedProvider =
+        Provider.of<BedProvider>(contextProvider, listen: false);
 
     print("[DEBUG]: BED DATA add map $bedId no ${data.sector}");
 
