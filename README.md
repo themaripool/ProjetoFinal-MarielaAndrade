@@ -25,5 +25,25 @@ Seguindo o layout de https://xd.adobe.com/view/6189fad1-97b4-4fdf-5113-8d7b8c8a3
   <img src="/Images_git/CasoMedico-ios/ajustes.png" alt="Size Limit CLI" width="180">
 </p>
 
+<br> Caso de uso: paciente - android
+<p align="left">
+  <img src="/Images_git/CasoPaciente-android/home.png" alt="Size Limit CLI" width="180">
+  <img src="/Images_git/CasoPaciente-android/detalhes.png" alt="Size Limit CLI" width="180">
+  <img src="/Images_git/CasoPaciente-android/sintomas.png" alt="Size Limit CLI" width="180">
+  <img src="/Images_git/CasoPaciente-android/historico_sintomas.png" alt="Size Limit CLI" width="180">
+  <img src="/Images_git/CasoPaciente-android/nivelDeDor.png" alt="Size Limit CLI" width="180">
+  <img src="/Images_git/CasoPaciente-android/ajustes.png" alt="Size Limit CLI" width="180">
+</p>
+
+<br> Caso de uso: equipe médica - android
+<p align="left">
+  <img src="/Images_git/CasoMedico-android/home.png" alt="Size Limit CLI" width="180">
+  <img src="/Images_git/CasoMedico-android/home_lista.png" alt="Size Limit CLI" width="180">
+  <img src="/Images_git/CasoMedico-android/detalhesCama.png" alt="Size Limit CLI" width="180">
+  <img src="/Images_git/CasoMedico-android/detalhesAlertasCama.png" alt="Size Limit CLI" width="180">
+  <img src="/Images_git/CasoMedico-android/todosAlarmes.png" alt="Size Limit CLI" width="180">
+  <img src="/Images_git/CasoMedico-android/Ajustes.png" alt="Size Limit CLI" width="180">
+</p>
+
 
 
