@@ -12,6 +12,19 @@ import 'package:projeto_final_1/Models/Models.dart';
 class MedicalTeamViewModel {
 
 // ignore: missing_return
+
+int checkSeverityBoxes(Color severitycolor) {
+  if (severitycolor == Colors.blue) {
+    return 2;
+  } else if (severitycolor == Colors.yellow) {
+    return 3;
+  } else if (severitycolor == Colors.red) {
+    return 4;
+  } else if (severitycolor == Colors.green){
+    return 1;
+  }
+}
+
 List checkInpatientStatusGrid(BedData bedInfo) {
   if (bedInfo.fr <= 8 || 
       bedInfo.fr >= 25 || 

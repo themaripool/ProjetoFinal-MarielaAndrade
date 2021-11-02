@@ -23,10 +23,6 @@ class cardWidgetGeneral extends StatelessWidget {
         width: 390,
         child: Card(
           elevation: 10,
-          // shape: RoundedRectangleBorder(
-
-          //   borderRadius: BorderRadius.circular(15.0),
-          // ),
           color: Colors.grey[300],
           child: SfCartesianChart(
               backgroundColor: Colors.transparent,
