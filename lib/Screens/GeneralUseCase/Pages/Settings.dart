@@ -47,6 +47,34 @@ class _SettingsState extends State<Settings> {
       return Scaffold(
         body: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 16, bottom: 8),
+              child: Column(
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.center,
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          'https://i.pinimg.com/originals/c9/85/9c/c9859c3719f1328d1795df856940ddfd.jpg'),
+                      radius: 30.0,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'John Doe',
+                      style: TextStyle(fontSize: 20.0),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Médico',
+                    ),
+                  ),
+                ]
+              ),
+            ),
             ListTile(
                 title: Text('Modo escuro'),
                 leading: Icon(CupertinoIcons.moon),
@@ -79,6 +107,34 @@ class _SettingsState extends State<Settings> {
       return Scaffold(
         body: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 16, bottom: 8),
+              child: Column(
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.center,
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          'https://i.pinimg.com/originals/c9/85/9c/c9859c3719f1328d1795df856940ddfd.jpg'),
+                      radius: 30.0,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'John Doe',
+                      style: TextStyle(fontSize: 20.0),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Médico',
+                    ),
+                  ),
+                ]
+              ),
+            ),
             SwitchListTile(
               title: Text('Modo Escuro'),
               secondary: Icon(Icons.dark_mode),
