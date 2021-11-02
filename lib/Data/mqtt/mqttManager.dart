@@ -147,7 +147,7 @@ class MQTTManager {
             print("--------------------AQUI TESTE 1------------------");
             Navigator.push(contextNavigation,
                 MaterialPageRoute(builder: (contextNavigation) {
-              return HomePatient();//Home();
+              return Home();
             }));
           } else {
             Navigator.push(contextNavigation,

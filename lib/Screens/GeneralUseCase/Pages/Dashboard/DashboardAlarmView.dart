@@ -12,12 +12,12 @@ class DashboardAlarmView extends StatelessWidget {
       theme: ThemeData(primaryColor: Color.fromRGBO(236, 234, 234, 1.0)),
       home: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.grey[300],
           leading: new IconButton(
-          icon: new Icon(Icons.arrow_back),
+          icon: new Icon(Icons.arrow_back, color: Colors.black,),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text("Alarmes enfermaria 1"),
-        centerTitle: true,
+        title: Text("Alarmes enfermaria 1", style: TextStyle(color: Colors.black),),
         ),
         body: AlertScreen(
           bedNumber: "0",

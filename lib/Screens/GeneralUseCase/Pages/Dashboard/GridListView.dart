@@ -29,8 +29,10 @@ class _GridListViewState extends State<GridListView> {
           }
         } else {
           return GridView.count(
-              crossAxisCount: 3,
-              childAspectRatio: (90 / 140),
+              crossAxisCount: 2,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 10,
+              childAspectRatio: (140 / 140),
               children: List.generate(model.holder.length, (index) {
                 var bedId = model.bedIds;
                 return GestureDetector(
