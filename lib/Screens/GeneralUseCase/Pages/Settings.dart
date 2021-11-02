@@ -1,3 +1,7 @@
+/*
+  Settings: Tela de ajustes, com botões de sair e de modo escuro
+*/
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
@@ -44,6 +48,7 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     final _platform = Theme.of(context).platform;
     if (_platform == TargetPlatform.iOS) {
+      /* Ajustes no modo cupertino */
       return Scaffold(
         body: Column(
           children: [
@@ -103,7 +108,9 @@ class _SettingsState extends State<Settings> {
           ],
         ),
       );
-    } else {
+    } 
+    /* Ajustes no modo material */
+    else {
       return Scaffold(
         body: Column(
           children: [
@@ -144,6 +151,17 @@ class _SettingsState extends State<Settings> {
                 });
               },
               value: _toggleDarkMode,
+            ),
+            ListTile(
+              title: Text("Sair",style: TextStyle(color: Colors.black),),
+              leading: Icon(Icons.exit_to_app,size: 20,color: Colors.grey[700],),
+              onTap: () {
+                MQTTManager().app_request_logout();
+                Navigator.push(
+                  context,
+                   MaterialPageRoute(builder: (context) => Login()),
+                );
+              }
             ),
           ],
         ),

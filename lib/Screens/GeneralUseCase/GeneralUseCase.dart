@@ -1,3 +1,7 @@
+/*
+  GeneralUseCase: todos os exports deste caso de uso
+*/
+
 export 'Components/AlertDialogPatient.dart';
 export 'Components/ErrorLoginAlertDialog.dart';
 export 'Components/HeaderDrawer.dart';
