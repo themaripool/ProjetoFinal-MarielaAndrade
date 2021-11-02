@@ -89,7 +89,10 @@ class _DashboardState extends State<Dashboard> {
                 ],
               ),
             ),
-            Expanded(child: Center(child: container)),
+            Expanded(child: Padding(
+              padding: EdgeInsets.only(left: 8, right: 8),
+              child: Center(child: container),
+            )),
           ]),
         ));
   }
@@ -132,9 +135,7 @@ class _GridListViewState extends State<GridListView> {
       builder: (__, model, _) {
         return GridView.count(
             crossAxisCount: 3,
-            mainAxisSpacing: 20.0,
-            crossAxisSpacing: 2.0,
-            childAspectRatio: (130 / 177),
+            childAspectRatio: (90 / 140),
             children: List.generate(model.holder.length, (index) {
               var bedId = model.bedIds;
               return GestureDetector(

@@ -73,6 +73,7 @@ class _HomePageState extends State<HomePage> {
           appBar: AppBar(
             title: title,
             centerTitle: true,
+            backgroundColor: Colors.grey[700],
           ),
           body: container,
           drawer: Drawer(
