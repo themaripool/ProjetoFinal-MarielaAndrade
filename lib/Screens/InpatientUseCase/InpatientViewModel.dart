@@ -85,7 +85,7 @@ class InpatientViewModel {
         break;
 
       case 3:
-        if (bedInfo.so >= 91) {
+        if (bedInfo.so <= 91) {
           return Colors.red;
         } else if (bedInfo.so >= 92 && bedInfo.so <= 93) {
           return Colors.yellow;
