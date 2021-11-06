@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:projeto_final_1/Data/Data.dart';
 import 'package:projeto_final_1/Enums/Enums.dart';
+import 'package:projeto_final_1/Screens/InpatientUseCase/InpatientUseCase.dart';
 
 // ignore: must_be_immutable
 class InpatientRatingAlert extends StatefulWidget {
@@ -27,7 +28,8 @@ class _InpatientRatingAlertState extends State<InpatientRatingAlert> {
   Widget build(BuildContext context) {
     if (widget.symptomCase.toString() == "others") {
       alertShown = OtherCase();
-    } else {
+    } 
+    else {
       alertShown = LevelOfPainCases(widget: widget);
     }
 
@@ -71,6 +73,148 @@ class OtherCase extends StatelessWidget {
           );
         })
       ],
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class ConscienceAlert extends StatelessWidget {
+  var text;
+  var viewModel = InpatientViewModel();
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(4.0)
+      ),
+      child: Stack(
+        overflow: Overflow.visible,
+        alignment: Alignment.topCenter,
+        children: [
+          Container(
+            height: 300,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 70, 10, 10),
+              child: Column(
+                children: [
+                  Text("Por favor, selecione o nível de consciência", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                  SizedBox(height: 16,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      OutlinedButton(onPressed: () {text = 'Alerta';},child: const Text('Alerta'),),
+                      OutlinedButton(onPressed: () {text = 'Confusão';},child: const Text('Confusão'),),
+                      OutlinedButton(onPressed: () {text = 'Resposta Verbal';},child: const Text('Resposta Verbal'),),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      OutlinedButton(onPressed: () {text = 'Resposta a Dor';},child: const Text('Resposta a Dor'),),
+                      OutlinedButton(onPressed: () {text = 'Sem Resposta';},child: const Text('Sem Resposta'),),
+                    ],
+                  ),
+                  RaisedButton(onPressed: () {
+                    viewModel.setConscienceLevel(context, text);
+                    Navigator.of(context).pop();
+                  },
+                    color: Colors.redAccent,
+                    child: Text('Okay', style: TextStyle(color: Colors.white),),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            top: -60,
+            child: CircleAvatar(
+              backgroundColor: Colors.redAccent,
+              radius: 60,
+              child: Icon(Icons.assistant_photo, color: Colors.white, size: 50,),
+            )
+          ),
+        ],
+      )
+    );
+  }
+}
+
+class OXAlert extends StatelessWidget {
+  var text;
+  var yes = false;
+  var no = false;
+  var viewModel = InpatientViewModel();
+  var controller = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(4.0)
+      ),
+      child: Stack(
+        overflow: Overflow.visible,
+        alignment: Alignment.topCenter,
+        children: [
+          Container(
+            height: 300,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 70, 10, 10),
+              child: Column(
+                children: [
+                  Text("Por favor, indique a suplementação de oxigênio", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                  SizedBox(height: 16,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      TextButton(onPressed: () {
+                        text = 'Sim';
+                        yes = true;
+                        no = false;
+                      },
+                      child: const Text('Sim'),
+                      style: ButtonStyle(
+                        backgroundColor: yes ? MaterialStateProperty.all(Colors.green) : MaterialStateProperty.all(Colors.transparent)
+                      ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          text = 'Não';
+                          yes = false;
+                          no = true;
+                        },
+                        child: const Text('Não'),
+                        style: ButtonStyle(
+                        backgroundColor: no ? MaterialStateProperty.all(Colors.green) : MaterialStateProperty.all(Colors.transparent)
+                      ),
+                        ),
+                    ],
+                  ),
+                  RaisedButton(onPressed: () {
+                    viewModel.setOxLevel(context, text);
+                    Navigator.of(context).pop();
+                  },
+                    color: Colors.redAccent,
+                    child: Text('Okay', style: TextStyle(color: Colors.white),),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            top: -60,
+            child: CircleAvatar(
+              backgroundColor: Colors.redAccent,
+              radius: 60,
+              child: Icon(Icons.assistant_photo, color: Colors.white, size: 50,),
+            )
+          ),
+        ],
+      )
     );
   }
 }

@@ -263,6 +263,42 @@ class PageBody extends StatelessWidget {
                     )),
               ),
             ),
+             Card(
+              child: InkWell(
+                splashColor: Colors.blue.withAlpha(30),
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return OXAlert();
+                    },
+                  );
+                },
+                child: SizedBox(
+                    width: 150,
+                    height: 100,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            "Suplemetação de Oxigênio",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          Consumer<Symptoms>(
+                              builder: (context, val, child) {
+                            if (val.toStringOx() == "") {
+                              return Text("Dado não inserido");
+                            }
+                            return Text(val.toStringOx());
+                          }),
+                        ],
+                      ),
+                    )),
+              ),
+            ),
           ]),
         ),
         Spacer(),
@@ -383,6 +419,42 @@ class PageBody extends StatelessWidget {
                               return Text("Dado não inserido");
                             }
                             return Text(othersVal.toStringOthers());
+                          }),
+                        ],
+                      ),
+                    )),
+              ),
+            ),
+
+            Card(
+              child: InkWell(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return ConscienceAlert();
+                    },
+                  );
+                },
+                child: SizedBox(
+                    width: 150,
+                    height: 100,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            "Estado de consciência",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          Consumer<Symptoms>(
+                              builder: (context, val, child) {
+                            if (val.toStringConscience() == "") {
+                              return Text("Dado não inserido");
+                            }
+                            return Text(val.toStringConscience());
                           }),
                         ],
                       ),

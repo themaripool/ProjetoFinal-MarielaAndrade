@@ -9,14 +9,16 @@ import '../Data.dart';
 GLOBAIS
 ===================================================== */
 
-//String broker = 'ws://192.168.5.178'; //macos
-String broker = 'ws://192.168.0.3'; //windows //192.168.0.3
+String broker = 'ws://192.168.5.178'; //macos
+//String broker = 'ws://192.168.0.3'; //windows //192.168.0.3
 int port = 9001;
 String clientIdentifier = 'SmartAlarm';
 
 String username; //= 'teste';
 String passwd; //= '123';
-String appId = "teste1"; //"pac1"; //"pacTeste"; "teste1";
+//String appId = "teste1"; //"pac1"; //"pacTeste"; "teste1";
+String appId = "pac1"; 
+
 
 BuildContext contextProvider;
 BuildContext contextNavigation;

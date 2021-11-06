@@ -14,6 +14,20 @@ import 'package:projeto_final_1/Data/Data.dart';
 import 'package:projeto_final_1/Models/Models.dart';
 
 class InpatientViewModel {
+
+  void setConscienceLevel(BuildContext context, String val){
+    if (val == null){
+      val = "Dado não inserido";
+    }
+    Provider.of<Symptoms>(context, listen: false).setConscienceVal(val);
+  }
+
+  void setOxLevel(BuildContext context, String val){
+    if (val == null){
+      val = "Dado não inserido";
+    }
+    Provider.of<Symptoms>(context, listen: false).setSupOxVal(val);
+  }
   
   void showToast(BuildContext context) {
     final scaffold = ScaffoldMessenger.of(context);
@@ -39,7 +53,10 @@ class InpatientViewModel {
         Provider.of<Symptoms>(context, listen: false).diarrheaVal.toString(),
         Provider.of<Symptoms>(context, listen: false).painVal.toString(),
         Provider.of<Symptoms>(context, listen: false).otherVal.toString(),
-        formattedDateHora));
+        formattedDateHora,
+        Provider.of<Symptoms>(context, listen: false).supOx.toString(),
+        Provider.of<Symptoms>(context, listen: false).conscience.toString(),
+        ));
 
     showToast(context);
   }

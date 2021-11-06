@@ -8,7 +8,7 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<Symptoms>(
-          create: (_) => Symptoms(-1, -1, -1, -1, -1, "")),
+          create: (_) => Symptoms(-1, -1, -1, -1, -1, "", "", "")),
       Provider<News2>(create: (_) => News2(32, 43, 54, 12, 32, 43)),
       ChangeNotifierProvider.value(value: BedProvider()),
     ],
