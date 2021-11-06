@@ -35,6 +35,26 @@ class InpatientViewModel {
     }
     Provider.of<Symptoms>(context, listen: false).setOtherVal(val);
   }
+
+  void setHeadache(BuildContext context, int val){
+    Provider.of<Symptoms>(context, listen: false).setHeadacheVal(val);
+  }
+
+  void setTiredness(BuildContext context, int val){
+    Provider.of<Symptoms>(context, listen: false).setTirednessVal(val);
+  }
+
+  void setPain(BuildContext context, int val){
+    Provider.of<Symptoms>(context, listen: false).setPainVal(val);
+  }
+
+  void setNausea(BuildContext context, int val){
+    Provider.of<Symptoms>(context, listen: false).setNauseaVal(val);
+  }
+
+  void setDiarrhea(BuildContext context, int val){
+    Provider.of<Symptoms>(context, listen: false).setDiarrheaVal(val);
+  }
   
   void showToast(BuildContext context) {
     final scaffold = ScaffoldMessenger.of(context);
@@ -48,21 +68,39 @@ class InpatientViewModel {
   }
 
   void saveData(BuildContext context) {
-    print("Tocou no salvar sintomas");
+    final _platform = Theme.of(context).platform;
 
-    var formattedDateHora =
-        DateFormat.Hm().format(DateTime.now().subtract(Duration(hours: 3)));
+    var inputFormat = DateFormat('yyyy-MM-dd HH:mm');
+    var inputDate = inputFormat.parse(DateTime.now().toString());
+    var outputFormat = DateFormat('dd/MM/yyyy');
+    var formattedDate = outputFormat.format(inputDate);
 
-    SymptomsDao().saveMessage(Symptom(
-        Provider.of<Symptoms>(context, listen: false).headacheVal.toString(),
-        Provider.of<Symptoms>(context, listen: false).nauseaVal.toString(),
-        Provider.of<Symptoms>(context, listen: false).tirednessVal.toString(),
-        Provider.of<Symptoms>(context, listen: false).diarrheaVal.toString(),
-        Provider.of<Symptoms>(context, listen: false).painVal.toString(),
-        Provider.of<Symptoms>(context, listen: false).otherVal.toString(),
+    var formattedDateHora = _platform == TargetPlatform.iOS ? 
+                            DateFormat.Hm().format(DateTime.now()) :
+                            DateFormat.Hm().format(DateTime.now().subtract(Duration(hours: 3)));
+
+    var headache = Provider.of<Symptoms>(context, listen: false).headacheVal.toString();
+    var nausea = Provider.of<Symptoms>(context, listen: false).nauseaVal.toString();
+    var tiredness = Provider.of<Symptoms>(context, listen: false).tirednessVal.toString();
+    var diarrhea = Provider.of<Symptoms>(context, listen: false).diarrheaVal.toString();
+    var pain = Provider.of<Symptoms>(context, listen: false).painVal.toString();
+    var other = Provider.of<Symptoms>(context, listen: false).otherVal.toString();
+    var ox = Provider.of<Symptoms>(context, listen: false).supOx.toString();
+    var conscience = Provider.of<Symptoms>(context, listen: false).conscience.toString();
+
+
+
+    SymptomsDao().saveMessage(
+      Symptom( headache == "-1" ? "dados não inseridos" : headache,
+        nausea == "-1" ? "dados não inseridos" : nausea,
+        tiredness == "-1" ? "dados não inseridos" : tiredness,
+        diarrhea == "-1" ? "dados não inseridos" : diarrhea,
+        pain == "-1" ? "dados não inseridos" : pain,
+        other == "-1" ? "dados não inseridos" : other,
         formattedDateHora,
-        Provider.of<Symptoms>(context, listen: false).supOx.toString(),
-        Provider.of<Symptoms>(context, listen: false).conscience.toString(),
+        ox == "-1" ? "dados não inseridos" : ox,
+        conscience == "-1" ? "dados não inseridos" : conscience,
+        formattedDate.toString(),
         ));
 
     showToast(context);

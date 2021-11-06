@@ -308,7 +308,12 @@ class MQTTManager {
     var now = new DateTime.now();
     now.toUtc();
     final f = new DateFormat.Hms();
-    String formattedDate = f.format(now.subtract(Duration(hours: 3)));
+
+    final _platform = Theme.of(contextProvider).platform;
+
+    String formattedDate = _platform == TargetPlatform.iOS ? 
+                          f.format(now) :
+                          f.format(now.subtract(Duration(hours: 3)));
 
     print("[DEBUG]: aAA $formattedDate ${now.timeZoneName}");
 
@@ -383,7 +388,12 @@ class MQTTManager {
     String formattedDiaEMes = diaEMes.format(now);
 
     final f = new DateFormat.Hm();
-    String formattedDateHora = f.format(now.subtract(Duration(hours: 3)));
+
+    final _platform = Theme.of(contextProvider).platform;
+
+    String formattedDateHora = _platform == TargetPlatform.iOS ? 
+                          f.format(now) :
+                          f.format(now.subtract(Duration(hours: 3)));
 
     final alert = Alert(clinicalStatus, patientId, bedId, sectorId,
         formattedDiaEMes, formattedDateHora, isCancelled);

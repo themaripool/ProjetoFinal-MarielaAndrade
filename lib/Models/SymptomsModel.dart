@@ -9,9 +9,10 @@ class Symptom {
   String hourAndMinute;
   String ox;
   String conscience;
+  String formattedDate;
 
   Symptom(this.headache, this.nausea, this.tiredness, this.diarrea,
-      this.pain, this.others, this.hourAndMinute, this.ox, this.conscience);
+      this.pain, this.others, this.hourAndMinute, this.ox, this.conscience, this.formattedDate);
 
   Symptom.fromJson(Map<dynamic, dynamic> json)
       : headache = json['headache'] as String,
@@ -22,7 +23,8 @@ class Symptom {
         others = json['others'] as String,
         hourAndMinute = json['hourAndMinute'] as String,
         ox = json['ox'] as String,
-        conscience = json['conscience'] as String;
+        conscience = json['conscience'] as String,
+        formattedDate = json['formattedDate'] as String;
 
   Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
         'headache': headache,
@@ -33,6 +35,7 @@ class Symptom {
         'others': others,
         'hourAndMinute': hourAndMinute,
         'ox': ox,
-        'conscience': conscience
+        'conscience': conscience,
+        'formattedDate': formattedDate,
       };
 }
