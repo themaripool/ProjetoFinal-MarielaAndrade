@@ -76,6 +76,7 @@ class Symptoms extends ChangeNotifier {
   }
 
    void setOtherVal(String val){
+    print("aaaaaaa $val");
     this.otherVal = val;
     notifyListeners();
   }

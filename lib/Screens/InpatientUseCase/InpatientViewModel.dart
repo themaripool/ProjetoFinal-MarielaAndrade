@@ -28,6 +28,13 @@ class InpatientViewModel {
     }
     Provider.of<Symptoms>(context, listen: false).setSupOxVal(val);
   }
+
+  void setOther(BuildContext context, String val){
+    if (val == ""){
+      val = "Dado não inserido";
+    }
+    Provider.of<Symptoms>(context, listen: false).setOtherVal(val);
+  }
   
   void showToast(BuildContext context) {
     final scaffold = ScaffoldMessenger.of(context);

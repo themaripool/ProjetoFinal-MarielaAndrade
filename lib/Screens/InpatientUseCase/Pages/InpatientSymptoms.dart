@@ -396,7 +396,7 @@ class PageBody extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return InpatientRatingAlert("others");
+                      return OtherAlert();
                     },
                   );
                 },
