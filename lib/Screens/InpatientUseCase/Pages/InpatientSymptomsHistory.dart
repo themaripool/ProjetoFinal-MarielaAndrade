@@ -33,7 +33,9 @@ class InpatientSymptomsHistory extends StatelessWidget {
               symptom.diarrea,
               symptom.pain,
               symptom.others,
-              symptom.hourAndMinute);
+              symptom.hourAndMinute,
+              symptom.formattedDate
+              );
         },
       ),
     );
@@ -53,7 +55,8 @@ class InpatientSymptomsHistory extends StatelessWidget {
               symptom.diarrea,
               symptom.pain,
               symptom.others,
-              symptom.hourAndMinute);
+              symptom.hourAndMinute,
+              symptom.formattedDate);
         },
       ),
     );
@@ -70,49 +73,36 @@ class SymptomsComponentList extends StatelessWidget {
   final String pain;
   final String others;
   final String hourAndMinute;
+  final String formattedDate;
   SymptomsComponentList(this.headache, this.nausea, this.tiredness,
-      this.diarrea, this.pain, this.others, this.hourAndMinute);
+      this.diarrea, this.pain, this.others, this.hourAndMinute, this.formattedDate);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 110.0,
+      height: 190.0,
       child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(children: [
-                Text(hourAndMinute,
-                    style: TextStyle(fontSize: 16, color: Colors.black)),
-              ]),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text("Dor de Cabeça: $headache",
-                      style: TextStyle(fontSize: 16, color: Colors.black)),
-                  Text("Nausea: $nausea",
-                      style: TextStyle(fontSize: 16, color: Colors.black)),
-                ],
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: Row(
+                  children: [
+                  Text(formattedDate,
+                      style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold)),
+                  Spacer(),
+                  Text(hourAndMinute,
+                      style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold)),
+                ]),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text("Cansaço $tiredness",
-                      style: TextStyle(fontSize: 16, color: Colors.black)),
-                  Text("Diarreia: $diarrea",
-                      style: TextStyle(fontSize: 16, color: Colors.black)),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text("Dor: $pain",
-                      style: TextStyle(fontSize: 16, color: Colors.black)),
-                  Text("Outros: $others",
-                      style: TextStyle(fontSize: 16, color: Colors.black)),
-                ],
-              )
+              Text("Dor de Cabeça: $headache", style: TextStyle(fontSize: 16, color: Colors.black)),
+              Text("Nausea: $nausea", style: TextStyle(fontSize: 16, color: Colors.black)),
+              Text("Cansaço $tiredness", style: TextStyle(fontSize: 16, color: Colors.black)),
+              Text("Diarreia: $diarrea", style: TextStyle(fontSize: 16, color: Colors.black)),
+              Text("Dor: $pain", style: TextStyle(fontSize: 16, color: Colors.black)),
+              Text("Outros: $others", style: TextStyle(fontSize: 16, color: Colors.black)),
             ],
           )),
     );
