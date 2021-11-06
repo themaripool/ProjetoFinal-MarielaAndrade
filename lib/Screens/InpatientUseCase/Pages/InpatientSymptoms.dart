@@ -156,7 +156,7 @@ class PageBody extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return InpatientRatingAlert("headache");
+                      return SymptomsAlert("headache");
                     },
                   );
                 },
@@ -195,7 +195,7 @@ class PageBody extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return InpatientRatingAlert("tiredness");
+                      return SymptomsAlert("tiredness");
                     },
                   );
                 },
@@ -234,7 +234,7 @@ class PageBody extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return InpatientRatingAlert("pain");
+                      return SymptomsAlert("pain");
                     },
                   );
                 },
@@ -318,7 +318,7 @@ class PageBody extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return InpatientRatingAlert("nausea");
+                      return SymptomsAlert("nausea");
                     },
                   );
                 },
@@ -357,7 +357,7 @@ class PageBody extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return InpatientRatingAlert("diarrhea");
+                      return SymptomsAlert("diarrhea");
                     },
                   );
                 },

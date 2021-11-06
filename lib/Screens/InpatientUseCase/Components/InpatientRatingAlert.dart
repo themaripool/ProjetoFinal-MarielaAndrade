@@ -9,74 +9,74 @@ import 'package:projeto_final_1/Data/Data.dart';
 import 'package:projeto_final_1/Enums/Enums.dart';
 import 'package:projeto_final_1/Screens/InpatientUseCase/InpatientUseCase.dart';
 
-// ignore: must_be_immutable
-class InpatientRatingAlert extends StatefulWidget {
-  final String symptomCase;
-
-  InpatientRatingAlert(this.symptomCase);
-
-  @override
-  _InpatientRatingAlertState createState() => _InpatientRatingAlertState();
-}
-
-class _InpatientRatingAlertState extends State<InpatientRatingAlert> {
-  _InpatientRatingAlertState();
-
-  var alertShown;
-
+class SymptomsAlert extends StatelessWidget {
+  var viewModel = InpatientViewModel();
+  String caseString;
+  SymptomsAlert(this.caseString);
   @override
   Widget build(BuildContext context) {
-    if (widget.symptomCase.toString() == "others") {
-      alertShown = OtherCase();
-    } 
-    else {
-      alertShown = LevelOfPainCases(widget: widget);
-    }
-
-    return SimpleDialog(
-      backgroundColor: Colors.transparent,
-      children: [
-        Container(
-          width: 200,
-          child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(4.0)
+      ),
+      child: Stack(
+        overflow: Overflow.visible,
+        alignment: Alignment.topCenter,
+        children: [
+          Container(
+            height: 220,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 70, 10, 10),
+              child: Column(
+                children: [
+                  Text("Por favor, selecione o nível de desconforto", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                  SizedBox(height: 8,),
+                  Consumer<Symptoms>(builder: (context, valor, child) {
+                    return FormBuilderSegmentedControl(
+                        selectedColor: Colors.grey[700],
+                        borderColor: Colors.grey[700],
+                        name: "headache",
+                        options: List.generate(6, (i) => (i - 1) + 1)
+                            .map((number) => FormBuilderFieldOption(value: number))
+                            .toList(),
+                        onChanged: (number) => {
+                              print("sintoma = $caseString"),
+                              print(
+                                  "headache = ${InpatientSymptomsEnum.headache.toString()}"),
+                              if (caseString == "headache")
+                                {valor.setHeadacheVal(number)},
+                              if (caseString == "tiredness")
+                                {valor.setTirednessVal(number)},
+                              if (caseString == "pain")
+                                {valor.setPainVal(number)},
+                              if (caseString== "nausea")
+                                {valor.setNauseaVal(number)},
+                              if (caseString == "diarrhea")
+                                {valor.setDiarrheaVal(number)},
+                              Navigator.pop(context)
+                            });
+                    }
+                  ),
+                  SizedBox(height: 8,),
+                ],
               ),
-              color: Colors.white70,
-              elevation: 10,
-              child: alertShown),
-        ),
-      ],
+            ),
+          ),
+          Positioned(
+            top: -60,
+            child: CircleAvatar(
+              backgroundColor: Colors.redAccent,
+              radius: 60,
+              child: Icon(Icons.report_problem_outlined, color: Colors.white, size: 50,),
+            )
+          ),
+        ],
+      )
     );
   }
 }
 
-class OtherCase extends StatelessWidget {
-  const OtherCase({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Consumer<Symptoms>(builder: (context, valor, child) {
-          return TextField(
-            textInputAction: TextInputAction.go,
-            onSubmitted: (value) {
-              print("value = $value");
-              valor.setOtherVal(value);
-              Navigator.pop(context);
-            },
-            decoration: const InputDecoration(
-                border: OutlineInputBorder(), hintText: 'Por favor, digite seu sintoma'),
-          );
-        })
-      ],
-    );
-  }
-}
-
+// ignore: must_be_immutable
 class OtherAlert extends StatelessWidget {
   var viewModel = InpatientViewModel();
   var controller = TextEditingController();
@@ -145,7 +145,7 @@ class ConscienceAlert extends StatelessWidget {
         alignment: Alignment.topCenter,
         children: [
           Container(
-            height: 300,
+            height: 250,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(10, 70, 10, 10),
               child: Column(
@@ -155,25 +155,38 @@ class ConscienceAlert extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      OutlinedButton(onPressed: () {text = 'Alerta';},child: const Text('Alerta'),),
-                      OutlinedButton(onPressed: () {text = 'Confusão';},child: const Text('Confusão'),),
-                      OutlinedButton(onPressed: () {text = 'Resposta Verbal';},child: const Text('Resposta Verbal'),),
+                      OutlinedButton(onPressed: () {
+                        text = 'Alerta';
+                        viewModel.setConscienceLevel(context, text);
+                        Navigator.of(context).pop();
+                      },child: const Text('Alerta'),),
+                      OutlinedButton(onPressed: () {
+                        text = 'Confusão';
+                        viewModel.setConscienceLevel(context, text);
+                        Navigator.of(context).pop();
+                      },child: const Text('Confusão'),),
+                      OutlinedButton(onPressed: () {
+                        text = 'Resposta Verbal';
+                        viewModel.setConscienceLevel(context, text);
+                        Navigator.of(context).pop();
+                      },child: const Text('Resposta Verbal'),),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      OutlinedButton(onPressed: () {text = 'Resposta a Dor';},child: const Text('Resposta a Dor'),),
-                      OutlinedButton(onPressed: () {text = 'Sem Resposta';},child: const Text('Sem Resposta'),),
+                      OutlinedButton(onPressed: () {
+                        text = 'Resposta a Dor';
+                        viewModel.setConscienceLevel(context, text);
+                        Navigator.of(context).pop();
+                      },child: const Text('Resposta a Dor'),),
+                      OutlinedButton(onPressed: () {
+                        text = 'Sem Resposta';
+                        viewModel.setConscienceLevel(context, text);
+                        Navigator.of(context).pop();
+                      },child: const Text('Sem Resposta'),),
                     ],
                   ),
-                  RaisedButton(onPressed: () {
-                    viewModel.setConscienceLevel(context, text);
-                    Navigator.of(context).pop();
-                  },
-                    color: Colors.redAccent,
-                    child: Text('Okay', style: TextStyle(color: Colors.white),),
-                  )
                 ],
               ),
             ),
@@ -209,7 +222,7 @@ class OXAlert extends StatelessWidget {
         alignment: Alignment.topCenter,
         children: [
           Container(
-            height: 300,
+            height: 250,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(10, 70, 10, 10),
               child: Column(
@@ -221,13 +234,10 @@ class OXAlert extends StatelessWidget {
                     children: [
                       TextButton(onPressed: () {
                         text = 'Sim';
-                        yes = true;
-                        no = false;
+                        viewModel.setOxLevel(context, text);
+                        Navigator.of(context).pop();
                       },
                       child: const Text('Sim'),
-                      style: ButtonStyle(
-                        backgroundColor: yes ? MaterialStateProperty.all(Colors.green) : MaterialStateProperty.all(Colors.transparent)
-                      ),
                       )
                     ],
                   ),
@@ -237,23 +247,13 @@ class OXAlert extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           text = 'Não';
-                          yes = false;
-                          no = true;
+                          viewModel.setOxLevel(context, text);
+                          Navigator.of(context).pop();
                         },
                         child: const Text('Não'),
-                        style: ButtonStyle(
-                        backgroundColor: no ? MaterialStateProperty.all(Colors.green) : MaterialStateProperty.all(Colors.transparent)
-                      ),
                         ),
                     ],
                   ),
-                  RaisedButton(onPressed: () {
-                    viewModel.setOxLevel(context, text);
-                    Navigator.of(context).pop();
-                  },
-                    color: Colors.redAccent,
-                    child: Text('Okay', style: TextStyle(color: Colors.white),),
-                  )
                 ],
               ),
             ),
@@ -272,45 +272,3 @@ class OXAlert extends StatelessWidget {
   }
 }
 
-class LevelOfPainCases extends StatelessWidget {
-  const LevelOfPainCases({Key key, @required this.widget}) : super(key: key);
-
-  final InpatientRatingAlert widget;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 16.0),
-          child: Text("Por favor, selecione o nível de sua dor: "),
-        ),
-        Consumer<Symptoms>(builder: (context, valor, child) {
-          return FormBuilderSegmentedControl(
-              selectedColor: Colors.grey[700],
-              borderColor: Colors.grey[700],
-              name: "headache",
-              options: List.generate(6, (i) => (i - 1) + 1)
-                  .map((number) => FormBuilderFieldOption(value: number))
-                  .toList(),
-              onChanged: (number) => {
-                    print("sintoma = ${widget.symptomCase.toString()}"),
-                    print(
-                        "headache = ${InpatientSymptomsEnum.headache.toString()}"),
-                    if (widget.symptomCase.toString() == "headache")
-                      {valor.setHeadacheVal(number)},
-                    if (widget.symptomCase.toString() == "tiredness")
-                      {valor.setTirednessVal(number)},
-                    if (widget.symptomCase.toString() == "pain")
-                      {valor.setPainVal(number)},
-                    if (widget.symptomCase.toString() == "nausea")
-                      {valor.setNauseaVal(number)},
-                    if (widget.symptomCase.toString() == "diarrhea")
-                      {valor.setDiarrheaVal(number)},
-                    Navigator.pop(context)
-                  });
-        })
-      ],
-    );
-  }
-}
