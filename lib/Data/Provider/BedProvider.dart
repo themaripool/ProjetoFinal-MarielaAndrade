@@ -6,6 +6,21 @@ class BedProvider extends ChangeNotifier {
   Map<String, LinkedList<BedData>> holder = {};
   Map<String, String> sectorMap = {};
   var bedIds = [];
+  String selectedSector;
+
+  void setSector(String setor) {
+    if (setor == "setor 3") {
+      selectedSector = "3";
+    } else if (setor == "setor 4") {
+      selectedSector = "4";
+    } else if (setor == "setor 5") {
+      selectedSector = "5";
+    } else if (setor == "todos") {
+      selectedSector = "0";
+    }
+    print("[DEBUG SETOR]: $selectedSector");
+    notifyListeners();
+  }
 
   void addToDataList(String bedId, BedData bedData) {
     if (holder.containsKey(bedId) == false) {

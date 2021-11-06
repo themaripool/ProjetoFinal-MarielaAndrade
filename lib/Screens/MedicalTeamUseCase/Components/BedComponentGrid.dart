@@ -95,6 +95,11 @@ class BedComponent extends StatelessWidget {
             padding: const EdgeInsets.only(top: 8, left: 8),
             child: Text(statusBed[1],
                 style: TextStyle(fontSize: 12, color: Colors.white)),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8, left: 8),
+            child: Text("Setor = ${bedInfo.sector}",
+                style: TextStyle(fontSize: 12, color: Colors.white)),
           )
         ],
       ),

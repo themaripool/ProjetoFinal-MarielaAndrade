@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:projeto_final_1/Data/Data.dart';
 import '../../GeneralUseCase.dart';
 
 class Dashboard extends StatefulWidget {
@@ -12,6 +13,7 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   var status = true;
+  String _chosenValue;
   var container;
 
   @override
@@ -47,6 +49,42 @@ class _DashboardState extends State<Dashboard> {
                         'Alarmes',
                         style: TextStyle(color: Colors.black),
                       )),
+                  Spacer(),
+                  DropdownButton<String>(
+                    focusColor: Colors.white,
+                    value: _chosenValue,
+                    //elevation: 5,
+                    style: TextStyle(color: Colors.white),
+                    iconEnabledColor: Colors.black,
+                    items: <String>[
+                      'todos',
+                      'setor 3',
+                      'setor 4',
+                      'setor 5',
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      );
+                    }).toList(),
+                    hint: Text(
+                      "Selecione o setor",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    onChanged: (String value) {
+                      setState(() {
+                        _chosenValue = value;
+                        Provider.of<BedProvider>(context, listen: false)
+                            .setSector(_chosenValue);
+                      });
+                    },
+                  ),
                   Spacer(),
                   OutlinedButton(
                       style: OutlinedButton.styleFrom(
@@ -89,7 +127,8 @@ class _DashboardState extends State<Dashboard> {
                 ],
               ),
             ),
-            Expanded(child: Padding(
+            Expanded(
+                child: Padding(
               padding: EdgeInsets.only(left: 8, right: 8),
               child: Center(child: container),
             )),
@@ -97,4 +136,3 @@ class _DashboardState extends State<Dashboard> {
         ));
   }
 }
-
