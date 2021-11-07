@@ -13,8 +13,8 @@ class SymptomsDao {
     return _symptomsRef;
   }
 
-  Query getAllSymptoms() {
-    print("------- QUERY ALL BEDS ALAMS -------");
-    return _symptomsRef.orderByChild("hourAndMinute");
+  Query getAlarmsByUser(String user) {
+    print("------- QUERY BED NUMBER $user -------");
+    return _symptomsRef.orderByChild("user").equalTo(user);
   }
 }

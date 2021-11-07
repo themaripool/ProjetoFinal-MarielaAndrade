@@ -23,7 +23,7 @@ class InpatientSymptomsHistory extends StatelessWidget {
       appBar: CupertinoNavigationBar(middle: Text("Histórico"),),
       body: FirebaseAnimatedList(
         defaultChild:Center(child: CircularProgressIndicator()),
-        query: SymptomsDao().getAllSymptoms(),
+        query: SymptomsDao().getAlarmsByUser(Provider.of<BedProvider>(contextNavigation, listen: false).currentUserName),
         itemBuilder: (context, snapshot, animation, index) {
           final json = snapshot.value as Map<dynamic, dynamic>;
           final symptom = Symptom.fromJson(json);
@@ -46,7 +46,7 @@ class InpatientSymptomsHistory extends StatelessWidget {
       appBar: AppBar(title: Text("Histórico"), backgroundColor: Colors.grey[700],),
       body: FirebaseAnimatedList(
         defaultChild:Center(child: CircularProgressIndicator()),
-        query: SymptomsDao().getAllSymptoms(),
+        query: SymptomsDao().getAlarmsByUser(Provider.of<BedProvider>(contextNavigation, listen: false).currentUserName),
         itemBuilder: (context, snapshot, animation, index) {
           final json = snapshot.value as Map<dynamic, dynamic>;
           final symptom = Symptom.fromJson(json);

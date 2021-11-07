@@ -87,6 +87,7 @@ class InpatientViewModel {
     var other = Provider.of<Symptoms>(context, listen: false).otherVal.toString();
     var ox = Provider.of<Symptoms>(context, listen: false).supOx.toString();
     var conscience = Provider.of<Symptoms>(context, listen: false).conscience.toString();
+    var user =  Provider.of<BedProvider>(contextNavigation, listen: false).currentUserName;
 
 
 
@@ -101,6 +102,7 @@ class InpatientViewModel {
         ox == "-1" ? "dados não inseridos" : ox,
         conscience == "-1" ? "dados não inseridos" : conscience,
         formattedDate.toString(),
+        user
         ));
 
     showToast(context);
