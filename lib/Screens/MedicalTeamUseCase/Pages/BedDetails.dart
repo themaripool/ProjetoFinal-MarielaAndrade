@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Screens/InpatientUseCase/InpatientUseCase.dart';
 import '../MedicalTeamUseCase.dart';
 
 class BedDetails extends StatefulWidget {
@@ -16,7 +17,6 @@ class _BedDetailsState extends State<BedDetails> {
   final int initialIndex;
 
   _BedDetailsState(this.bedId, this.initialIndex);
-
 
   final Map<int, Widget> logoWidgets = const <int, Widget>{
     0: Text("Dados"),
@@ -40,7 +40,7 @@ class _BedDetailsState extends State<BedDetails> {
     ];
 
     if (_platform == TargetPlatform.iOS) {
-      if (initialIndex != -1){
+      if (initialIndex != -1) {
         theriGroupVakue = initialIndex;
       }
       return Scaffold(
@@ -48,9 +48,25 @@ class _BedDetailsState extends State<BedDetails> {
         body: bodies[theriGroupVakue],
         appBar: AppBar(
           leading: CupertinoNavigationBarBackButton(
-              color: CupertinoColors.black,
-              onPressed: () => Navigator.of(context).pop(),
-            ),
+            color: CupertinoColors.black,
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          actions: <Widget>[
+            Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return NavigationSymptoms();
+                    }));
+                  },
+                  child: Icon(
+                    CupertinoIcons.add,
+                    size: 26.0,
+                  ),
+                ))
+          ],
           elevation: 2.0,
           backgroundColor: Colors.white,
           centerTitle: true,
@@ -100,6 +116,22 @@ class _BedDetailsState extends State<BedDetails> {
                 icon: new Icon(Icons.arrow_back),
                 onPressed: () => Navigator.of(context).pop(),
               ),
+              actions: <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(right: 20.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return NavigationSymptoms();
+                        }));
+                      },
+                      child: Icon(
+                        Icons.add,
+                        size: 26.0,
+                      ),
+                    ))
+              ],
               backgroundColor: Colors.grey[700],
               title: Text("Leito Número ${widget.bedId}"),
               bottom: TabBar(
@@ -128,5 +160,18 @@ class _BedDetailsState extends State<BedDetails> {
             )),
       ));
     }
+  }
+}
+
+class NavigationSymptoms extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text("Sintomas do paciente"),
+      ),
+      body: PatientSymptoms(),
+    );
   }
 }
