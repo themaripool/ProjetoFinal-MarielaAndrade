@@ -45,6 +45,11 @@ class _HomePageState extends State<HomePage> {
         ),
         body: CupertinoTabScaffold(
             tabBar: CupertinoTabBar(
+              onTap: (index) {
+                setState(() {
+                  _currentTab = index;
+                });
+              },
               items: [
                 BottomNavigationBarItem(
                     icon: Icon(CupertinoIcons.home), label: 'Dashboard'),
@@ -53,7 +58,6 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             tabBuilder: (BuildContext context, index) {
-              _currentTab = index;
               return _tabs[index];
             }),
       );

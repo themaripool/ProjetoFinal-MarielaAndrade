@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:projeto_final_1/Data/Data.dart';
-import 'package:projeto_final_1/Screens/GeneralUseCase/Components/CupertinoPicker.dart';
 import '../../GeneralUseCase.dart';
 
 class Dashboard extends StatefulWidget {
@@ -16,17 +15,6 @@ class _DashboardState extends State<Dashboard> {
   var status = true;
   String _chosenValue;
   var container;
-  int value = 0;
-  var selectItem;
-
-  final items = [
-    "Item 1",
-    "Item 2",
-    "Item 3",
-    "Item 4",
-    "Item 5",
-  ];
-
   @override
   Widget build(BuildContext context) {
     final _platform = Theme.of(context).platform;
