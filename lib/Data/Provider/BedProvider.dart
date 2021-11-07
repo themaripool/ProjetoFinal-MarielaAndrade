@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Models/Models.dart';
 
 class BedProvider extends ChangeNotifier {
-  Map<String, LinkedList<BedData>> holder = {};
-  Map<String, String> sectorMap = {};
+  Map<String, LinkedList<BedData>> holder = {}; // BEDID : LISTA
+  Map<String, String> sectorMap = {}; // BEDIS : SECTOR
   var bedIds = [];
   String selectedSector;
+  Map<String, List<BedData>> bySector = {};
 
   void setSector(String setor) {
     if (setor == "setor 3") {
@@ -31,7 +32,27 @@ class BedProvider extends ChangeNotifier {
     if (holder[bedId].length == 30) {
       holder[bedId].remove(holder[bedId].first);
     }
+    fillSortedList(bedData, bedId);
     notifyListeners();
+  }
+
+  void fillSortedList(BedData bedData, String bedId) {
+    if (bySector.containsKey(bedData.sector) != true) {
+      bySector[bedData.sector] = [];
+    }
+    int index = bySector[bedData.sector]
+        .indexWhere((element) => element.bedNumber.toString() == bedId);
+    if (index != -1) {
+      bySector[bedData.sector][index] = bedData;
+    } else {
+      bySector[bedData.sector].add(bedData);
+    }
+
+    List<List<BedData>> aux = [];
+    bySector.forEach((key, value) => { if (key != "0") { aux.add(value) }});
+    bySector["0"] = aux.expand((element) => element).toList(); 
+    
+    print("[DEBUG SETOR]: $bySector");
   }
 
   void addToSectorMap(String bedId, String sectorId) {

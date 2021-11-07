@@ -28,7 +28,7 @@ class _ListViewPatientsState extends State<ListViewPatients> {
         }
       } else {
         return ListView.separated(
-          itemCount: model.holder.length,
+          itemCount: model.bySector[model.selectedSector].length,
           separatorBuilder: (BuildContext context, int index) => const Divider(
             color: Colors.black,
           ),
@@ -39,11 +39,11 @@ class _ListViewPatientsState extends State<ListViewPatients> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => BedDetails(bedId[index], -1)),
+                        builder: (context) => BedDetails(model.bySector[model.selectedSector][index].bedNumber.toString(), -1)),
                   );
                 },
                 child:
-                    BedComponentList(bedInfo: model.holder[bedId[index]].last));
+                    BedComponentList(bedInfo:model.bySector[model.selectedSector][index]));
           },
         );
       }

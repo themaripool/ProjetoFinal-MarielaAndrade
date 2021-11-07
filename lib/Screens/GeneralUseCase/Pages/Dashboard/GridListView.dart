@@ -33,18 +33,18 @@ class _GridListViewState extends State<GridListView> {
               crossAxisSpacing: 20,
               mainAxisSpacing: 10,
               childAspectRatio: (140 / 140),
-              children: List.generate(model.holder.length, (index) {
-                var bedId = model.bedIds;
+              children: List.generate(model.bySector[model.selectedSector].length, (index) {
+               // var bedId = model.bedIds;
                 return GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => BedDetails(bedId[index], -1)),
+                            builder: (context) => BedDetails(model.bySector[model.selectedSector][index].bedNumber.toString(), -1)),
                       );
                     },
                     child: BedComponent(
-                      bedInfo: model.holder[bedId[index]].last,
+                      bedInfo: model.bySector[model.selectedSector][index],
                     ));
               }));
         }
