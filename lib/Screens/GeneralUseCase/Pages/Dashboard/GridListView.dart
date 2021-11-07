@@ -19,6 +19,9 @@ class _GridListViewState extends State<GridListView> {
   @override
   Widget build(BuildContext context) {
     final _platform = Theme.of(context).platform;
+    if ( Provider.of<BedProvider>(context, listen: false).selectedSector == null){
+      Provider.of<BedProvider>(context, listen: false).setSector("todos");
+    }
     return Consumer<BedProvider>(
       builder: (__, model, _) {
         if (model.holder.isEmpty) {
