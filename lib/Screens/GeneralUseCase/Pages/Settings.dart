@@ -54,31 +54,27 @@ class _SettingsState extends State<Settings> {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 16, bottom: 8),
-              child: Column(
-                children: <Widget>[
-                  Align(
-                    alignment: Alignment.center,
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          'https://i.pinimg.com/originals/c9/85/9c/c9859c3719f1328d1795df856940ddfd.jpg'),
-                      radius: 30.0,
-                    ),
+              child: Column(children: <Widget>[
+                Align(
+                  alignment: Alignment.center,
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        'https://i.pinimg.com/originals/c9/85/9c/c9859c3719f1328d1795df856940ddfd.jpg'),
+                    radius: 30.0,
                   ),
-                  Align(
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'John Doe',
+                      Provider.of<BedProvider>(contextNavigation, listen: false)
+                          .currentUserName,
                       style: TextStyle(fontSize: 20.0),
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Médico',
-                    ),
-                  ),
-                ]
-              ),
+                ),
+              ]),
             ),
             ListTile(
                 title: Text('Modo escuro'),
@@ -108,7 +104,7 @@ class _SettingsState extends State<Settings> {
           ],
         ),
       );
-    } 
+    }
     /* Ajustes no modo material */
     else {
       return Scaffold(
@@ -116,31 +112,27 @@ class _SettingsState extends State<Settings> {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 16, bottom: 8),
-              child: Column(
-                children: <Widget>[
-                  Align(
-                    alignment: Alignment.center,
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          'https://i.pinimg.com/originals/c9/85/9c/c9859c3719f1328d1795df856940ddfd.jpg'),
-                      radius: 30.0,
-                    ),
+              child: Column(children: <Widget>[
+                Align(
+                  alignment: Alignment.center,
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        'https://i.pinimg.com/originals/c9/85/9c/c9859c3719f1328d1795df856940ddfd.jpg'),
+                    radius: 30.0,
                   ),
-                  Align(
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'John Doe',
+                      Provider.of<BedProvider>(contextNavigation, listen: false)
+                          .currentUserName,
                       style: TextStyle(fontSize: 20.0),
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Médico',
-                    ),
-                  ),
-                ]
-              ),
+                ),
+              ]),
             ),
             SwitchListTile(
               title: Text('Modo Escuro'),
@@ -153,16 +145,22 @@ class _SettingsState extends State<Settings> {
               value: _toggleDarkMode,
             ),
             ListTile(
-              title: Text("Sair",style: TextStyle(color: Colors.black),),
-              leading: Icon(Icons.exit_to_app,size: 20,color: Colors.grey[700],),
-              onTap: () {
-                MQTTManager().app_request_logout();
-                Navigator.push(
-                  context,
-                   MaterialPageRoute(builder: (context) => Login()),
-                );
-              }
-            ),
+                title: Text(
+                  "Sair",
+                  style: TextStyle(color: Colors.black),
+                ),
+                leading: Icon(
+                  Icons.exit_to_app,
+                  size: 20,
+                  color: Colors.grey[700],
+                ),
+                onTap: () {
+                  MQTTManager().app_request_logout();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Login()),
+                  );
+                }),
           ],
         ),
       );

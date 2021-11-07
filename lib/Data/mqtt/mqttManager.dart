@@ -143,10 +143,10 @@ class MQTTManager {
         if (contentLoginRequest == "2") {
           userId = content['UI'].toString();
           sectorId = content['SI'].toString();
+          Provider.of<BedProvider>(contextNavigation, listen: false).setCurrentUserName(username);
           print("[DEBUG]: SECTORID = $sectorId, userid= $userId");
           login_accepted();
           if (appId == "teste1") {
-            print("--------------------AQUI TESTE 1------------------");
             Navigator.push(contextNavigation,
                 MaterialPageRoute(builder: (contextNavigation) {
               return Home();

@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Models/Models.dart';
 
 class BedProvider extends ChangeNotifier {
-  Map<String, LinkedList<BedData>> holder = {}; // BEDID : LISTA
-  Map<String, String> sectorMap = {}; // BEDIS : SECTOR
+  Map<String, LinkedList<BedData>> holder = {}; 
+  Map<String, String> sectorMap = {};  // retirar dps
   var bedIds = [];
+  var currentUserName;
   String selectedSector;
   Map<String, List<BedData>> bySector = {};
+
+  void setCurrentUserName(String username){
+    currentUserName = username;
+    notifyListeners();
+  }
 
   void setSector(String setor) {
     if (setor == "setor 3") {
