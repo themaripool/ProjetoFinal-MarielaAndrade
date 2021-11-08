@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:postgres/postgres.dart';
 import 'package:projeto_final_1/Data/Data.dart';
 import '../../GeneralUseCase.dart';
 
@@ -26,7 +27,7 @@ class _LoginState extends State<Login> {
 /*
   initializeFlutterFire: Inicialização do firebase
 */
-  void initializeFlutterFire() async {
+  /* void initializeFlutterFire() async {
     try {
       await Firebase.initializeApp();
       setState(() {
@@ -37,11 +38,37 @@ class _LoginState extends State<Login> {
         _error = true;
       });
     }
+  } */
+
+  void postGre() async {
+    final conn = PostgreSQLConnection(
+      '10.0.2.2',
+      5435,
+      'postgres',
+      username: 'postgres',
+      password: 'secret',
+    );
+    await conn.open();
+
+    print('Connected to Postgres database...');
+    setState(() {
+        _initialized = true;
+    });
+    print('[CONN]: ${conn.isClosed}');
+
+    var resultsMap = await conn.mappedResultsQuery('''
+      SELECT sector_id_id, count(*) 
+      FROM "SmartAlarm_bed" 
+      GROUP BY sector_id_id
+    ''');
+     print(resultsMap);
+
   }
 
   @override
   void initState() {
-    initializeFlutterFire();
+    //initializeFlutterFire();
+    postGre();
     NotificationApi.init();
     super.initState();
   }
@@ -50,8 +77,8 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     final _platform = Theme.of(context).platform;
     if (!_initialized) {
-      if (_platform  == TargetPlatform.iOS){
-         return Center(child: CupertinoActivityIndicator());
+      if (_platform == TargetPlatform.iOS) {
+        return Center(child: CupertinoActivityIndicator());
       } else {
         return Center(child: CircularProgressIndicator());
       }
@@ -63,10 +90,21 @@ class _LoginState extends State<Login> {
             Container(
               child: Column(children: [
                 LoginHeader(),
-                _platform == TargetPlatform.iOS ? LoginFormCupertino( passwordCntl: _passwordCntl, userNameCntl: _userNameCntl)
-                                                : LoginFormMaterial(userNameCntl: _userNameCntl,passwordCntl: _passwordCntl),
-                LoginInpatient(passwordCntl: _passwordCntl, userNameCntl: _userNameCntl,),
-                LoginMedicalTeam(passwordCntl: _passwordCntl,userNameCntl: _userNameCntl,)
+                _platform == TargetPlatform.iOS
+                    ? LoginFormCupertino(
+                        passwordCntl: _passwordCntl,
+                        userNameCntl: _userNameCntl)
+                    : LoginFormMaterial(
+                        userNameCntl: _userNameCntl,
+                        passwordCntl: _passwordCntl),
+                LoginInpatient(
+                  passwordCntl: _passwordCntl,
+                  userNameCntl: _userNameCntl,
+                ),
+                LoginMedicalTeam(
+                  passwordCntl: _passwordCntl,
+                  userNameCntl: _userNameCntl,
+                )
               ]),
             ),
           ]),
@@ -75,4 +113,3 @@ class _LoginState extends State<Login> {
     }
   }
 }
-

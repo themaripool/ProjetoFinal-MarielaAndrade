@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'Data/Data.dart';
-import 'Screens/GeneralUseCase/GeneralUseCase.dart';
+import 'Screens/GeneralUseCase/GeneralUseCase.dart'; 
 
 
 void main() async {
@@ -32,3 +32,21 @@ class TccApp extends StatelessWidget {
     );
   }
 }
+
+
+/* import 'package:postgres/postgres.dart';
+
+void main(List<String> arguments) async {
+  final conn = PostgreSQLConnection(
+    'localhost',
+    5435,
+    'postgres',
+    username: 'postgres',
+    password: 'secret',
+  );
+  await conn.open();
+
+  print('Connected to Postgres database...');
+
+  
+} */
