@@ -1,23 +1,10 @@
-import 'dart:io';
-
 import 'package:postgres/postgres.dart';
-import 'package:projeto_final_1/Data/Data.dart';
 import 'package:projeto_final_1/Models/Models.dart';
 
-class SymptomsDao {
+class PostgresDao {
   PostgreSQLConnection _symptomsRef;
 
-  /* void saveMessage(Symptom message) {
-    _symptomsRef.push().set(message.toJson());
-  } */
-
-  /*  Query getMessageQuery() {
-    return _symptomsRef;
-  }*/
-
-  Future<List<Symptom>> getAlarmsByUser(String user) async {
-    print("------- QUERY BED NUMBER $user -------");
-
+  Future<List<Symptom>> getSymptomsByUser(String user) async {
     //SELECT *
     //FROM "SmartAlarmMobile_symptoms"
     //WHERE userlogged = 'teste'
@@ -53,6 +40,36 @@ class SymptomsDao {
     return res;
   }
 
+  Future<List<Symptom>> getSymptomsByBed(String bed) async {
+    //SELECT *
+    //FROM "SmartAlarmMobile_symptoms"
+    //WHERE bed = 'bed'
+
+    List<Symptom> res = List<Symptom>();
+
+    _symptomsRef = PostgreSQLConnection(
+      '10.0.2.2',
+      5435,
+      'postgres',
+      username: 'postgres',
+      password: 'secret',
+    );
+    await _symptomsRef.open();
+
+    var result = await _symptomsRef.query(
+        '''select * from "SmartAlarmMobile_symptoms" WHERE bednumber = '$bed' ''');
+
+    var aux;
+
+    result.forEach((element) => {
+       aux = Symptom(element[3], element[9], element[8], 
+                    element[5], element[1], element[6],element[4], 
+                    element[7], element[0], element[2], element[10]),
+       res.add(aux)
+    });  
+    return res;
+  }
+
   void initPostgres() async {
     _symptomsRef = PostgreSQLConnection(
       '10.0.2.2',
@@ -66,6 +83,11 @@ class SymptomsDao {
     print('Connected to Postgres database...');
   }
 
+  /* flutter/lib/ui/ui_dart_state.cc(209)] Unhandled Exception: PostgreSQLSeverity.error 23502: 
+  null value in column "bednumber" of relation "SmartAlarmMobile_symptoms" violates not-null 
+  constraint Detail: Failing row contains (Alerta, 5, 09/11/2021, 2, 09:57, 4, aaaa, NÃ£o, 0, 5, teste, null). 
+  Table: SmartAlarmMobile_symptoms Column: bednumber */
+
   Future<void> saveSymptom(
       String conscience,
       String diarrea,
@@ -77,7 +99,8 @@ class SymptomsDao {
       String ox,
       String pain,
       String tiredness,
-      String userlogged) async {
+      String userlogged,
+      String bednumber) async {
     _symptomsRef = PostgreSQLConnection(
       '10.0.2.2',
       5435,
@@ -86,10 +109,11 @@ class SymptomsDao {
       password: 'secret',
     );
     await _symptomsRef.open();
+    print('[BD TESTE]: bednumber = $bednumber');
     if (_symptomsRef.isClosed == false) {
-      await _symptomsRef.query(
-        'insert into "SmartAlarmMobile_symptoms" (conscience,diarrea,date,headache,hour,nausea,others,ox,pain,tiredness,userlogged) '
-        'values(@conscience,@diarrea,@date,@headache,@hour,@nausea,@others,@ox,@pain,@tiredness,@userlogged)',
+      var result = await _symptomsRef.query(
+        'insert into "SmartAlarmMobile_symptoms" (conscience,diarrea,date,headache,hour,nausea,others,ox,pain,tiredness,userlogged,bednumber) '
+        'values(@conscience,@diarrea,@date,@headache,@hour,@nausea,@others,@ox,@pain,@tiredness,@userlogged,@bednumber)',
         substitutionValues: {
           'conscience': conscience,
           'diarrea': diarrea,
@@ -102,9 +126,11 @@ class SymptomsDao {
           'pain': pain,
           'tiredness': tiredness,
           'userlogged': userlogged,
+          'bednumber': bednumber,
         },
         allowReuse: true,
       );
+      print('[BD TESTE]: $result');
     }
   }
 }

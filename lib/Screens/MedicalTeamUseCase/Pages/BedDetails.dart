@@ -58,7 +58,7 @@ class _BedDetailsState extends State<BedDetails> {
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return NavigationSymptoms();
+                      return NavigationSymptoms(widget.bedId);
                     }));
                   },
                   child: Icon(
@@ -123,7 +123,7 @@ class _BedDetailsState extends State<BedDetails> {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return NavigationSymptoms();
+                          return NavigationSymptoms(widget.bedId);
                         }));
                       },
                       child: Icon(
@@ -164,14 +164,28 @@ class _BedDetailsState extends State<BedDetails> {
 }
 
 class NavigationSymptoms extends StatelessWidget {
+  String numberBed;
+  NavigationSymptoms(this.numberBed);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text("Sintomas do paciente"),
-      ),
-      body: PatientSymptoms(),
-    );
+    final _platform = Theme.of(context).platform;
+    if (_platform == TargetPlatform.iOS) {
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: Text("Sintomas do paciente"),
+        ),
+        body: PatientSymptoms(numberBed: numberBed),
+      );
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.grey[700],
+          title: Text("Sintomas do paciente"),
+          centerTitle: true,
+        ),
+        body: PatientSymptoms(numberBed: numberBed),
+      );
+    }
   }
 }

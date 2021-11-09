@@ -22,27 +22,10 @@ class _LoginState extends State<Login> {
   bool _initialized = false;
   bool _error = false;
 
-/*
-  initializeFlutterFire: Inicialização do firebase
-*/
-  /* void initializeFlutterFire() async {
-    try {
-      await Firebase.initializeApp();
-      setState(() {
-        _initialized = true;
-      });
-    } catch (e) {
-      setState(() {
-        _error = true;
-      });
-    }
-  } */
-
   @override
   void initState() {
-    //initializeFlutterFire();
     NotificationApi.init();
-    SymptomsDao().initPostgres();
+    PostgresDao().initPostgres();
     _initialized = true;
     super.initState();
   }

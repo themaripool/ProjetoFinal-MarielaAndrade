@@ -10,8 +10,10 @@ import 'package:projeto_final_1/Data/Data.dart';
 import '../InpatientUseCase.dart';
 
 class PatientSymptoms extends StatefulWidget {
+  final numberBed;
+  PatientSymptoms({this.numberBed});
   @override
-  _PatientSymptomsState createState() => _PatientSymptomsState();
+  _PatientSymptomsState createState() => _PatientSymptomsState(numberBed);
 }
 
 class _PatientSymptomsState extends State<PatientSymptoms> {
@@ -21,6 +23,9 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
   bool nausea = false;
   bool diarrhea = false;
   bool other = false;
+  String numberBed;
+
+  _PatientSymptomsState(this.numberBed);
 
   String formattedDateHora;
   var viewModel = InpatientViewModel();
@@ -50,7 +55,7 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
                   padding: const EdgeInsets.only(top: 16),
                   child: CupertinoButton(
                     color: CupertinoColors.systemGrey,
-                    onPressed: () => {viewModel.saveData(context)},
+                    onPressed: () => {viewModel.saveData(context, numberBed)},
                     child: Text("Salvar Sintomas"),
                   ),
                 ),
@@ -72,10 +77,10 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
           ),
         ),
       );
-    } 
+    }
 
     /* Android */
-    
+
     else {
       return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -93,7 +98,7 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
                 Padding(
                   padding: const EdgeInsets.only(top: 16),
                   child: ElevatedButton(
-                    onPressed: () => {viewModel.saveData(context)},
+                    onPressed: () => {viewModel.saveData(context, numberBed)},
                     child: Text("Salvar Sintomas"),
                     style: ButtonStyle(
                         backgroundColor:
@@ -111,7 +116,9 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
                     onPressed: () => {
                       Navigator.push(contextNavigation,
                           MaterialPageRoute(builder: (contextNavigation) {
-                        return InpatientSymptomsHistory();
+                        return InpatientSymptomsHistory(
+                          bedNumber: numberBed,
+                        );
                       }))
                     },
                     child: Text("Ver histórico"),
@@ -263,7 +270,7 @@ class PageBody extends StatelessWidget {
                     )),
               ),
             ),
-             Card(
+            Card(
               child: InkWell(
                 splashColor: Colors.blue.withAlpha(30),
                 onTap: () {
@@ -287,8 +294,7 @@ class PageBody extends StatelessWidget {
                             "Suplemetação de Oxigênio",
                             style: TextStyle(fontSize: 18),
                           ),
-                          Consumer<Symptoms>(
-                              builder: (context, val, child) {
+                          Consumer<Symptoms>(builder: (context, val, child) {
                             if (val.toStringOx() == "") {
                               return Text("Dado não inserido");
                             }
@@ -449,8 +455,7 @@ class PageBody extends StatelessWidget {
                             "Estado de consciência",
                             style: TextStyle(fontSize: 18),
                           ),
-                          Consumer<Symptoms>(
-                              builder: (context, val, child) {
+                          Consumer<Symptoms>(builder: (context, val, child) {
                             if (val.toStringConscience() == "") {
                               return Text("Dado não inserido");
                             }

@@ -22,12 +22,13 @@ class InpatientSymptomsHistory extends StatelessWidget {
           middle: Text("Histórico"),
         ),
         body: FutureBuilder<List>(
-          future: SymptomsDao().getAlarmsByUser(
-              Provider.of<BedProvider>(contextNavigation, listen: false)
-                  .currentUserName),
+          future: PostgresDao().getSymptomsByBed(bedNumber),
           initialData: List(),
           builder: (context, snapshot) {
-            return snapshot.hasData
+            if (snapshot.data.isEmpty){
+              return Center(child: Text("Sem dados"));
+            }else {
+              return snapshot.hasData
                 ? ListView.builder(
                     itemCount: snapshot.data.length,
                     itemBuilder: (_, int position) {
@@ -47,6 +48,7 @@ class InpatientSymptomsHistory extends StatelessWidget {
                     },
                   )
                 : Center(child: CircularProgressIndicator());
+            }
           },
         ),
       );
@@ -58,12 +60,13 @@ class InpatientSymptomsHistory extends StatelessWidget {
           backgroundColor: Colors.grey[700],
         ),
         body: FutureBuilder<List>(
-          future: SymptomsDao().getAlarmsByUser(
-              Provider.of<BedProvider>(contextNavigation, listen: false)
-                  .currentUserName),
+          future: PostgresDao().getSymptomsByBed(bedNumber),
           initialData: List(),
           builder: (context, snapshot) {
-            return snapshot.hasData
+            if (snapshot.data.isEmpty){
+              return Center(child: Text("Sem dados salvos nesta cama"));
+            }else {
+              return snapshot.hasData
                 ? ListView.builder(
                     itemCount: snapshot.data.length,
                     itemBuilder: (_, int position) {
@@ -82,9 +85,8 @@ class InpatientSymptomsHistory extends StatelessWidget {
                       );
                     },
                   )
-                : Center(
-                    child: CircularProgressIndicator(),
-                  );
+                : Center(child: CircularProgressIndicator());
+            }
           },
         ),
       );
