@@ -32,21 +32,3 @@ class TccApp extends StatelessWidget {
     );
   }
 }
-
-
-/* import 'package:postgres/postgres.dart';
-
-void main(List<String> arguments) async {
-  final conn = PostgreSQLConnection(
-    'localhost',
-    5435,
-    'postgres',
-    username: 'postgres',
-    password: 'secret',
-  );
-  await conn.open();
-
-  print('Connected to Postgres database...');
-
-  
-} */

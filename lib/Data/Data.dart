@@ -1,5 +1,4 @@
 export 'package:firebase_database/firebase_database.dart';
-export 'DAO/alarmsDAO.dart';
 export 'DAO/PostgresDao.dart';
 export 'mqtt/mqttManager.dart';
 export 'Provider/BedProvider.dart';
