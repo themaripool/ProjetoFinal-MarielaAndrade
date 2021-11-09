@@ -16,9 +16,9 @@ String clientIdentifier = 'SmartAlarm';
 
 String username; //= 'teste';
 String passwd; //= '123';
-//String appId = "teste1";
+String appId = "teste1";
 //String appId = "pac1";
-String appId = "pacteste";
+//String appId = "pacteste";
 
 BuildContext contextProvider;
 BuildContext contextNavigation;

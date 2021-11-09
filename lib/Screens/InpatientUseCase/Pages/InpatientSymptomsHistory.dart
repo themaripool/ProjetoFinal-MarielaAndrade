@@ -137,8 +137,9 @@ class InpatientSymptomsHistory extends StatelessWidget {
       } else {
         return Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: CupertinoNavigationBar(
-            middle: Text("Histórico"),
+          appBar: AppBar(
+            title: Text("Histórico"),
+            backgroundColor: Colors.grey[700],
           ),
           body: FutureBuilder<List>(
             future: PostgresDao().getSymptomsByBed(bedNumber),
