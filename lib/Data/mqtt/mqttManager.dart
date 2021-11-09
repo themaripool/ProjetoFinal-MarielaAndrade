@@ -397,7 +397,8 @@ class MQTTManager {
 
     final alert = Alert(clinicalStatus, patientId, bedId, sectorId,
         formattedDiaEMes, formattedDateHora, isCancelled);
-    alarmsDao.saveMessage(alert);
+    PostgresDao().saveAlert(clinicalStatus, patientId, bedId, sectorId,
+        formattedDiaEMes, formattedDateHora, isCancelled);
   }
 
   // ignore: non_constant_identifier_names

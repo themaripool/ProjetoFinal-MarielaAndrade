@@ -13,25 +13,55 @@ class AlertScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isAllAlarms == true) {
-      return FirebaseAnimatedList(
-        query: AlarmsDao().getAllAlarms(),
-        itemBuilder: (context, snapshot, animation, index) {
-          final json = snapshot.value as Map<dynamic, dynamic>;
-          final alert = Alert.fromJson(json);
-          return AlertComponentList(alert.dateAndMonth, alert.hourAndMinute,
-              alert.clinicalStatus, alert.bedId);
-        },
-      );
+      return FutureBuilder<List>(
+            future: PostgresDao().getAllAlerts(),
+            initialData: List(),
+            builder: (context, snapshot) {
+              if (snapshot.data.isEmpty) {
+                return Center(child: Text("Sem alertas"));
+              } else {
+                return snapshot.hasData
+                    ? ListView.builder(
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (_, int position) {
+                          final alert = snapshot.data[position];
+                          return AlertComponentList(
+                            alert.dateAndMonth, 
+                            alert.hourAndMinute,
+                            alert.clinicalStatus,
+                            alert.bedId,
+                          );
+                        },
+                      )
+                    : Center(child: CircularProgressIndicator());
+              }
+            },
+          );
     } else {
-      return FirebaseAnimatedList(
-        query: AlarmsDao().getAlarmsByBedQuery(bedNumber),
-        itemBuilder: (context, snapshot, animation, index) {
-          final json = snapshot.value as Map<dynamic, dynamic>;
-          final alert = Alert.fromJson(json);
-          return AlertComponentList(alert.dateAndMonth, alert.hourAndMinute,
-              alert.clinicalStatus, alert.bedId);
-        },
-      );
+      return FutureBuilder<List>(
+            future: PostgresDao().getAlertsByBed(bedNumber),
+            initialData: List(),
+            builder: (context, snapshot) {
+              if (snapshot.data.isEmpty) {
+                return Center(child: Text("Este paciente ainda não tem alertas"));
+              } else {
+                return snapshot.hasData
+                    ? ListView.builder(
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (_, int position) {
+                          final alert = snapshot.data[position];
+                          return AlertComponentList(
+                            alert.dateAndMonth, 
+                            alert.hourAndMinute,
+                            alert.clinicalStatus,
+                            alert.bedId,
+                          );
+                        },
+                      )
+                    : Center(child: CircularProgressIndicator());
+              }
+            },
+          );
     }
   }
 }

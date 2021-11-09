@@ -5,7 +5,7 @@ class AlarmsDao {
   final DatabaseReference _alarmRef =
       FirebaseDatabase.instance.reference().child('alarms');
 
-  void saveMessage(Alert message) {
+ /*  void saveMessage(Alert message) {
     _alarmRef.push().set(message.toJson());
   }
 
@@ -21,5 +21,5 @@ class AlarmsDao {
   Query getAllAlarms() {
     print("------- QUERY ALL BEDS ALAMS -------");
     return _alarmRef.orderByChild("bedId");
-  }
+  } */
 }

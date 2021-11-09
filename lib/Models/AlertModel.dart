@@ -11,7 +11,7 @@ class Alert {
   Alert(this.clinicalStatus, this.patientId, this.bedId, this.sectorId,
       this.dateAndMonth, this.hourAndMinute, this.isCancelled);
 
-  Alert.fromJson(Map<dynamic, dynamic> json)
+  /* Alert.fromJson(Map<dynamic, dynamic> json)
       : clinicalStatus = json['clinicalStatus'] as String,
         patientId = json['patientId'] as String,
         bedId = json['bedId'] as String,
@@ -28,5 +28,5 @@ class Alert {
         'dateAndMonth': dateAndMonth,
         'hourAndMinute': hourAndMinute,
         'isCancelled': isCancelled,
-      };
+      }; */
 }

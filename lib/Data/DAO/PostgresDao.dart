@@ -105,11 +105,6 @@ class PostgresDao {
     print('Connected to Postgres database...');
   }
 
-  /* flutter/lib/ui/ui_dart_state.cc(209)] Unhandled Exception: PostgreSQLSeverity.error 23502: 
-  null value in column "bednumber" of relation "SmartAlarmMobile_symptoms" violates not-null 
-  constraint Detail: Failing row contains (Alerta, 5, 09/11/2021, 2, 09:57, 4, aaaa, NÃ£o, 0, 5, teste, null). 
-  Table: SmartAlarmMobile_symptoms Column: bednumber */
-
   Future<void> saveSymptom(
       String conscience,
       String diarrea,
@@ -160,4 +155,125 @@ class PostgresDao {
       Provider.of<Symptoms>(contextProvider, listen: false).eraseAllData();
     }
   }
+
+
+  /* ALARMES */
+
+  Future<void> saveAlert(
+      String clinicalStatus,
+      String patientId,
+      String bedId,
+      String sectorId,
+      String dateAndMonth,
+      String hourAndMinute,
+      bool isCancelled) async {
+    _symptomsRef = PostgreSQLConnection(
+      '10.0.2.2',
+      5435,
+      'postgres',
+      username: 'postgres',
+      password: 'secret',
+    );
+    await _symptomsRef.open();
+
+    if (_symptomsRef.isClosed == false) {
+      var result = await _symptomsRef.query(
+        'insert into "SmartAlarmMobile_alarms" (clinicalstatus,patientId,bedId,sectorId,date,hour,iscancelled) '
+        'values(@clinicalstatus,@patientId,@bedId,@sectorId,@date,@hour,@iscancelled)',
+        substitutionValues: {
+          'clinicalstatus': clinicalStatus,
+          'patientId': patientId,
+          'bedId': bedId,
+          'sectorId': sectorId,
+          'date': dateAndMonth,
+          'hour': hourAndMinute,
+          'iscancelled': isCancelled,
+        },
+        allowReuse: true,
+      );
+      print('[BD TESTE]: $result');
+    }
+  }
+
+   Future<List<Alert>> getAllAlerts() async {
+    //SELECT *
+    //FROM "SmartAlarmMobile_alarms"
+
+    List<Alert> res = List<Alert>();
+
+    print("[BD TESTE]: entrou all alarms");
+
+    _symptomsRef = PostgreSQLConnection(
+      '10.0.2.2',
+      5435,
+      'postgres',
+      username: 'postgres',
+      password: 'secret',
+    );
+    await _symptomsRef.open();
+
+    print("[BD TESTE]: ${_symptomsRef.isClosed}");
+
+    var result = await _symptomsRef.query(
+        '''select * from "SmartAlarmMobile_alarms" ''');
+
+    var aux;
+
+    result.forEach((element) => {
+          aux = Alert(
+              element[0],
+              element[1],
+              element[2],
+              element[3],
+              element[4],
+              element[5],
+              element[6]),
+          res.add(aux)
+        });
+
+    print("[BD TESTE]: RES = $result res = $res");
+    return res;
+  }
+
+  Future<List<Alert>> getAlertsByBed(String bed) async {
+    //SELECT *
+    //FROM "SmartAlarmMobile_alarms"
+
+    List<Alert> res = List<Alert>();
+
+    print("[BD TESTE]: entrou getAlertsByBed");
+
+    _symptomsRef = PostgreSQLConnection(
+      '10.0.2.2',
+      5435,
+      'postgres',
+      username: 'postgres',
+      password: 'secret',
+    );
+    await _symptomsRef.open();
+
+    print("[BD TESTE]: ${_symptomsRef.isClosed}");
+
+    var result = await _symptomsRef.query(
+        '''select * from "SmartAlarmMobile_alarms"  WHERE bedid = '$bed' ''');
+
+    var aux;
+
+    result.forEach((element) => {
+          aux = Alert(
+              element[0],
+              element[1],
+              element[2],
+              element[3],
+              element[4],
+              element[5],
+              element[6]),
+          res.add(aux)
+        });
+
+    print("[BD TESTE]: RES = $result res = $res");
+    return res;
+  }
+
+
 }
