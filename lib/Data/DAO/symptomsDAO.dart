@@ -1,6 +1,8 @@
 import 'package:postgres/postgres.dart';
 import 'package:projeto_final_1/Models/Models.dart';
 
+import '../Data.dart';
+
 class PostgresDao {
   PostgreSQLConnection _symptomsRef;
 
@@ -131,6 +133,8 @@ class PostgresDao {
         allowReuse: true,
       );
       print('[BD TESTE]: $result');
+      Provider.of<Symptoms>(contextProvider, listen: false).eraseAllData();
+      
     }
   }
 }

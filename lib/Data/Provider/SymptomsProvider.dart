@@ -76,7 +76,6 @@ class Symptoms extends ChangeNotifier {
   }
 
    void setOtherVal(String val){
-    print("aaaaaaa $val");
     this.otherVal = val;
     notifyListeners();
   }
@@ -88,6 +87,18 @@ class Symptoms extends ChangeNotifier {
 
   void setConscienceVal(String val){
     this.conscience = val;
+    notifyListeners();
+  }
+
+  void eraseAllData(){
+    this.diarrheaVal = -1;
+    this.conscience = "";
+    this.headacheVal = -1;
+    this.nauseaVal = -1;
+    this.otherVal = "";
+    this.painVal = -1;
+    this.supOx = "";
+    this.tirednessVal = -1;
     notifyListeners();
   }
  
