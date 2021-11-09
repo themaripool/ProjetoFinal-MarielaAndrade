@@ -175,7 +175,7 @@ class NavigationSymptoms extends StatelessWidget {
           backgroundColor: Colors.white,
           title: Text("Sintomas do paciente"),
         ),
-        body: PatientSymptoms(numberBed: numberBed),
+        body: PatientSymptoms(numberBed: numberBed, isInpatient: false,),
       );
     } else {
       return Scaffold(
@@ -184,7 +184,7 @@ class NavigationSymptoms extends StatelessWidget {
           title: Text("Sintomas do paciente"),
           centerTitle: true,
         ),
-        body: PatientSymptoms(numberBed: numberBed),
+        body: PatientSymptoms(numberBed: numberBed, isInpatient: false),
       );
     }
   }

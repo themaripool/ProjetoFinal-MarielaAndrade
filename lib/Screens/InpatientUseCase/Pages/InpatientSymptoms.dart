@@ -11,9 +11,10 @@ import '../InpatientUseCase.dart';
 
 class PatientSymptoms extends StatefulWidget {
   final numberBed;
-  PatientSymptoms({this.numberBed});
+  final isInpatient;
+  PatientSymptoms({this.numberBed, this.isInpatient});
   @override
-  _PatientSymptomsState createState() => _PatientSymptomsState(numberBed);
+  _PatientSymptomsState createState() => _PatientSymptomsState(numberBed, isInpatient);
 }
 
 class _PatientSymptomsState extends State<PatientSymptoms> {
@@ -24,8 +25,9 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
   bool diarrhea = false;
   bool other = false;
   String numberBed;
+  bool isInpatient;
 
-  _PatientSymptomsState(this.numberBed);
+  _PatientSymptomsState(this.numberBed, this.isInpatient);
 
   String formattedDateHora;
   var viewModel = InpatientViewModel();
@@ -48,7 +50,7 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(16),
-                  child: Title(),
+                  child: Container(),
                 ),
                 PageBody(),
                 Padding(
@@ -92,7 +94,7 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(16),
-                  child: Title(),
+                  child: Container(),
                 ),
                 PageBody(),
                 Padding(
@@ -118,6 +120,7 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
                           MaterialPageRoute(builder: (contextNavigation) {
                         return InpatientSymptomsHistory(
                           bedNumber: numberBed,
+                          isInpatient: isInpatient,
                         );
                       }))
                     },
@@ -470,20 +473,5 @@ class PageBody extends StatelessWidget {
         ),
       ],
     );
-  }
-}
-
-class Title extends StatelessWidget {
-  const Title({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text("Sintomas",
-        style: TextStyle(
-          fontSize: 26,
-          fontWeight: FontWeight.w300,
-        ));
   }
 }

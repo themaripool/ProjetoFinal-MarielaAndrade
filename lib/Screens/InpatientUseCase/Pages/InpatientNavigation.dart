@@ -19,7 +19,7 @@ class _HomePatientState extends State<HomePatient> {
 
   final List<Widget> _screens = [
     PatientData(),
-    PatientSymptoms(),
+    PatientSymptoms(isInpatient: true,),
     Settings()
   ];
 

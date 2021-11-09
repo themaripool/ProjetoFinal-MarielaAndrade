@@ -13,7 +13,7 @@ class PostgresDao {
 
     List<Symptom> res = List<Symptom>();
 
-    print("[BD TESTE]: entrou");
+    print("[BD TESTE]: entrou by user");
 
     _symptomsRef = PostgreSQLConnection(
       '10.0.2.2',
@@ -32,11 +32,20 @@ class PostgresDao {
     var aux;
 
     result.forEach((element) => {
-       aux = Symptom(element[3], element[9], element[8], 
-                    element[5], element[1], element[6],element[4], 
-                    element[7], element[0], element[2], element[10]),
-       res.add(aux)
-    });  
+          aux = Symptom(
+              element[3],
+              element[9],
+              element[8],
+              element[5],
+              element[1],
+              element[6],
+              element[4],
+              element[7],
+              element[0],
+              element[2],
+              element[10]),
+          res.add(aux)
+        });
 
     print("[BD TESTE]: RES = $result res = $res");
     return res;
@@ -46,6 +55,8 @@ class PostgresDao {
     //SELECT *
     //FROM "SmartAlarmMobile_symptoms"
     //WHERE bed = 'bed'
+
+    print("[BD TESTE]: entrou by bed");
 
     List<Symptom> res = List<Symptom>();
 
@@ -64,11 +75,20 @@ class PostgresDao {
     var aux;
 
     result.forEach((element) => {
-       aux = Symptom(element[3], element[9], element[8], 
-                    element[5], element[1], element[6],element[4], 
-                    element[7], element[0], element[2], element[10]),
-       res.add(aux)
-    });  
+          aux = Symptom(
+              element[3],
+              element[9],
+              element[8],
+              element[5],
+              element[1],
+              element[6],
+              element[4],
+              element[7],
+              element[0],
+              element[2],
+              element[10]),
+          res.add(aux)
+        });
     return res;
   }
 
@@ -111,7 +131,11 @@ class PostgresDao {
       password: 'secret',
     );
     await _symptomsRef.open();
-    print('[BD TESTE]: bednumber = $bednumber');
+    if (bednumber == null) {
+      //paciente está em casa
+      bednumber = "-1";
+    }
+
     if (_symptomsRef.isClosed == false) {
       var result = await _symptomsRef.query(
         'insert into "SmartAlarmMobile_symptoms" (conscience,diarrea,date,headache,hour,nausea,others,ox,pain,tiredness,userlogged,bednumber) '
@@ -134,7 +158,6 @@ class PostgresDao {
       );
       print('[BD TESTE]: $result');
       Provider.of<Symptoms>(contextProvider, listen: false).eraseAllData();
-      
     }
   }
 }
