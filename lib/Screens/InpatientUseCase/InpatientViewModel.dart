@@ -14,48 +14,47 @@ import 'package:projeto_final_1/Data/Data.dart';
 import 'package:projeto_final_1/Models/Models.dart';
 
 class InpatientViewModel {
-
-  void setConscienceLevel(BuildContext context, String val){
-    if (val == null){
+  void setConscienceLevel(BuildContext context, String val) {
+    if (val == null) {
       val = "Dado não inserido";
     }
     Provider.of<Symptoms>(context, listen: false).setConscienceVal(val);
   }
 
-  void setOxLevel(BuildContext context, String val){
-    if (val == null){
+  void setOxLevel(BuildContext context, String val) {
+    if (val == null) {
       val = "Dado não inserido";
     }
     Provider.of<Symptoms>(context, listen: false).setSupOxVal(val);
   }
 
-  void setOther(BuildContext context, String val){
-    if (val == ""){
+  void setOther(BuildContext context, String val) {
+    if (val == "") {
       val = "Dado não inserido";
     }
     Provider.of<Symptoms>(context, listen: false).setOtherVal(val);
   }
 
-  void setHeadache(BuildContext context, int val){
+  void setHeadache(BuildContext context, int val) {
     Provider.of<Symptoms>(context, listen: false).setHeadacheVal(val);
   }
 
-  void setTiredness(BuildContext context, int val){
+  void setTiredness(BuildContext context, int val) {
     Provider.of<Symptoms>(context, listen: false).setTirednessVal(val);
   }
 
-  void setPain(BuildContext context, int val){
+  void setPain(BuildContext context, int val) {
     Provider.of<Symptoms>(context, listen: false).setPainVal(val);
   }
 
-  void setNausea(BuildContext context, int val){
+  void setNausea(BuildContext context, int val) {
     Provider.of<Symptoms>(context, listen: false).setNauseaVal(val);
   }
 
-  void setDiarrhea(BuildContext context, int val){
+  void setDiarrhea(BuildContext context, int val) {
     Provider.of<Symptoms>(context, listen: false).setDiarrheaVal(val);
   }
-  
+
   void showToast(BuildContext context) {
     final scaffold = ScaffoldMessenger.of(context);
     scaffold.showSnackBar(
@@ -75,23 +74,31 @@ class InpatientViewModel {
     var outputFormat = DateFormat('dd/MM/yyyy');
     var formattedDate = outputFormat.format(inputDate);
 
-    var formattedDateHora = _platform == TargetPlatform.iOS ? 
-                            DateFormat.Hm().format(DateTime.now()) :
-                            DateFormat.Hm().format(DateTime.now().subtract(Duration(hours: 3)));
+    var formattedDateHora = _platform == TargetPlatform.iOS
+        ? DateFormat.Hm().format(DateTime.now())
+        : DateFormat.Hm().format(DateTime.now().subtract(Duration(hours: 3)));
 
-    var headache = Provider.of<Symptoms>(context, listen: false).headacheVal.toString();
-    var nausea = Provider.of<Symptoms>(context, listen: false).nauseaVal.toString();
-    var tiredness = Provider.of<Symptoms>(context, listen: false).tirednessVal.toString();
-    var diarrhea = Provider.of<Symptoms>(context, listen: false).diarrheaVal.toString();
+    var headache =
+        Provider.of<Symptoms>(context, listen: false).headacheVal.toString();
+    var nausea =
+        Provider.of<Symptoms>(context, listen: false).nauseaVal.toString();
+    var tiredness =
+        Provider.of<Symptoms>(context, listen: false).tirednessVal.toString();
+    var diarrhea =
+        Provider.of<Symptoms>(context, listen: false).diarrheaVal.toString();
     var pain = Provider.of<Symptoms>(context, listen: false).painVal.toString();
-    var other = Provider.of<Symptoms>(context, listen: false).otherVal.toString();
+    var other =
+        Provider.of<Symptoms>(context, listen: false).otherVal.toString();
     var ox = Provider.of<Symptoms>(context, listen: false).supOx.toString();
-    var conscience = Provider.of<Symptoms>(context, listen: false).conscience.toString();
-    var user =  Provider.of<BedProvider>(contextNavigation, listen: false).currentUserName;
+    var conscience =
+        Provider.of<Symptoms>(context, listen: false).conscience.toString();
+    var user = Provider.of<BedProvider>(contextNavigation, listen: false)
+        .currentUserName;
 
+    SymptomsDao().saveSymptom(conscience, diarrhea, formattedDate, headache,
+        formattedDateHora, nausea, other, ox, pain, tiredness, user);
 
-
-    SymptomsDao().saveMessage(
+    /*  SymptomsDao().saveMessage(
       Symptom( headache == "-1" ? "dados não inseridos" : headache,
         nausea == "-1" ? "dados não inseridos" : nausea,
         tiredness == "-1" ? "dados não inseridos" : tiredness,
@@ -103,7 +110,7 @@ class InpatientViewModel {
         conscience == "-1" ? "dados não inseridos" : conscience,
         formattedDate.toString(),
         user
-        ));
+        )); */
 
     showToast(context);
   }

@@ -19,7 +19,7 @@ class InpatientSymptomsHistory extends StatelessWidget {
     final _platform = Theme.of(context).platform;
     if (_platform == TargetPlatform.iOS) {
       return Scaffold(
-      resizeToAvoidBottomInset: false,
+     /*  resizeToAvoidBottomInset: false,
       appBar: CupertinoNavigationBar(middle: Text("Histórico"),),
       body: FirebaseAnimatedList(
         defaultChild:Center(child: CircularProgressIndicator()),
@@ -38,11 +38,11 @@ class InpatientSymptomsHistory extends StatelessWidget {
               symptom.formattedDate
               );
         },
-      ),
+      ), */
     );
     } else {
       return Scaffold(
-      resizeToAvoidBottomInset: false,
+     /*  resizeToAvoidBottomInset: false,
       appBar: AppBar(title: Text("Histórico"), backgroundColor: Colors.grey[700],),
       body: FirebaseAnimatedList(
         defaultChild:Center(child: CircularProgressIndicator()),
@@ -60,7 +60,7 @@ class InpatientSymptomsHistory extends StatelessWidget {
               symptom.hourAndMinute,
               symptom.formattedDate);
         },
-      ),
+      ), */
     );
 
     }

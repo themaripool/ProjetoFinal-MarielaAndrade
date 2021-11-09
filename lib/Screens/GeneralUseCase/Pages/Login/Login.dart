@@ -1,6 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:postgres/postgres.dart';
 import 'package:projeto_final_1/Data/Data.dart';
 import '../../GeneralUseCase.dart';
 
@@ -40,36 +38,12 @@ class _LoginState extends State<Login> {
     }
   } */
 
-  void postGre() async {
-    final conn = PostgreSQLConnection(
-      '10.0.2.2',
-      5435,
-      'postgres',
-      username: 'postgres',
-      password: 'secret',
-    );
-    await conn.open();
-
-    print('Connected to Postgres database...');
-    setState(() {
-        _initialized = true;
-    });
-    print('[CONN]: ${conn.isClosed}');
-
-    var resultsMap = await conn.mappedResultsQuery('''
-      SELECT sector_id_id, count(*) 
-      FROM "SmartAlarm_bed" 
-      GROUP BY sector_id_id
-    ''');
-     print(resultsMap);
-
-  }
-
   @override
   void initState() {
     //initializeFlutterFire();
-    postGre();
     NotificationApi.init();
+    SymptomsDao().initPostgres();
+    _initialized = true;
     super.initState();
   }
 
