@@ -16,7 +16,8 @@ String clientIdentifier = 'SmartAlarm';
 
 String username; //= 'teste';
 String passwd; //= '123';
-String appId = "teste1";
+// String appId = "teste1";
+String appId;
 //String appId = "pac1";
 //String appId = "pacteste";
 
@@ -25,7 +26,6 @@ BuildContext contextNavigation;
 
 var Beds = List(2);
 final _client = MqttServerClient.withPort(broker, clientIdentifier, port);
-
 
 String sectorId;
 String userId;
@@ -58,9 +58,14 @@ var appHistory = TOPIC_604 + '2'; //"SmartAlarm/Client/Application/History"
 class MQTTManager {
   var contentLoginRequest;
   void initializeMQTTClient(login, password, BuildContext context) {
-
     username = login;
     passwd = password;
+
+    if(username == "marcos"){
+      appId = "pacteste";
+    } else if (username == "teste"){
+      appId = "teste1";
+    }
 
     contextNavigation = context;
     contextProvider = context;
@@ -141,7 +146,8 @@ class MQTTManager {
         if (contentLoginRequest == "2") {
           userId = content['UI'].toString();
           sectorId = content['SI'].toString();
-          Provider.of<BedProvider>(contextNavigation, listen: false).setCurrentUserName(username);
+          Provider.of<BedProvider>(contextNavigation, listen: false)
+              .setCurrentUserName(username);
           print("[DEBUG]: SECTORID = $sectorId, userid= $userId");
           login_accepted();
           if (appId == "teste1") {

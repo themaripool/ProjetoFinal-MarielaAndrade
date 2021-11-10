@@ -20,6 +20,7 @@ class BedComponentList extends StatelessWidget {
 
     return Container(
       height: 120.0,
+      decoration: BoxDecoration(border: Border.all(color: Theme.of(context).primaryColor.withAlpha(24)), borderRadius:  BorderRadius.all(Radius.circular(20))),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(

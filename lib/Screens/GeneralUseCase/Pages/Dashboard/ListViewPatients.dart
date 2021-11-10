@@ -29,7 +29,7 @@ class _ListViewPatientsState extends State<ListViewPatients> {
       } else {
         return ListView.separated(
           itemCount: model.bySector[model.selectedSector].length,
-          separatorBuilder: (BuildContext context, int index) => const Divider(height: 2, thickness: 4,),
+          separatorBuilder: (BuildContext context, int index) => const Divider(),
           itemBuilder: (BuildContext context, int index) {
             var bedId = model.bedIds;
             return GestureDetector(
