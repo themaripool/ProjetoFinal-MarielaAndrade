@@ -1,7 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Data/Data.dart';
 import 'package:projeto_final_1/Models/Models.dart';
+import 'package:projeto_final_1/Screens/GeneralUseCase/GeneralUseCase.dart';
+import 'package:projeto_final_1/Screens/GeneralUseCase/config.dart';
 import '../MedicalTeamUseCase.dart';
 
 var status;
@@ -17,7 +20,6 @@ class BedComponentList extends StatelessWidget {
 
     return Container(
       height: 120.0,
-      decoration: BoxDecoration(color: Colors.grey[300]),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -37,34 +39,30 @@ class BedComponentList extends StatelessWidget {
                   Text("FC: ",
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)),
+                          fontWeight: FontWeight.bold)),
                   Text(bedInfo.fc.toString(),
-                      style: TextStyle(fontSize: 14, color: Colors.black)),
+                      style: TextStyle(fontSize: 14)),
                   Spacer(),
                   Text("SaO2: ",
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)),
+                          fontWeight: FontWeight.bold)),
                   Text(bedInfo.so.toString(),
-                      style: TextStyle(fontSize: 14, color: Colors.black)),
+                      style: TextStyle(fontSize: 14)),
                   Spacer(),
                   Text("Temp: ",
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)),
+                          fontWeight: FontWeight.bold)),
                   Text(bedInfo.te.toString(),
-                      style: TextStyle(fontSize: 14, color: Colors.black)),
+                      style: TextStyle(fontSize: 14)),
                   Spacer(),
                   Text("FR: ",
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)),
+                          fontWeight: FontWeight.bold)),
                   Text(bedInfo.fr.toString(),
-                      style: TextStyle(fontSize: 14, color: Colors.black)),
+                      style: TextStyle(fontSize: 14)),
                 ],
               ),
             ),

@@ -22,7 +22,7 @@ class SymptomsAlert extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(10, 70, 10, 10),
               child: Column(
                 children: [
-                  Text("Por favor, selecione o nível de desconforto", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                  Text("Por favor, selecione o nível de desconforto", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Theme.of(context).primaryColor),),
                   SizedBox(height: 8,),
                   FormBuilderSegmentedControl(
                         selectedColor: Colors.grey[700],

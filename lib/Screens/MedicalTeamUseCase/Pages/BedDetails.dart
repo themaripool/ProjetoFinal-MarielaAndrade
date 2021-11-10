@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Data/Data.dart';
+import 'package:projeto_final_1/Screens/GeneralUseCase/GeneralUseCase.dart';
+import 'package:projeto_final_1/Screens/GeneralUseCase/config.dart';
 import 'package:projeto_final_1/Screens/InpatientUseCase/InpatientUseCase.dart';
 import '../MedicalTeamUseCase.dart';
 
@@ -44,7 +47,6 @@ class _BedDetailsState extends State<BedDetails> {
         theriGroupVakue = initialIndex;
       }
       return Scaffold(
-        backgroundColor: Colors.grey[300],
         body: bodies[theriGroupVakue],
         appBar: AppBar(
           leading: CupertinoNavigationBarBackButton(
@@ -107,58 +109,60 @@ class _BedDetailsState extends State<BedDetails> {
       );
     } else {
       return MaterialApp(
+          theme: SwitchProvider.lightTheme,
+          darkTheme: SwitchProvider.darkTheme,
+          themeMode: currentTheme.currentTheme,
           home: DefaultTabController(
-        length: 2,
-        initialIndex: widget.initialIndex != -1 ? widget.initialIndex : 0,
-        child: Scaffold(
-            appBar: AppBar(
-              leading: new IconButton(
-                icon: new Icon(Icons.arrow_back),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-              actions: <Widget>[
-                Padding(
-                    padding: EdgeInsets.only(right: 20.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return NavigationSymptoms(widget.bedId);
-                        }));
-                      },
-                      child: Icon(
-                        Icons.add,
-                        size: 26.0,
-                      ),
-                    ))
-              ],
-              backgroundColor: Colors.grey[700],
-              title: Text("Leito Número ${widget.bedId}"),
-              bottom: TabBar(
-                tabs: <Widget>[
-                  Tab(
-                    icon: Icon(Icons.data_usage),
-                    text: "DADOS",
+            length: 2,
+            initialIndex: widget.initialIndex != -1 ? widget.initialIndex : 0,
+            child: Scaffold(
+                appBar: AppBar(
+                  leading: new IconButton(
+                    icon: new Icon(Icons.arrow_back),
+                    onPressed: () => Navigator.of(context).pop(),
                   ),
-                  Tab(
-                    icon: Icon(Icons.notifications),
-                    text: "ALERTAS",
-                  )
-                ],
-              ),
-            ),
-            body: TabBarView(
-              children: <Widget>[
-                DataScreen(
-                  bedId: widget.bedId,
+                  actions: <Widget>[
+                    Padding(
+                        padding: EdgeInsets.only(right: 20.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return NavigationSymptoms(widget.bedId);
+                            }));
+                          },
+                          child: Icon(
+                            Icons.add,
+                            size: 26.0,
+                          ),
+                        ))
+                  ],
+                  title: Text("Leito Número ${widget.bedId}"),
+                  bottom: TabBar(
+                    tabs: <Widget>[
+                      Tab(
+                        icon: Icon(Icons.data_usage),
+                        text: "DADOS",
+                      ),
+                      Tab(
+                        icon: Icon(Icons.notifications),
+                        text: "ALERTAS",
+                      )
+                    ],
+                  ),
                 ),
-                AlertScreen(
-                  bedNumber: widget.bedId,
-                  isAllAlarms: false,
-                )
-              ],
-            )),
-      ));
+                body: TabBarView(
+                  children: <Widget>[
+                    DataScreen(
+                      bedId: widget.bedId,
+                    ),
+                    AlertScreen(
+                      bedNumber: widget.bedId,
+                      isAllAlarms: false,
+                    )
+                  ],
+                )),
+          ));
     }
   }
 }
@@ -175,17 +179,19 @@ class NavigationSymptoms extends StatelessWidget {
           backgroundColor: Colors.white,
           title: Text("Sintomas do paciente"),
         ),
-        body: PatientSymptoms(numberBed: numberBed, isInpatient: false,),
+        body: PatientSymptoms(
+          numberBed: numberBed,
+          isInpatient: false,
+        ),
       );
     } else {
       return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.grey[700],
-          title: Text("Sintomas do paciente"),
-          centerTitle: true,
-        ),
-        body: PatientSymptoms(numberBed: numberBed, isInpatient: false),
-      );
+            appBar: AppBar(
+              title: Text("Sintomas do paciente"),
+              centerTitle: true,
+            ),
+            body: PatientSymptoms(numberBed: numberBed, isInpatient: false),
+          );
     }
   }
 }

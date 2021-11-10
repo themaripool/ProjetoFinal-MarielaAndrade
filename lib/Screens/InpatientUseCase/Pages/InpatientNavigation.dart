@@ -6,6 +6,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Screens/GeneralUseCase/GeneralUseCase.dart';
+import 'package:projeto_final_1/Screens/GeneralUseCase/config.dart';
 import 'package:projeto_final_1/Screens/InpatientUseCase/InpatientUseCase.dart';
 
 class HomePatient extends StatefulWidget {
@@ -36,6 +37,9 @@ class _HomePatientState extends State<HomePatient> {
 
     if (_platform == TargetPlatform.iOS) {
       return MaterialApp(
+        theme: SwitchProvider.lightTheme,
+      darkTheme: SwitchProvider.darkTheme,
+      themeMode: currentTheme.currentTheme,
         home: DefaultTabController(
           length: 3,
           initialIndex: 0,
@@ -65,6 +69,9 @@ class _HomePatientState extends State<HomePatient> {
     } else {
 
       return MaterialApp(
+      theme: SwitchProvider.lightTheme,
+      darkTheme: SwitchProvider.darkTheme,
+      themeMode: currentTheme.currentTheme,
         home: DefaultTabController(
       length: 3,
       initialIndex: 0,

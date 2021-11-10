@@ -23,7 +23,7 @@ class OXAlert extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(10, 70, 10, 10),
               child: Column(
                 children: [
-                  Text("Por favor, indique a suplementação de oxigênio", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                  Text("Por favor, indique a suplementação de oxigênio", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Theme.of(context).primaryColor),),
                   SizedBox(height: 16,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

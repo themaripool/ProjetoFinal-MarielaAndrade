@@ -26,7 +26,6 @@ BuildContext contextNavigation;
 var Beds = List(2);
 final _client = MqttServerClient.withPort(broker, clientIdentifier, port);
 
-AlarmsDao alarmsDao;
 
 String sectorId;
 String userId;
@@ -59,7 +58,6 @@ var appHistory = TOPIC_604 + '2'; //"SmartAlarm/Client/Application/History"
 class MQTTManager {
   var contentLoginRequest;
   void initializeMQTTClient(login, password, BuildContext context) {
-    alarmsDao = AlarmsDao();
 
     username = login;
     passwd = password;

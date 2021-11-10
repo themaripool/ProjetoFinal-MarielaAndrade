@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Data/Data.dart';
+import 'package:projeto_final_1/Screens/GeneralUseCase/config.dart';
 import '../GeneralUseCase.dart';
 import 'Dashboard/Dashboard.dart';
 import 'Settings.dart';
@@ -32,6 +34,10 @@ class _HomePageState extends State<HomePage> {
   void onTabTapped(int index) {
     setState(() {
       _currentTab = index;
+      currentTheme.addListener(() {
+      //2
+      setState(() {});
+    });
     });
   }
 
@@ -63,14 +69,16 @@ class _HomePageState extends State<HomePage> {
       );
     } else {
       return MaterialApp(
-        home: DefaultTabController(
+      theme: SwitchProvider.lightTheme,
+      darkTheme: SwitchProvider.darkTheme,
+      themeMode: currentTheme.currentTheme,
+      home: DefaultTabController(
       length: 3,
       initialIndex: 0,
       child: Scaffold(
           appBar: AppBar(
             title: _currentTab == 0 ? Text("Enfermaria") : Text("Ajustes") ,
             centerTitle: true,
-            backgroundColor: Colors.grey[700],
           ),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: _currentTab, 

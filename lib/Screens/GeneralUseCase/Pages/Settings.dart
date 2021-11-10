@@ -8,6 +8,41 @@ import 'package:projeto_final_1/Data/Data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../GeneralUseCase.dart';
+import '../config.dart';
+
+class SwitchProvider with ChangeNotifier {
+  static bool isDarkMode = true;
+  ThemeMode get currentTheme => isDarkMode ? ThemeMode.dark : ThemeMode.light;
+
+  void toggleTheme() {
+    isDarkMode = !isDarkMode;
+    notifyListeners();
+  }
+
+  static ThemeData get lightTheme {
+    //1
+    return ThemeData(
+      primaryColor: Colors.black,
+      backgroundColor: Colors.white,
+      scaffoldBackgroundColor: Colors.grey[200],
+      bottomAppBarColor: Colors.amber,
+      appBarTheme: AppBarTheme(backgroundColor: Colors.grey[400]),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: Colors.grey[350]),
+      textTheme: ThemeData.light().textTheme,
+    );
+  }
+
+  static ThemeData get darkTheme {
+    return ThemeData(
+      primaryColor: Colors.black,
+      scaffoldBackgroundColor: Colors.grey[600],
+      bottomAppBarColor: Colors.blue,
+      textTheme: ThemeData.dark().textTheme,
+      appBarTheme: AppBarTheme(backgroundColor: Colors.grey[800]),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: Colors.grey[800]),
+    );
+  }
+}
 
 class Settings extends StatefulWidget {
   @override
@@ -16,37 +51,17 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   SharedPreferences prefs;
-  bool _toggleDarkMode = false;
-  bool _toggleSoundMode;
+  bool _toggleDarkMode;
 
   @override
   void initState() {
     super.initState();
-    getSwitchValues();
-  }
-
-  getSwitchValues() async {
-    _toggleSoundMode = await getSwitchState();
-    setState(() {});
-  }
-
-  Future<bool> saveSwitchState(bool value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("AlarmeBool", value);
-    print('[SWT]: Switch Value saved $value');
-    return prefs.setBool("AlarmeBool", value);
-  }
-
-  Future<bool> getSwitchState() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool _toggleSoundMode = prefs.getBool("AlarmeBool");
-    print("[SWT]: getSwitchState $_toggleSoundMode");
-    return _toggleSoundMode;
   }
 
   @override
   Widget build(BuildContext context) {
     final _platform = Theme.of(context).platform;
+    _toggleDarkMode = currentTheme.currentTheme == ThemeMode.dark ? true : false;
     if (_platform == TargetPlatform.iOS) {
       /* Ajustes no modo cupertino */
       return Scaffold(
@@ -83,6 +98,7 @@ class _SettingsState extends State<Settings> {
                   onChanged: (value) {
                     setState(() {
                       _toggleDarkMode = value;
+                      currentTheme.toggleTheme();
                     });
                   },
                   value: _toggleDarkMode,
@@ -140,6 +156,7 @@ class _SettingsState extends State<Settings> {
               onChanged: (value) {
                 setState(() {
                   _toggleDarkMode = value;
+                  currentTheme.toggleTheme();
                 });
               },
               value: _toggleDarkMode,
@@ -147,12 +164,10 @@ class _SettingsState extends State<Settings> {
             ListTile(
                 title: Text(
                   "Sair",
-                  style: TextStyle(color: Colors.black),
                 ),
                 leading: Icon(
                   Icons.exit_to_app,
                   size: 20,
-                  color: Colors.grey[700],
                 ),
                 onTap: () {
                   MQTTManager().app_request_logout();

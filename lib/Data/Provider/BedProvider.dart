@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Models/Models.dart';
 
 class BedProvider extends ChangeNotifier {
-  Map<String, LinkedList<BedData>> holder = {}; 
-  Map<String, String> sectorMap = {};  // retirar dps
+  Map<String, LinkedList<BedData>> holder = {};
+  Map<String, String> sectorMap = {}; // retirar dps
   var bedIds = [];
   var currentUserName;
   String selectedSector;
   Map<String, List<BedData>> bySector = {};
 
-  void setCurrentUserName(String username){
+  void setCurrentUserName(String username) {
     currentUserName = username;
     notifyListeners();
   }
@@ -55,9 +55,11 @@ class BedProvider extends ChangeNotifier {
     }
 
     List<List<BedData>> aux = [];
-    bySector.forEach((key, value) => { if (key != "0") { aux.add(value) }});
-    bySector["0"] = aux.expand((element) => element).toList(); 
-    
+    bySector.forEach((key, value) => {
+          if (key != "0") {aux.add(value)}
+        });
+    bySector["0"] = aux.expand((element) => element).toList();
+
     print("[DEBUG SETOR]: $bySector");
   }
 

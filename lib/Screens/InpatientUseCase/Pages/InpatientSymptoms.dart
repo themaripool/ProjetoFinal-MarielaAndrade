@@ -7,6 +7,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
+import 'package:projeto_final_1/Screens/GeneralUseCase/GeneralUseCase.dart';
+import 'package:projeto_final_1/Screens/GeneralUseCase/config.dart';
 import '../InpatientUseCase.dart';
 
 class PatientSymptoms extends StatefulWidget {
@@ -181,14 +183,16 @@ class PageBody extends StatelessWidget {
                         children: [
                           Text(
                             "Dor de Cabeça",
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor),
                           ),
                           Consumer<Symptoms>(
                               builder: (context, headacheVal, child) {
                             if (headacheVal.toStringHeadache() == "-1") {
-                              return Text("Dado não inserido");
+                              return Text("Dado não inserido",
+                            style: TextStyle(color: Theme.of(context).primaryColor));
                             }
-                            return Text(headacheVal.toStringHeadache());
+                            return Text(headacheVal.toStringHeadache(),
+                            style: TextStyle(color: Theme.of(context).primaryColor));
                           }),
                         ],
                       ),
@@ -220,14 +224,16 @@ class PageBody extends StatelessWidget {
                         children: [
                           Text(
                             "Cansaço",
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(fontSize: 18,color: Theme.of(context).primaryColor),
                           ),
                           Consumer<Symptoms>(
                               builder: (context, tirednessVal, child) {
                             if (tirednessVal.toStringTiredness() == "-1") {
-                              return Text("Dado não inserido");
+                              return Text("Dado não inserido",
+                            style: TextStyle(color: Theme.of(context).primaryColor));
                             }
-                            return Text(tirednessVal.toStringTiredness());
+                            return Text(tirednessVal.toStringTiredness(),
+                            style: TextStyle(color: Theme.of(context).primaryColor));
                           }),
                         ],
                       ),
@@ -259,14 +265,16 @@ class PageBody extends StatelessWidget {
                         children: [
                           Text(
                             "Dor",
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(fontSize: 18,color: Theme.of(context).primaryColor),
                           ),
                           Consumer<Symptoms>(
                               builder: (context, painVal, child) {
                             if (painVal.toStringPain() == "-1") {
-                              return Text("Dado não inserido");
+                              return Text("Dado não inserido",
+                            style: TextStyle(color: Theme.of(context).primaryColor));
                             }
-                            return Text(painVal.toStringPain());
+                            return Text(painVal.toStringPain(),
+                            style: TextStyle(color: Theme.of(context).primaryColor));
                           }),
                         ],
                       ),
@@ -295,13 +303,15 @@ class PageBody extends StatelessWidget {
                         children: [
                           Text(
                             "Suplemetação de Oxigênio",
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(fontSize: 18,color: Theme.of(context).primaryColor),
                           ),
                           Consumer<Symptoms>(builder: (context, val, child) {
                             if (val.toStringOx() == "") {
-                              return Text("Dado não inserido");
+                              return Text("Dado não inserido",
+                            style: TextStyle(color: Theme.of(context).primaryColor));
                             }
-                            return Text(val.toStringOx());
+                            return Text(val.toStringOx(),
+                            style: TextStyle(color: Theme.of(context).primaryColor));
                           }),
                         ],
                       ),
@@ -342,14 +352,16 @@ class PageBody extends StatelessWidget {
                         children: [
                           Text(
                             "Nausea",
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(fontSize: 18,color: Theme.of(context).primaryColor),
                           ),
                           Consumer<Symptoms>(
                               builder: (context, nauseaVal, child) {
                             if (nauseaVal.toStringNausea() == "-1") {
-                              return Text("Dado não inserido");
+                              return Text("Dado não inserido",
+                            style: TextStyle(color: Theme.of(context).primaryColor));
                             }
-                            return Text(nauseaVal.toStringNausea());
+                            return Text(nauseaVal.toStringNausea(),
+                            style: TextStyle(color: Theme.of(context).primaryColor));
                           }),
                         ],
                       ),
@@ -381,14 +393,16 @@ class PageBody extends StatelessWidget {
                         children: [
                           Text(
                             "Diarreia",
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(fontSize: 18,color: Theme.of(context).primaryColor),
                           ),
                           Consumer<Symptoms>(
                               builder: (context, diarrheaVal, child) {
                             if (diarrheaVal.toStringDiarrhea() == "-1") {
-                              return Text("Dado não inserido");
+                              return Text("Dado não inserido",
+                            style: TextStyle(color: Theme.of(context).primaryColor));
                             }
-                            return Text(diarrheaVal.toStringDiarrhea());
+                            return Text(diarrheaVal.toStringDiarrhea(),
+                            style: TextStyle(color: Theme.of(context).primaryColor));
                           }),
                         ],
                       ),
@@ -420,14 +434,16 @@ class PageBody extends StatelessWidget {
                         children: [
                           Text(
                             "Outros",
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(fontSize: 18,color: Theme.of(context).primaryColor),
                           ),
                           Consumer<Symptoms>(
                               builder: (context, othersVal, child) {
                             if (othersVal.toStringOthers() == "") {
-                              return Text("Dado não inserido");
+                              return Text("Dado não inserido",
+                            style: TextStyle(color: Theme.of(context).primaryColor));
                             }
-                            return Text(othersVal.toStringOthers());
+                            return Text(othersVal.toStringOthers(),
+                            style: TextStyle(color: Theme.of(context).primaryColor));
                           }),
                         ],
                       ),
@@ -456,13 +472,15 @@ class PageBody extends StatelessWidget {
                         children: [
                           Text(
                             "Estado de consciência",
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(fontSize: 18,color: Theme.of(context).primaryColor),
                           ),
                           Consumer<Symptoms>(builder: (context, val, child) {
                             if (val.toStringConscience() == "") {
-                              return Text("Dado não inserido");
+                              return Text("Dado não inserido",
+                            style: TextStyle(color: Theme.of(context).primaryColor));
                             }
-                            return Text(val.toStringConscience());
+                            return Text(val.toStringConscience(),
+                            style: TextStyle(color: Theme.of(context).primaryColor));
                           }),
                         ],
                       ),

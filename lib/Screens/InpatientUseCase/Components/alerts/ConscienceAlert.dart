@@ -15,12 +15,12 @@ class ConscienceAlert extends StatelessWidget {
         alignment: Alignment.topCenter,
         children: [
           Container(
-            height: 250,
+            height: 300,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(10, 70, 10, 10),
               child: Column(
                 children: [
-                  Text("Por favor, selecione o nível de consciência", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                  Text("Por favor, selecione o nível de consciência", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Theme.of(context).primaryColor),),
                   SizedBox(height: 16,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -35,21 +35,26 @@ class ConscienceAlert extends StatelessWidget {
                         viewModel.setConscienceLevel(context, text);
                         Navigator.of(context).pop();
                       },child: const Text('Confusão'),),
-                      OutlinedButton(onPressed: () {
-                        text = 'Resposta Verbal';
-                        viewModel.setConscienceLevel(context, text);
-                        Navigator.of(context).pop();
-                      },child: const Text('Resposta Verbal'),),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       OutlinedButton(onPressed: () {
+                        text = 'Resposta Verbal';
+                        viewModel.setConscienceLevel(context, text);
+                        Navigator.of(context).pop();
+                      },child: const Text('Resposta Verbal'),),
+                      OutlinedButton(onPressed: () {
                         text = 'Resposta a Dor';
                         viewModel.setConscienceLevel(context, text);
                         Navigator.of(context).pop();
                       },child: const Text('Resposta a Dor'),),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
                       OutlinedButton(onPressed: () {
                         text = 'Sem Resposta';
                         viewModel.setConscienceLevel(context, text);

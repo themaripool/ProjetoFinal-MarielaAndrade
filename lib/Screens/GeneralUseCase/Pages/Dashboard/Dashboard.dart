@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:projeto_final_1/Data/Data.dart';
+import 'package:projeto_final_1/Screens/GeneralUseCase/config.dart';
 import '../../GeneralUseCase.dart';
 
 class Dashboard extends StatefulWidget {
@@ -25,7 +26,6 @@ class _DashboardState extends State<Dashboard> {
     }
     if (_platform == TargetPlatform.iOS) {
       return Scaffold(
-          backgroundColor: Colors.grey[300],
           body: Center(
             child: Column(children: [
               Padding(
@@ -110,7 +110,6 @@ class _DashboardState extends State<Dashboard> {
           ));
     } else {
       return Scaffold(
-          backgroundColor: Colors.grey[300],
           body: Center(
             child: Column(children: [
               Padding(
