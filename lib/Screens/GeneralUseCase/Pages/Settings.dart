@@ -38,7 +38,7 @@ class SwitchProvider with ChangeNotifier {
       cardColor: Colors.blueGrey[200],
       primaryColor: Colors.black,
       backgroundColor: Colors.grey[200],
-      scaffoldBackgroundColor: Colors.grey[600],
+      scaffoldBackgroundColor: Colors.grey,
       bottomAppBarColor: Colors.blue,
       textTheme: ThemeData.dark().textTheme,
       appBarTheme: AppBarTheme(backgroundColor: Colors.grey[800]),
