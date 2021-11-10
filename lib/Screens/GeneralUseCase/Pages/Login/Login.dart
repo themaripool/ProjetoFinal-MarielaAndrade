@@ -54,10 +54,10 @@ class _LoginState extends State<Login> {
                     : LoginFormMaterial(
                         userNameCntl: _userNameCntl,
                         passwordCntl: _passwordCntl),
-                LoginInpatient(
+                /* LoginInpatient(
                   passwordCntl: _passwordCntl,
                   userNameCntl: _userNameCntl,
-                ),
+                ), */
                 LoginMedicalTeam(
                   passwordCntl: _passwordCntl,
                   userNameCntl: _userNameCntl,

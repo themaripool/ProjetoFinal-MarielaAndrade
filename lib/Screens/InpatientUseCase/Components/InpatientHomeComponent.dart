@@ -33,6 +33,7 @@ class InpatientHomeComponent extends StatelessWidget {
           width: 130.0,
           decoration: BoxDecoration(
               border: Border.all(color: color, width: 4),
+              color: Colors.grey[850],
               borderRadius: new BorderRadius.all(Radius.circular(15))),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -41,12 +42,12 @@ class InpatientHomeComponent extends StatelessWidget {
             children: [
               icon,
               Padding(
-                  padding: const EdgeInsets.all(8), child: Text(displayData, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,))),
+                  padding: const EdgeInsets.all(8), child: Text(displayData, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white))),
               Text(
                 title,
                 style: TextStyle(
                     fontSize: 18,
-                    color: Colors.black,
+                    color: Colors.white,
                     fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               )

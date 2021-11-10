@@ -176,17 +176,17 @@ class InpatientViewModel {
     switch (index) {
       case 0:
         return Image.asset('assets/images/respiratoryFreq.png',
-            height: 40, width: 40);
+            height: 40, width: 40, color: Colors.white,);
         break;
       case 1:
-        return Image.asset('assets/images/pulse.png', height: 40, width: 40);
+        return Image.asset('assets/images/pulse.png', height: 40, width: 40, color: Colors.white,);
         break;
       case 2:
         return Image.asset('assets/images/temperature.png',
-            height: 40, width: 40);
+            height: 40, width: 40, color: Colors.white,);
         break;
       default:
-        return Image.asset('assets/images/airIcon.png', height: 40, width: 40);
+        return Image.asset('assets/images/airIcon.png', height: 40, width: 40, color: Colors.white,);
         break;
     }
   }

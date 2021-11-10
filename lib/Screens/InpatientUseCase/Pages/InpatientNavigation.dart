@@ -28,6 +28,10 @@ class _HomePatientState extends State<HomePatient> {
   void onTabTapped(int index) {
     setState(() {
       _pageIndex = index;
+      currentTheme.addListener(() {
+        //2
+        setState(() {});
+      });
     });
   }
 

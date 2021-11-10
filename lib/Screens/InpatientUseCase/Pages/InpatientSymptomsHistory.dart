@@ -110,6 +110,10 @@ class InpatientSymptomsHistory extends StatelessWidget {
               resizeToAvoidBottomInset: false,
               appBar: AppBar(
                 title: Text("Histórico"),
+                leading: new IconButton(
+              icon: new Icon(Icons.arrow_back),
+              onPressed: () => Navigator.of(context).pop(),
+            )
               ),
               body: FutureBuilder<List>(
                 future: PostgresDao().getSymptomsByUser(
