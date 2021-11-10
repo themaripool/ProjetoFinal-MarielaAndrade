@@ -23,18 +23,21 @@ class SwitchProvider with ChangeNotifier {
     //1
     return ThemeData(
       primaryColor: Colors.black,
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[200],
       scaffoldBackgroundColor: Colors.grey[200],
       bottomAppBarColor: Colors.amber,
       appBarTheme: AppBarTheme(backgroundColor: Colors.grey[400]),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: Colors.grey[350]),
       textTheme: ThemeData.light().textTheme,
+      cardColor: Colors.blueGrey[200],
     );
   }
 
   static ThemeData get darkTheme {
     return ThemeData(
+      cardColor: Colors.blueGrey[200],
       primaryColor: Colors.black,
+      backgroundColor: Colors.grey[200],
       scaffoldBackgroundColor: Colors.grey[600],
       bottomAppBarColor: Colors.blue,
       textTheme: ThemeData.dark().textTheme,
