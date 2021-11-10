@@ -23,18 +23,19 @@ class BedComponent extends StatelessWidget {
       width: 130.0,
       decoration: BoxDecoration(
           border: Border.all(color: statusBed[0], width: 4),
+          borderRadius:  BorderRadius.all(Radius.circular(20)),
           color: Colors.grey[850]),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 8, left: 8),
+            padding: const EdgeInsets.only(bottom: 8, left: 8, top: 8),
             child: Text(
               "LEITO " + bedInfo.bedNumber.toString(),
               style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 16,
                   color: Colors.white,
                   fontWeight: FontWeight.bold),
             ),
@@ -44,11 +45,11 @@ class BedComponent extends StatelessWidget {
             child: Row(children: [
               Text("FC: ",
                   style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
-              Text(bedInfo.fc.toString(),
-                  style: TextStyle(fontSize: 12, color: Colors.white))
+              Text(bedInfo.fc.toString() + " bpm",
+                  style: TextStyle(fontSize: 14, color: Colors.white))
             ]),
           ),
           Padding(
@@ -56,11 +57,11 @@ class BedComponent extends StatelessWidget {
             child: Row(children: [
               Text("SaO2: ",
                   style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
-              Text(bedInfo.so.toString(),
-                  style: TextStyle(fontSize: 12, color: Colors.white))
+              Text(bedInfo.so.toString() + " %",
+                  style: TextStyle(fontSize: 14, color: Colors.white))
             ]),
           ),
           Padding(
@@ -68,11 +69,11 @@ class BedComponent extends StatelessWidget {
             child: Row(children: [
               Text("Temp: ",
                   style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
-              Text(bedInfo.te.toString(),
-                  style: TextStyle(fontSize: 12, color: Colors.white))
+              Text(bedInfo.te.toString() + " C",
+                  style: TextStyle(fontSize: 14, color: Colors.white))
             ]),
           ),
           Padding(
@@ -80,11 +81,11 @@ class BedComponent extends StatelessWidget {
             child: Row(children: [
               Text("FR: ",
                   style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
-              Text(bedInfo.fr.toString(),
-                  style: TextStyle(fontSize: 12, color: Colors.white))
+              Text(bedInfo.fr.toString() + " pm",
+                  style: TextStyle(fontSize: 14, color: Colors.white))
             ]),
           ),
           Padding(
@@ -93,14 +94,9 @@ class BedComponent extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8, left: 8),
-            child: Text(statusBed[1],
-                style: TextStyle(fontSize: 12, color: Colors.white)),
+            child: Text(statusBed[1] + "    " + "Setor = ${bedInfo.sector}",
+                style: TextStyle(fontSize: 14, color: Colors.white)),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8, left: 8),
-            child: Text("Setor = ${bedInfo.sector}",
-                style: TextStyle(fontSize: 12, color: Colors.white)),
-          )
         ],
       ),
     );
