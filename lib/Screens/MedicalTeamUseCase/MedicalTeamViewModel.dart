@@ -52,12 +52,13 @@ List checkInpatientStatusGrid(BedData bedInfo) {
 
     return [Colors.blue, "PREOCUPANTE"];
 
-  }else if (bedInfo.fr >= 12 && bedInfo.fr <= 20){
+  }else if (bedInfo.fr >= 12 && bedInfo.fr <= 20 || 
+            bedInfo.so >= 96 ||
+            bedInfo.fc >= 51 && bedInfo.fc <= 90 ||
+            bedInfo.te >= 36.1 && bedInfo.te <= 38.0){
 
     return [Colors.green, "ESTÁVEL"];
   }
 }
-
-
 
 }
