@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:projeto_final_1/Data/Data.dart';
+import 'package:projeto_final_1/WEB/mainWeb.dart';
 import '../../GeneralUseCase.dart';
 
 /*
@@ -40,33 +41,38 @@ class _LoginState extends State<Login> {
         return Center(child: CircularProgressIndicator());
       }
     } else {
-      return Scaffold(
-        resizeToAvoidBottomInset: true,
-        body: SingleChildScrollView(
-          child: Stack(children: <Widget>[
-            Container(
-              child: Column(children: [
-                LoginHeader(),
-                _platform == TargetPlatform.iOS
-                    ? LoginFormCupertino(
-                        passwordCntl: _passwordCntl,
-                        userNameCntl: _userNameCntl)
-                    : LoginFormMaterial(
-                        userNameCntl: _userNameCntl,
-                        passwordCntl: _passwordCntl),
-                /* LoginInpatient(
+      if (_platform == TargetPlatform.iOS ||
+          _platform == TargetPlatform.android) {
+        return Scaffold(
+          resizeToAvoidBottomInset: true,
+          body: SingleChildScrollView(
+            child: Stack(children: <Widget>[
+              Container(
+                child: Column(children: [
+                  LoginHeader(),
+                  _platform == TargetPlatform.iOS
+                      ? LoginFormCupertino(
+                          passwordCntl: _passwordCntl,
+                          userNameCntl: _userNameCntl)
+                      : LoginFormMaterial(
+                          userNameCntl: _userNameCntl,
+                          passwordCntl: _passwordCntl),
+                  /* LoginInpatient(
                   passwordCntl: _passwordCntl,
                   userNameCntl: _userNameCntl,
                 ), */
-                LoginMedicalTeam(
-                  passwordCntl: _passwordCntl,
-                  userNameCntl: _userNameCntl,
-                )
-              ]),
-            ),
-          ]),
-        ),
-      );
+                  LoginMedicalTeam(
+                    passwordCntl: _passwordCntl,
+                    userNameCntl: _userNameCntl,
+                  )
+                ]),
+              ),
+            ]),
+          ),
+        );
+      } else {
+        return MyAppWeb();
+      }
     }
   }
 }
