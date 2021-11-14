@@ -24,8 +24,6 @@ class PostgresDao {
     );
     await _symptomsRef.open();
 
-    print("[BD TESTE]: ${_symptomsRef.isClosed}");
-
     var result = await _symptomsRef.query(
         '''select * from "SmartAlarmMobile_symptoms" WHERE userlogged = '$user' ''');
 
@@ -47,7 +45,6 @@ class PostgresDao {
           res.add(aux)
         });
 
-    print("[BD TESTE]: RES = $result res = $res");
     return res;
   }
 
@@ -101,8 +98,6 @@ class PostgresDao {
       password: 'secret',
     );
     await _symptomsRef.open();
-
-    print('Connected to Postgres database...');
   }
 
   Future<void> saveSymptom(
@@ -151,7 +146,6 @@ class PostgresDao {
         },
         allowReuse: true,
       );
-      print('[BD TESTE]: $result');
       Provider.of<Symptoms>(contextProvider, listen: false).eraseAllData();
     }
   }
@@ -191,7 +185,6 @@ class PostgresDao {
         },
         allowReuse: true,
       );
-      print('[BD TESTE]: $result');
     }
   }
 
@@ -212,8 +205,6 @@ class PostgresDao {
     );
     await _symptomsRef.open();
 
-    print("[BD TESTE]: ${_symptomsRef.isClosed}");
-
     var result = await _symptomsRef.query(
         '''select * from "SmartAlarmMobile_alarms" ''');
 
@@ -231,7 +222,6 @@ class PostgresDao {
           res.add(aux)
         });
 
-    print("[BD TESTE]: RES = $result res = $res");
     return res;
   }
 
@@ -252,8 +242,6 @@ class PostgresDao {
     );
     await _symptomsRef.open();
 
-    print("[BD TESTE]: ${_symptomsRef.isClosed}");
-
     var result = await _symptomsRef.query(
         '''select * from "SmartAlarmMobile_alarms"  WHERE bedid = '$bed' ''');
 
@@ -271,7 +259,6 @@ class PostgresDao {
           res.add(aux)
         });
 
-    print("[BD TESTE]: RES = $result res = $res");
     return res;
   }
 

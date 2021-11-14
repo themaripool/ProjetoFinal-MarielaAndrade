@@ -1,10 +1,10 @@
-
 /*
   LoginMedicalTeam: Lida com o clique do botão no caso de login do médico
 */
 
 import 'package:flutter/cupertino.dart';
 import 'package:projeto_final_1/Data/Data.dart';
+import 'package:projeto_final_1/Data/mqtt/mqttManager_web.dart';
 import '../../../GeneralUseCase.dart';
 
 class LoginMedicalTeam extends StatelessWidget {
@@ -35,7 +35,7 @@ class LoginMedicalTeam extends StatelessWidget {
           },
         ),
       );
-    } else {
+    } else if (_platform == TargetPlatform.android) {
       return Padding(
         padding: const EdgeInsets.only(top: 16.0),
         child: ElevatedButton(
@@ -43,6 +43,25 @@ class LoginMedicalTeam extends StatelessWidget {
             MQTTManager().initializeMQTTClient(
                 _userNameCntl.text, _passwordCntl.text, context),
             MQTTManager().connect(),
+          },
+          child: Text("Login"),
+          style: ButtonStyle(
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(Colors.grey[850]),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(40.0),
+              ))),
+        ),
+      );
+    } else  {
+        return Padding(
+        padding: const EdgeInsets.only(top: 16.0),
+        child: ElevatedButton(
+          onPressed: () => {
+            MQTTManagerWeb().initializeMQTTClient(
+                _userNameCntl.text, _passwordCntl.text, context),
+            MQTTManagerWeb().connect(),
           },
           child: Text("Login"),
           style: ButtonStyle(
