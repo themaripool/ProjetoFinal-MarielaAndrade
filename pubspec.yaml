@@ -33,7 +33,7 @@ dependencies:
   flutter_local_notifications: ^9.0.1
   shared_preferences: ^2.0.0
   postgres: ^2.4.2
-  webdev: ^2.7.6
+  webdev: 
 
 dev_dependencies:
   flutter_test:

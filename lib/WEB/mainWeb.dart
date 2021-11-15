@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Models/BedModel.dart';
+import 'package:projeto_final_1/Screens/MedicalTeamUseCase/MedicalTeamUseCase.dart';
 
 class MyAppWeb extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Explore',
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
@@ -19,30 +20,27 @@ class HomePageWeb extends StatefulWidget {
 }
 
 class _HomePageWebState extends State<HomePageWeb> {
-  final List<String> elements = [
-    "Zero",
-    "One",
-    "Two",
-    "Three",
-    "Four",
-    "Five",
-    "Six",
-    "Seven",
-    "Eight",
-    "A Million Billion Trillion",
-    "A much, much longer text that will still fit"
-  ];
+
+  final TextEditingController _userNameCntl = TextEditingController();
+  // final TextEditingController _passwordCntl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: AppBar(/* ... \*/),
-        drawer: MediaQuery.of(context).size.width < 500
-            ? Drawer(
-                child: Menu(),
-              )
-            : null,
+        appBar: PreferredSize(
+            preferredSize: Size(screenSize.width, 1000),
+            child: Container(
+                color: Colors.grey,
+                child: Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Row(
+                    children: [
+                      Text("WkitSimulator-WEB"),
+                    ],
+                  ),
+                ))),
+        drawer: MediaQuery.of(context).size.width < 500 ? Drawer(child: Menu(),) : null,
         body: SafeArea(
             child: Center(
                 child: MediaQuery.of(context).size.width < 500
@@ -50,38 +48,36 @@ class _HomePageWebState extends State<HomePageWeb> {
                     : Row(children: [
                         Container(width: 200.0, child: Menu()),
                         Container(
-                            width: MediaQuery.of(context).size.width - 200.0,
-                            child: Content())
+                            width: MediaQuery.of(context).size.width - 400.0,
+                            height: MediaQuery.of(context).size.width - 400.0,
+                            child: Content()),
                       ]))));
   }
 }
 
 class Content extends StatelessWidget {
-  final List elements = [
-    "Zero",
-    "One",
-    "Two",
-    "Three",
-    "Four",
-    "Five",
-    "Six",
-    "Seven",
-    "Eight",
-    "A Million Billion Trillion",
-    "A much, much longer text that will still fit"
-  ];
+
+  var mock = BedData(bedNumber: 1, dateDetails: "12/12/2021", fc: 98, fr: 60, sector: "3", so: 2, te: 32.1);
+
   @override
-  Widget build(context) => GridView.builder(
-      itemCount: elements.length,
-      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 130.0,
-        crossAxisSpacing: 20.0,
-        mainAxisSpacing: 20.0,
-      ),
-      itemBuilder: (context, i) => Card(
-          child: Center(
-              child: Padding(
-                  padding: EdgeInsets.all(8.0), child: Text(elements[i])))));
+  Widget build(context) => GridView.count(
+              crossAxisCount: 4,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 10,
+              childAspectRatio: 1,
+              children: List.generate(10, (index) {
+                return GestureDetector(
+                    onTap: () {
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //       builder: (context) => BedDetails("1", -1)),
+                      // );
+                    },
+                    child: BedComponent(
+                      bedInfo: mock
+                    ));
+              }));
 }
 
 class Menu extends StatelessWidget {
@@ -90,14 +86,53 @@ class Menu extends StatelessWidget {
         FlatButton(
             onPressed: () {},
             child: ListTile(
-              leading: Icon(Icons.looks_one),
-              title: Text("First Link"),
+              title: Text("Setor 1"),
             )),
         FlatButton(
             onPressed: () {},
             child: ListTile(
-              leading: Icon(Icons.looks_two),
-              title: Text("Second Link"),
-            ))
+              title: Text("Setor 2"),
+            )),
+        ListTile(
+                title: Text(
+                  "Sair",
+                ),
+                leading: Icon(
+                  Icons.exit_to_app,
+                  size: 20,
+                ),
+                onTap: () {
+                  print("logout do mqtt");
+                }),
       ]);
+}
+
+
+class StarageDetails extends StatelessWidget {
+  const StarageDetails({
+    Key key,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.grey,
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Storage Details",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          SizedBox(height: 50),
+        ],
+      ),
+    );
+  }
 }
