@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Data/Data.dart';
 import 'package:projeto_final_1/Models/BedModel.dart';
 import 'package:projeto_final_1/Screens/MedicalTeamUseCase/MedicalTeamUseCase.dart';
+import 'package:projeto_final_1/WEB/detailsWeb.dart';
+import 'package:projeto_final_1/WEB/menuWeb.dart';
 
 class MyAppWeb extends StatelessWidget {
   @override
@@ -20,26 +23,12 @@ class HomePageWeb extends StatefulWidget {
 }
 
 class _HomePageWebState extends State<HomePageWeb> {
-  final TextEditingController _userNameCntl = TextEditingController();
-  // final TextEditingController _passwordCntl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: AppBar(),
-        /* PreferredSize(
-            preferredSize: Size(screenSize.width, 1000),
-            child: Container(
-                color: Colors.grey,
-                child: Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Row(
-                    children: [
-                      Text("WkitSimulator-WEB"),
-                    ],
-                  ),
-                ))), */
+        appBar: AppBar(backgroundColor: Colors.grey[350], title: Text("SmartAlarmsWeb"),),
         drawer: MediaQuery.of(context).size.width < 800
             ? Drawer(
                 child: Menu(),
@@ -109,76 +98,35 @@ class Content extends StatelessWidget {
       te: 32.1);
 
   @override
-  Widget build(context) => GridView.count(
-      crossAxisCount: axisCount,
-      crossAxisSpacing: 20,
-      mainAxisSpacing: 10,
-      childAspectRatio: 1,
-      children: List.generate(10, (index) {
-        return GestureDetector(
-            onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //       builder: (context) => BedDetails("1", -1)),
-              // );
-            },
-            child: BedComponent(bedInfo: mock));
-      }));
-}
-
-class Menu extends StatelessWidget {
-  @override
-  Widget build(context) => ListView(children: [
-        FlatButton(
-            onPressed: () {},
-            child: ListTile(
-              title: Text("Setor 1"),
-            )),
-        FlatButton(
-            onPressed: () {},
-            child: ListTile(
-              title: Text("Setor 2"),
-            )),
-        ListTile(
-            title: Text(
-              "Sair",
-            ),
-            leading: Icon(
-              Icons.exit_to_app,
-              size: 20,
-            ),
-            onTap: () {
-              print("logout do mqtt");
-            }),
-      ]);
-}
-
-class StarageDetails extends StatelessWidget {
-  const StarageDetails({
-    Key key,
-  }) : super(key: key);
-  @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.grey,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Storage Details",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          SizedBox(height: 50),
-        ],
-      ),
+    if ( Provider.of<BedProvider>(context, listen: false).selectedSector == null){
+      Provider.of<BedProvider>(context, listen: false).setSector("todos");
+    }
+    return Consumer<BedProvider>(
+      builder: (__, model, _) {
+        if (model.holder.isEmpty) {
+            return Center(child: CircularProgressIndicator());
+        } else {
+          return GridView.count(
+              crossAxisCount: axisCount,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 10,
+              childAspectRatio: (140 / 140),
+              children: List.generate(model.bySector[model.selectedSector].length, (index) {
+                return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DetailsPageWeb(model.bySector[model.selectedSector][index].bedNumber.toString(), -1)),
+                      );
+                    },
+                    child: BedComponent(
+                      bedInfo: model.bySector[model.selectedSector][index],
+                    ));
+              }));
+        }
+      },
     );
   }
 }

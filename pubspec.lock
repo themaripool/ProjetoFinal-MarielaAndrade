@@ -28,7 +28,7 @@ packages:
       name: browser_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "0.1.10"
   buffer:
     dependency: transitive
     description:
@@ -42,21 +42,21 @@ packages:
       name: build_daemon
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "2.1.10"
   built_collection:
     dependency: transitive
     description:
       name: built_collection
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.1"
+    version: "4.3.2"
   built_value:
     dependency: transitive
     description:
       name: built_value
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.1.3"
+    version: "7.1.0"
   characters:
     dependency: transitive
     description:
@@ -126,35 +126,35 @@ packages:
       name: dds
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.4"
+    version: "1.7.6"
   devtools:
     dependency: transitive
     description:
       name: devtools
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.8.0"
+    version: "2.2.4"
   devtools_server:
     dependency: transitive
     description:
       name: devtools_server
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.8.0"
+    version: "2.2.4"
   devtools_shared:
     dependency: transitive
     description:
       name: devtools_shared
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.8.0"
+    version: "2.2.4"
   dwds:
     dependency: transitive
     description:
       name: dwds
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "11.2.3"
+    version: "11.0.2"
   event_bus:
     dependency: transitive
     description:
@@ -189,7 +189,7 @@ packages:
       name: fixnum
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "0.10.11"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -272,7 +272,7 @@ packages:
       name: io
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "0.3.5"
   js:
     dependency: transitive
     description:
@@ -293,7 +293,7 @@ packages:
       name: json_rpc_2
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.1"
+    version: "2.2.2"
   logging:
     dependency: transitive
     description:
@@ -441,6 +441,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  quiver:
+    dependency: transitive
+    description:
+      name: quiver
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.5"
   sasl_scram:
     dependency: transitive
     description:
@@ -571,7 +578,7 @@ packages:
       name: sse
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.1.0"
+    version: "3.8.3"
   stack_trace:
     dependency: transitive
     description:
@@ -669,7 +676,7 @@ packages:
       name: vm_service
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.2.0"
+    version: "6.2.0"
   watcher:
     dependency: transitive
     description:
@@ -690,7 +697,7 @@ packages:
       name: webdev
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.7.5"
+    version: "2.7.4"
   webkit_inspection_protocol:
     dependency: transitive
     description:

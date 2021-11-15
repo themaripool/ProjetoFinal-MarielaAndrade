@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Data/mqtt/mqttManager_web.dart';
 import 'package:projeto_final_1/WEB/mainWeb.dart';
 
 class SignUpApp extends StatelessWidget {
@@ -7,7 +8,6 @@ class SignUpApp extends StatelessWidget {
     return MaterialApp(
       routes: {
         '/': (context) => SignUpScreen(),
-        '/dashboard': (context) => MyAppWeb(),
       },
     );
   }
@@ -54,10 +54,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   void _updateFormProgress() {
     var progress = 0.0;
-    final controllers = [
-      _passwordTextController,
-      _usernameTextController
-    ];
+    final controllers = [_passwordTextController, _usernameTextController];
 
     for (final controller in controllers) {
       if (controller.value.text.isNotEmpty) {
@@ -70,10 +67,6 @@ class _SignUpFormState extends State<SignUpForm> {
     });
   }
 
-  void _showWelcomeScreen() {
-    Navigator.of(context).pushNamed('/dashboard');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -81,7 +74,23 @@ class _SignUpFormState extends State<SignUpForm> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('Login', style: Theme.of(context).textTheme.headline4),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: 150,
+            color: Colors.grey[850],
+            child: Padding(
+              padding: const EdgeInsets.only(top: 90),
+              child: Column(
+                children: [
+                  Text(
+                    "Monitoramento",
+                    style: TextStyle(color: Colors.white, fontSize: 36),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Text("COVID", style: TextStyle(color: Colors.black, fontSize: 36)),
           Padding(
             padding: EdgeInsets.all(8.0),
             child: TextFormField(
@@ -93,6 +102,8 @@ class _SignUpFormState extends State<SignUpForm> {
             padding: EdgeInsets.all(8.0),
             child: TextFormField(
               controller: _passwordTextController,
+              keyboardType: TextInputType.number,
+              obscureText: true,
               decoration: InputDecoration(hintText: 'Senha'),
             ),
           ),
@@ -100,14 +111,26 @@ class _SignUpFormState extends State<SignUpForm> {
             padding: const EdgeInsets.all(8.0),
             child: TextButton(
               style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.resolveWith((Set<MaterialState> states) {
-                  return states.contains(MaterialState.disabled) ? null : Colors.white;
+                foregroundColor: MaterialStateProperty.resolveWith(
+                    (Set<MaterialState> states) {
+                  return states.contains(MaterialState.disabled)
+                      ? null
+                      : Colors.white;
                 }),
-                backgroundColor: MaterialStateProperty.resolveWith((Set<MaterialState> states) {
-                  return states.contains(MaterialState.disabled) ? null : Colors.blue;
+                backgroundColor: MaterialStateProperty.resolveWith(
+                    (Set<MaterialState> states) {
+                  return states.contains(MaterialState.disabled)
+                      ? null
+                      : Colors.blue;
                 }),
               ),
-              onPressed: _formProgress == 1 ? _showWelcomeScreen : null, // botar aqui chamada web mqtt
+              onPressed: () {
+                MQTTManagerWeb().initializeMQTTClient(
+                    _usernameTextController.text,
+                    _passwordTextController.text,
+                    context);
+                MQTTManagerWeb().connect();
+              },
               child: Text('Sign up'),
             ),
           ),

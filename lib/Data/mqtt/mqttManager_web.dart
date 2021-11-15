@@ -3,6 +3,8 @@ import 'package:projeto_final_1/Data/Data.dart';
 import 'package:projeto_final_1/Models/Models.dart';
 import 'package:projeto_final_1/Screens/GeneralUseCase/GeneralUseCase.dart';
 import 'package:projeto_final_1/Screens/InpatientUseCase/InpatientUseCase.dart';
+import 'package:projeto_final_1/WEB/alertDialogWeb.dart';
+import 'package:projeto_final_1/WEB/mainWeb.dart';
 import 'package:typed_data/typed_data.dart';
 export 'package:mqtt_client/mqtt_browser_client.dart';
 
@@ -62,9 +64,9 @@ class MQTTManagerWeb {
     username = login;
     passwd = password;
 
-    if(username == "marcos"){
+    if (username == "marcos") {
       appId = "pacteste";
-    } else if (username == "teste"){
+    } else if (username == "teste") {
       appId = "teste1";
     }
 
@@ -148,17 +150,10 @@ class MQTTManagerWeb {
               .setCurrentUserName(username);
           print("[DEBUG]: SECTORID = $sectorId, userid= $userId");
           login_accepted();
-          if (appId == "teste1") {
-            Navigator.push(contextNavigation,
-                MaterialPageRoute(builder: (contextNavigation) {
-              return Home();
-            }));
-          } else {
-            Navigator.push(contextNavigation,
-                MaterialPageRoute(builder: (contextNavigation) {
-              return HomePatient();
-            }));
-          }
+          Navigator.push(contextNavigation,
+              MaterialPageRoute(builder: (contextNavigation) {
+            return MyAppWeb();
+          }));
         } else if (contentLoginRequest != "2") {
           _client.disconnect();
           showErrorLoginAlertDialog(contextNavigation);
@@ -313,9 +308,7 @@ class MQTTManagerWeb {
 
     final _platform = Theme.of(contextProvider).platform;
 
-    String formattedDate = _platform == TargetPlatform.iOS
-        ? f.format(now)
-        : f.format(now.subtract(Duration(hours: 3)));
+    String formattedDate = f.format(now);
 
     print("[DEBUG]: aAA $formattedDate ${now.timeZoneName}");
 
@@ -367,16 +360,9 @@ class MQTTManagerWeb {
     var content = jsonDecode(contentPayload);
     print("ALARM NEW  content = $content");
 
-    NotificationApi.showNotification(
-        title: 'Alerta! Leito $bedId',
-        body:
-            'FC = ${content['FC']} bpm  FR = ${content['FR']} pm  TE: ${content['TE']} C  SO: ${content['SO']} %',
-        payload: 'sarah.abs');
-
     showDialog(
         context: contextNavigation,
-        builder: (context) =>
-            AlertDialogPatient(clinicalStatus, bedId, content));
+        builder: (context) => AlertDialogWeb(clinicalStatus, bedId, content));
 
     _sendMessage(clinicalStatus, patientId, bedId, sectorId, false);
   }
@@ -393,9 +379,7 @@ class MQTTManagerWeb {
 
     final _platform = Theme.of(contextProvider).platform;
 
-    String formattedDateHora = _platform == TargetPlatform.iOS
-        ? f.format(now)
-        : f.format(now.subtract(Duration(hours: 3)));
+    String formattedDateHora = f.format(now);
 
     final alert = Alert(clinicalStatus, patientId, bedId, sectorId,
         formattedDiaEMes, formattedDateHora, isCancelled);
