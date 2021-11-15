@@ -20,7 +20,6 @@ class HomePageWeb extends StatefulWidget {
 }
 
 class _HomePageWebState extends State<HomePageWeb> {
-
   final TextEditingController _userNameCntl = TextEditingController();
   // final TextEditingController _passwordCntl = TextEditingController();
 
@@ -28,7 +27,8 @@ class _HomePageWebState extends State<HomePageWeb> {
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: PreferredSize(
+        appBar: AppBar(),
+        /* PreferredSize(
             preferredSize: Size(screenSize.width, 1000),
             child: Container(
                 color: Colors.grey,
@@ -39,45 +39,92 @@ class _HomePageWebState extends State<HomePageWeb> {
                       Text("WkitSimulator-WEB"),
                     ],
                   ),
-                ))),
-        drawer: MediaQuery.of(context).size.width < 500 ? Drawer(child: Menu(),) : null,
+                ))), */
+        drawer: MediaQuery.of(context).size.width < 800
+            ? Drawer(
+                child: Menu(),
+              )
+            : null,
         body: SafeArea(
             child: Center(
-                child: MediaQuery.of(context).size.width < 500
-                    ? Content()
-                    : Row(children: [
+                child: 
+                MediaQuery.of(context).size.width < 800 && MediaQuery.of(context).size.width > 500
+                    ? Container(width: 400, child: Content(axisCount: 2,)) 
+                    : MediaQuery.of(context).size.width > 800 &&  MediaQuery.of(context).size.width <= 1004
+                    ? Row(children: [
                         Container(width: 200.0, child: Menu()),
                         Container(
-                            width: MediaQuery.of(context).size.width - 400.0,
-                            height: MediaQuery.of(context).size.width - 400.0,
-                            child: Content()),
-                      ]))));
+                            width: MediaQuery.of(context).size.width - 200.0,
+                            child: Content(axisCount: 3,)
+                        ),
+                      ]
+                    )
+                    :MediaQuery.of(context).size.width > 1004 &&  MediaQuery.of(context).size.width <= 1300
+                    ? Row(children: [
+                        Container(width: 200.0, child: Menu()),
+                        Container(
+                            width: MediaQuery.of(context).size.width - 200.0,
+                            child: Content(axisCount: 4,)
+                        ),
+                      ]
+                    )
+                    : MediaQuery.of(context).size.width > 1300 &&  MediaQuery.of(context).size.width <= 1500
+                    ? Row(children: [
+                        Container(width: 200.0, child: Menu()),
+                        Container(
+                            width: MediaQuery.of(context).size.width - 200.0,
+                            child: Content(axisCount: 5,)
+                        ),
+                      ]
+                    )
+                    : MediaQuery.of(context).size.width > 1500 
+                    ? Row(children: [
+                        Container(width: 200.0, child: Menu()),
+                        Container(
+                            width: MediaQuery.of(context).size.width - 200.0,
+                            child: Content(axisCount: 6,)
+                        ),
+                      ]
+                    )
+                    : MediaQuery.of(context).size.width < 400 
+                    ? Container(width: 200, child: Content(axisCount: 1,)) 
+                    : Container(width: 200, child: Content(axisCount: 1,))
+                )
+        )
+              );
   }
 }
 
 class Content extends StatelessWidget {
+  final axisCount;
+  Content({this.axisCount});
 
-  var mock = BedData(bedNumber: 1, dateDetails: "12/12/2021", fc: 98, fr: 60, sector: "3", so: 2, te: 32.1);
+  var mock = BedData(
+      bedNumber: 1,
+      dateDetails: "12/12/2021",
+      fc: 98,
+      fr: 60,
+      sector: "3",
+      so: 2,
+      te: 32.1);
 
   @override
   Widget build(context) => GridView.count(
-              crossAxisCount: 4,
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 10,
-              childAspectRatio: 1,
-              children: List.generate(10, (index) {
-                return GestureDetector(
-                    onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //       builder: (context) => BedDetails("1", -1)),
-                      // );
-                    },
-                    child: BedComponent(
-                      bedInfo: mock
-                    ));
-              }));
+      crossAxisCount: axisCount,
+      crossAxisSpacing: 20,
+      mainAxisSpacing: 10,
+      childAspectRatio: 1,
+      children: List.generate(10, (index) {
+        return GestureDetector(
+            onTap: () {
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //       builder: (context) => BedDetails("1", -1)),
+              // );
+            },
+            child: BedComponent(bedInfo: mock));
+      }));
 }
 
 class Menu extends StatelessWidget {
@@ -94,19 +141,18 @@ class Menu extends StatelessWidget {
               title: Text("Setor 2"),
             )),
         ListTile(
-                title: Text(
-                  "Sair",
-                ),
-                leading: Icon(
-                  Icons.exit_to_app,
-                  size: 20,
-                ),
-                onTap: () {
-                  print("logout do mqtt");
-                }),
+            title: Text(
+              "Sair",
+            ),
+            leading: Icon(
+              Icons.exit_to_app,
+              size: 20,
+            ),
+            onTap: () {
+              print("logout do mqtt");
+            }),
       ]);
 }
-
 
 class StarageDetails extends StatelessWidget {
   const StarageDetails({
