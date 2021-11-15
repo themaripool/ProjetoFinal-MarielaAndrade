@@ -61,9 +61,9 @@ class MQTTManager {
     username = login;
     passwd = password;
 
-    if(username == "marcos"){
+    if (username == "marcos") {
       appId = "pacteste";
-    } else if (username == "teste"){
+    } else if (username == "teste") {
       appId = "teste1";
     }
 
@@ -88,6 +88,7 @@ class MQTTManager {
         .withWillQos(MqttQos.atLeastOnce);
 
     print('EXAMPLE::Mosquitto client connecting....');
+    print("[DEBUG]: MQTTManager");
     _client.connectionMessage = connMess;
   }
 

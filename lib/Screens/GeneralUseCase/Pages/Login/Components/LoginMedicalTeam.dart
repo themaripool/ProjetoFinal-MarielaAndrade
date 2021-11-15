@@ -4,7 +4,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:projeto_final_1/Data/Data.dart';
-import 'package:projeto_final_1/Data/mqtt/mqttManager_web.dart';
 import '../../../GeneralUseCase.dart';
 
 class LoginMedicalTeam extends StatelessWidget {
@@ -54,14 +53,14 @@ class LoginMedicalTeam extends StatelessWidget {
               ))),
         ),
       );
-    } else  {
-        return Padding(
+    } else {
+      return Padding(
         padding: const EdgeInsets.only(top: 16.0),
         child: ElevatedButton(
           onPressed: () => {
-            MQTTManagerWeb().initializeMQTTClient(
+            MQTTManager().initializeMQTTClient(
                 _userNameCntl.text, _passwordCntl.text, context),
-            MQTTManagerWeb().connect(),
+            MQTTManager().connect(),
           },
           child: Text("Login"),
           style: ButtonStyle(

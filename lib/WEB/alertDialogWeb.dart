@@ -1,9 +1,8 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/Data/mqtt/mqttManager_web.dart';
 import 'package:projeto_final_1/Screens/MedicalTeamUseCase/MedicalTeamUseCase.dart';
 import 'package:projeto_final_1/WEB/detailsWeb.dart';
+import 'package:projeto_final_1/WEB/mqttManagerWeb.dart';
 
 var bedSeverityStatus;
 var bedSeverityColor;
@@ -55,7 +54,8 @@ class AlertDialogWeb extends StatelessWidget {
               children: <Widget>[
                 AlertCloseButton(),
                 AlertTitle(bedId: bedId),
-                Image.asset('assets/images/warningIcon.png', height: 60, width: 60),
+                Image.asset('assets/images/warningIcon.png',
+                    height: 60, width: 60),
                 AlertInfoLabel(
                   content: content,
                 ),
@@ -146,11 +146,10 @@ class AlertInfoLabel extends StatelessWidget {
             CrossAxisAlignment.center, //Center Row contents vertically,
         children: [
           Row(children: [
-          Text("SaO2: ",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          Text("${content['SO']}%", style: TextStyle(fontSize: 18)),
+            Text("SaO2: ",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text("${content['SO']}%", style: TextStyle(fontSize: 18)),
           ]),
-
           Row(children: [
             Text("FR: ",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),

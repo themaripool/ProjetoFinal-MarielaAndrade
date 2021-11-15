@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+/* import 'package:mqtt_client/mqtt_browser_client.dart'
+    if (dart.library.io) 'package:mqtt_client/mqtt_server_client.dart'; */
+import 'package:mqtt_client/mqtt_client.dart';
+import 'package:projeto_final_1/stub/mqtt_client_stub.dart'
+    if (dart.library.html) 'package:projeto_final_1/stub/mqtt_browser_stub.dart'
+    if (dart.library.io) 'package:projeto_final_1/stub/mqtt_server_stub.dart';
 import 'package:projeto_final_1/Data/Data.dart';
 import 'package:projeto_final_1/Models/Models.dart';
 import 'package:projeto_final_1/Screens/GeneralUseCase/GeneralUseCase.dart';
-import 'package:projeto_final_1/Screens/InpatientUseCase/InpatientUseCase.dart';
 import 'package:projeto_final_1/WEB/alertDialogWeb.dart';
 import 'package:projeto_final_1/WEB/mainWeb.dart';
 import 'package:typed_data/typed_data.dart';
-export 'package:mqtt_client/mqtt_browser_client.dart';
 
 /* ==================================================
 GLOBAIS
@@ -28,10 +32,10 @@ BuildContext contextProvider;
 BuildContext contextNavigation;
 
 var Beds = List(2);
-final _client = MqttBrowserClient.withPort(broker, clientIdentifier, port);
 
 String sectorId;
 String userId;
+var _client;
 
 // ====================================================
 
@@ -58,11 +62,15 @@ var serverLoginTopic =
     TOPIC_401 + appId; //"SmartAlarm/Server/Application/Login/teste1"
 var appHistory = TOPIC_604 + '2'; //"SmartAlarm/Client/Application/History"
 
+final _platform = Theme.of(contextProvider).platform;
+
 class MQTTManagerWeb {
   var contentLoginRequest;
   void initializeMQTTClient(login, password, BuildContext context) {
     username = login;
     passwd = password;
+
+    _client = createClientWithPort(broker, clientIdentifier, port, port);
 
     if (username == "marcos") {
       appId = "pacteste";
@@ -88,6 +96,7 @@ class MQTTManagerWeb {
         .withWillQos(MqttQos.atLeastOnce);
 
     print('EXAMPLE::Mosquitto client connecting....');
+     print("[DEBUG]: MQTTManagerWeb");
     _client.connectionMessage = connMess;
   }
 
