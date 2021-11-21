@@ -17,7 +17,6 @@ class News2 extends ChangeNotifier {
   void setRespiratoryFreq(double val){
     this.respiratoryFreq = val;
     notifyListeners();
-    print("pasosu");
   }
 
   String toStringRespiratoryFreq(){

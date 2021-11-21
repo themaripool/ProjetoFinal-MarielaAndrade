@@ -25,7 +25,7 @@ class BedProvider extends ChangeNotifier {
     } else if (setor == "todos") {
       selectedSector = "0";
     }
-    print("[DEBUG SETOR]: $selectedSector");
+    print("[SETOR ATUAL]: $selectedSector");
     notifyListeners();
   }
 
@@ -59,8 +59,6 @@ class BedProvider extends ChangeNotifier {
           if (key != "0") {aux.add(value)}
         });
     bySector["0"] = aux.expand((element) => element).toList();
-
-    print("[DEBUG SETOR]: $bySector");
   }
 
   void addToSectorMap(String bedId, String sectorId) {

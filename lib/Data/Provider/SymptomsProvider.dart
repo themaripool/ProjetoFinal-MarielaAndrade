@@ -52,7 +52,6 @@ class Symptoms extends ChangeNotifier {
   void setHeadacheVal(int val){
     this.headacheVal = val;
     notifyListeners();
-    print("notificaou");
   }
 
    void setTirednessVal(int val){

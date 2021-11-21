@@ -216,7 +216,6 @@ class AlertButtons extends StatelessWidget {
                   backgroundColor:
                       MaterialStateProperty.all<Color>(Colors.grey[900])),
               onPressed: () {
-                print("------ bed id $bedId -------");
                 return Navigator.push(
                     context,
                     MaterialPageRoute(

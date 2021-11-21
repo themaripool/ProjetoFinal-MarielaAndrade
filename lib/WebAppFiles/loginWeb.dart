@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/WEB/mainWeb.dart';
-import 'package:projeto_final_1/WEB/mqttManagerWeb.dart';
+import 'package:projeto_final_1/WebAppFiles/mqttManagerWeb.dart';
 
 class SignUpApp extends StatelessWidget {
   @override

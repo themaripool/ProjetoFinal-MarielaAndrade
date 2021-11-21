@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/Screens/MedicalTeamUseCase/MedicalTeamUseCase.dart';
-import 'package:projeto_final_1/WEB/dataScreenWeb.dart';
+import 'package:projeto_final_1/WebAppFiles/dataScreenWeb.dart';
 
 class DetailsPageWeb extends StatelessWidget {
   String bedId;

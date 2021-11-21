@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
-import 'package:projeto_final_1/WEB/loginWeb.dart';
-import 'package:projeto_final_1/WEB/mqttManagerWeb.dart';
+import 'package:projeto_final_1/WebAppFiles/loginWeb.dart';
+import 'package:projeto_final_1/WebAppFiles/mqttManagerWeb.dart';
 
 class Menu extends StatelessWidget {
   @override

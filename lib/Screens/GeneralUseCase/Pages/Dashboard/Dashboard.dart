@@ -73,7 +73,6 @@ class _DashboardState extends State<Dashboard> {
                     onPressed: () {
                       setState(() {
                         status = true;
-                        print(status);
                       });
                     },
                     child: Icon(
@@ -92,7 +91,6 @@ class _DashboardState extends State<Dashboard> {
                     onPressed: () {
                       setState(() {
                         status = false;
-                        print(status);
                       });
                     },
                     child: Icon(
@@ -147,7 +145,6 @@ class _DashboardState extends State<Dashboard> {
                     onPressed: () {
                       setState(() {
                         status = true;
-                        print(status);
                       });
                     },
                     child: Icon(
@@ -166,7 +163,6 @@ class _DashboardState extends State<Dashboard> {
                     onPressed: () {
                       setState(() {
                         status = false;
-                        print(status);
                       });
                     },
                     child: Icon(

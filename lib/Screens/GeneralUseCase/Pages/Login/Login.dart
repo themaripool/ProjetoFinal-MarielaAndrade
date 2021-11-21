@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:projeto_final_1/Data/Data.dart';
-import 'package:projeto_final_1/WEB/loginWeb.dart';
-import 'package:projeto_final_1/WEB/mainWeb.dart';
+import 'package:projeto_final_1/WebAppFiles/loginWeb.dart';
+import 'package:projeto_final_1/WebAppFiles/mainWeb.dart';
 import '../../GeneralUseCase.dart';
 
 /*

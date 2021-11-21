@@ -1,6 +1,5 @@
 import 'package:postgres/postgres.dart';
 import 'package:projeto_final_1/Models/Models.dart';
-
 import '../Data.dart';
 
 class PostgresDao {
@@ -13,7 +12,7 @@ class PostgresDao {
 
     List<Symptom> res = List<Symptom>();
 
-    print("[BD TESTE]: entrou by user");
+    print("[BD]: entrou by user");
 
     _symptomsRef = PostgreSQLConnection(
       '10.0.2.2',
@@ -53,7 +52,7 @@ class PostgresDao {
     //FROM "SmartAlarmMobile_symptoms"
     //WHERE bed = 'bed'
 
-    print("[BD TESTE]: entrou by bed");
+    print("[BD]: entrou by bed");
 
     List<Symptom> res = List<Symptom>();
 
@@ -150,7 +149,6 @@ class PostgresDao {
     }
   }
 
-
   /* ALARMES */
 
   Future<void> saveAlert(
@@ -188,13 +186,13 @@ class PostgresDao {
     }
   }
 
-   Future<List<Alert>> getAllAlerts() async {
+  Future<List<Alert>> getAllAlerts() async {
     //SELECT *
     //FROM "SmartAlarmMobile_alarms"
 
     List<Alert> res = List<Alert>();
 
-    print("[BD TESTE]: entrou all alarms");
+    print("[BD]: entrou all alarms");
 
     _symptomsRef = PostgreSQLConnection(
       '10.0.2.2',
@@ -205,20 +203,14 @@ class PostgresDao {
     );
     await _symptomsRef.open();
 
-    var result = await _symptomsRef.query(
-        '''select * from "SmartAlarmMobile_alarms" ''');
+    var result = await _symptomsRef
+        .query('''select * from "SmartAlarmMobile_alarms" ''');
 
     var aux;
 
     result.forEach((element) => {
-          aux = Alert(
-              element[0],
-              element[1],
-              element[2],
-              element[3],
-              element[4],
-              element[5],
-              element[6]),
+          aux = Alert(element[0], element[1], element[2], element[3],
+              element[4], element[5], element[6]),
           res.add(aux)
         });
 
@@ -231,7 +223,7 @@ class PostgresDao {
 
     List<Alert> res = List<Alert>();
 
-    print("[BD TESTE]: entrou getAlertsByBed");
+    print("[BD]: entrou getAlertsByBed");
 
     _symptomsRef = PostgreSQLConnection(
       '10.0.2.2',
@@ -248,19 +240,11 @@ class PostgresDao {
     var aux;
 
     result.forEach((element) => {
-          aux = Alert(
-              element[0],
-              element[1],
-              element[2],
-              element[3],
-              element[4],
-              element[5],
-              element[6]),
+          aux = Alert(element[0], element[1], element[2], element[3],
+              element[4], element[5], element[6]),
           res.add(aux)
         });
 
     return res;
   }
-
-
 }

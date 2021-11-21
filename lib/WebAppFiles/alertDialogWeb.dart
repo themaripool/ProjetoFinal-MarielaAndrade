@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Screens/MedicalTeamUseCase/MedicalTeamUseCase.dart';
-import 'package:projeto_final_1/WEB/detailsWeb.dart';
-import 'package:projeto_final_1/WEB/mqttManagerWeb.dart';
+import 'package:projeto_final_1/WebAppFiles/detailsWeb.dart';
+import 'package:projeto_final_1/WebAppFiles/mqttManagerWeb.dart';
 
 var bedSeverityStatus;
 var bedSeverityColor;
@@ -202,7 +202,6 @@ class AlertButtons extends StatelessWidget {
                   backgroundColor:
                       MaterialStateProperty.all<Color>(Colors.grey[900])),
               onPressed: () {
-                print("------ bed id $bedId -------");
                 return Navigator.push(
                     context,
                     MaterialPageRoute(
