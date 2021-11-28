@@ -34,10 +34,81 @@ class _HomePageWebState extends State<HomePageWeb> {
           actions: [
             GestureDetector(
               onTap: () {
-                MQTTManagerWeb().makePGQuery('SymptomsByUser');
+                MQTTManagerWeb().makePGQuery('allAlarms');
               },
               child: Icon(
                 Icons.search,
+                size: 26.0,
+              ),
+            ),
+
+             GestureDetector(
+              onTap: () {
+                MQTTManagerWeb().makePGQuery('SymptomsByUser');
+              },
+              child: Icon(
+                Icons.accessible,
+                size: 26.0,
+              ),
+            ),
+
+             GestureDetector(
+              onTap: () {
+                MQTTManagerWeb().makePGQuery('SymptomsByBed');
+              },
+              child: Icon(
+                Icons.ac_unit,
+                size: 26.0,
+              ),
+            ),
+
+             GestureDetector(
+              onTap: () {
+                MQTTManagerWeb().makePGQuery('AlarmsByBed');
+              },
+              child: Icon(
+                Icons.ac_unit,
+                size: 26.0,
+              ),
+            ),
+
+            GestureDetector(
+              onTap: () {
+                MQTTManagerWeb().insertSymptomsQuery(
+                  'insertSymptoms', 
+                  '5',
+                  '5',
+                  '5/5/2010',
+                  '5',
+                  '16:20',
+                  '5',
+                  'dor no peito',
+                  'nao',
+                  '5',
+                  '5',
+                  'teste',
+                  '5');
+              },
+              child: Icon(
+                Icons.add_sharp,
+                size: 26.0,
+              ),
+            ),
+
+            GestureDetector(
+              onTap: () {
+                MQTTManagerWeb().insertAlarmQuery(
+                  'insertAlarm', 
+                  '1',
+                  '1',
+                  '1',
+                  '1',
+                  '1',
+                  '1',
+                  false);
+              },
+              child: Icon(
+                Icons.add_sharp,
                 size: 26.0,
               ),
             )

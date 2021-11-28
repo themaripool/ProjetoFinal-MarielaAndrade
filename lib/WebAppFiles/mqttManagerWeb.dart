@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_client.dart';
+import 'package:projeto_final_1/Screens/InpatientUseCase/InpatientUseCase.dart';
 import 'package:projeto_final_1/stub/mqtt_client_stub.dart'
     if (dart.library.html) 'package:projeto_final_1/stub/mqtt_browser_stub.dart'
     if (dart.library.io) 'package:projeto_final_1/stub/mqtt_server_stub.dart';
@@ -14,7 +15,7 @@ import 'package:typed_data/typed_data.dart';
 GLOBAIS
 ===================================================== */
 
-String broker = 'ws://192.168.0.3'; //windows
+String broker = 'ws://192.168.0.4'; //windows
 int port = 9001;
 String clientIdentifier = 'SmartAlarm';
 
@@ -240,7 +241,90 @@ class MQTTManagerWeb {
     Map<String, dynamic> str = {
       'QR' : '$queryName',
       'UN' : '${Provider.of<BedProvider>(contextNavigation, listen: false).currentUserName}',
-      'BN' : '',
+      'BN' : '7',
+    };
+
+    String json = jsonEncode(str);
+    Uint8List data = utf8.encode(json);
+    Uint8Buffer dataBuffer = Uint8Buffer();
+    dataBuffer.addAll(data);
+
+    _client.publishMessage(bdServer, MqttQos.atLeastOnce, dataBuffer);
+  }
+
+   void insertSymptomsQuery(queryName,  String conscience,
+      String diarrea,
+      String date,
+      String headache,
+      String hour,
+      String nausea,
+      String others,
+      String ox,
+      String pain,
+      String tiredness,
+      String userlogged,
+      String bednumber) {
+    print("[Mqtt Web]: Connect to postgres - insert on db");
+
+    /*  String TOPIC_605 = "SmartAlarm/Client/Application/Query";
+    String TOPIC_405 = "SmartAlarm/Server/Application/Query"; */
+
+    var bdCliente = TOPIC_605 + '/$userId';
+    var bdServer = TOPIC_405 + '/$userId';
+
+    _client.subscribe(bdCliente, MqttQos.atLeastOnce);
+
+    Map<String, dynamic> str = {
+      'QR' : '$queryName',
+      'conscience' : '$conscience',
+      'diarrea' : '$diarrea',
+      'date' : '$date',
+      'headache' : '$headache',
+      'hour' : '$hour',
+      'nausea' : '$nausea',
+      'others' : '$others',
+      'ox' : '$ox',
+      'pain' : '$pain',
+      'tiredness' : '$tiredness',
+      'userlogged' : '$userlogged',
+      'bednumber' : '$bednumber',
+    };
+
+    String json = jsonEncode(str);
+    Uint8List data = utf8.encode(json);
+    Uint8Buffer dataBuffer = Uint8Buffer();
+    dataBuffer.addAll(data);
+
+    _client.publishMessage(bdServer, MqttQos.atLeastOnce, dataBuffer);
+  }
+
+  void insertAlarmQuery(queryName,  
+      String clinicalStatus,
+      String patientId,
+      String bedId,
+      String sectorId,
+      String dateAndMonth,
+      String hourAndMinute,
+      bool isCancelled) {
+    print("[Mqtt Web]: Connect to postgres - insert on db");
+
+    /*  String TOPIC_605 = "SmartAlarm/Client/Application/Query";
+    String TOPIC_405 = "SmartAlarm/Server/Application/Query"; */
+
+    var bdCliente = TOPIC_605 + '/$userId';
+    var bdServer = TOPIC_405 + '/$userId';
+
+    _client.subscribe(bdCliente, MqttQos.atLeastOnce);
+
+    Map<String, dynamic> str = {
+      'QR' : '$queryName',
+      'clinicalStatus' : '$clinicalStatus',
+      'patientId' : '$patientId',
+      'bedId' : '$bedId',
+      'sectorId' : '$sectorId',
+      'dateAndMonth' : '$dateAndMonth',
+      'hourAndMinute' : '$hourAndMinute',
+      'isCancelled' : '$isCancelled',
     };
 
     String json = jsonEncode(str);
