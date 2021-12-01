@@ -10,6 +10,34 @@ class BedProvider extends ChangeNotifier {
   String selectedSector;
   Map<String, List<BedData>> bySector = {};
 
+  /* Auxiliares para o banco */
+
+  List<Alert> allAlertsByBed = List<Alert>();
+  List<Symptom> allSymptomByBed = List<Symptom>();
+  
+
+  void setAlertsListByBed(List<Alert> res) {
+    allAlertsByBed = res;
+    notifyListeners();
+  }
+
+  void eraseAlertsListByBed() {
+    allAlertsByBed = List<Alert>();
+    notifyListeners();
+  }
+
+  void setSymptomListByBed(List<Symptom> res) {
+    allSymptomByBed = res;
+    notifyListeners();
+  }
+
+  void eraseSymptomListByBed() {
+    allSymptomByBed = List<Symptom>();
+    notifyListeners();
+  }
+
+  /* ---------------------------------------- */
+
   void setCurrentUserName(String username) {
     currentUserName = username;
     notifyListeners();

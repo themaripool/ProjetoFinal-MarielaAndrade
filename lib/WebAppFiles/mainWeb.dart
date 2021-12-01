@@ -34,7 +34,7 @@ class _HomePageWebState extends State<HomePageWeb> {
           actions: [
             GestureDetector(
               onTap: () {
-                MQTTManagerWeb().makePGQuery('allAlarms');
+                MQTTManagerWeb().makePGQuery('allAlarms', 7);
               },
               child: Icon(
                 Icons.search,
@@ -44,7 +44,7 @@ class _HomePageWebState extends State<HomePageWeb> {
 
              GestureDetector(
               onTap: () {
-                MQTTManagerWeb().makePGQuery('SymptomsByUser');
+                MQTTManagerWeb().makePGQuery('SymptomsByUser', 7);
               },
               child: Icon(
                 Icons.accessible,
@@ -54,7 +54,7 @@ class _HomePageWebState extends State<HomePageWeb> {
 
              GestureDetector(
               onTap: () {
-                MQTTManagerWeb().makePGQuery('SymptomsByBed');
+                MQTTManagerWeb().makePGQuery('SymptomsByBed', 7);
               },
               child: Icon(
                 Icons.ac_unit,
@@ -64,7 +64,7 @@ class _HomePageWebState extends State<HomePageWeb> {
 
              GestureDetector(
               onTap: () {
-                MQTTManagerWeb().makePGQuery('AlarmsByBed');
+                MQTTManagerWeb().makePGQuery('AlarmsByBed', 7);
               },
               child: Icon(
                 Icons.ac_unit,
@@ -191,16 +191,6 @@ class _HomePageWebState extends State<HomePageWeb> {
 class Content extends StatelessWidget {
   final axisCount;
   Content({this.axisCount});
-
-  var mock = BedData(
-      bedNumber: 1,
-      dateDetails: "12/12/2021",
-      fc: 98,
-      fr: 60,
-      sector: "3",
-      so: 2,
-      te: 32.1);
-
   @override
   Widget build(BuildContext context) {
     if (Provider.of<BedProvider>(context, listen: false).selectedSector ==

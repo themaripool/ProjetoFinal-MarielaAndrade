@@ -18,6 +18,7 @@ GLOBAIS
 String broker = 'ws://192.168.0.4'; //windows
 int port = 9001;
 String clientIdentifier = 'SmartAlarm';
+String queryHolder = "";
 
 String username;
 String passwd;
@@ -155,20 +156,20 @@ class MQTTManagerWeb {
           showErrorLoginAlertDialog(contextNavigation);
         }
       } else if (c[0].topic == clientInitialData) {
-        // receive_InitialData(contentPayload);
+        receive_InitialData(contentPayload);
       } else {
         var subTopics = c[0].topic.split("/");
         print("TOOOPICO ELSE = ${c[0].topic}");
 
         if (c[0].topic.contains(TOPIC_200)) {
-          // receive_data(contentPayload, subTopics);
+          receive_data(contentPayload, subTopics);
         } else if (c[0].topic.contains(TOPIC_301)) {
-          // recv_alarm_new(contentPayload, subTopics);
+          recv_alarm_new(contentPayload, subTopics);
         } else if (c[0].topic.contains(TOPIC_302)) {
         } else if (c[0].topic.contains(TOPIC_303)) {
-          //recv_alarm_cancel(contentPayload, subTopics);
+          recv_alarm_cancel(contentPayload, subTopics);
         } else if (c[0].topic.contains(TOPIC_605)) {
-          print("entrou topico 405 - ${c[0].topic}");
+          print("entrou topico 405 - ${c[0].topic} - ");
           getPGQuery(contentPayload);
         }
       }
@@ -227,11 +228,10 @@ class MQTTManagerWeb {
 
   //***************************************************************************************** */
 
-  void makePGQuery(queryName) {
+  void makePGQuery(queryName, bedId) {
     print("[Mqtt Web]: Connect to postgres");
 
-    /*  String TOPIC_605 = "SmartAlarm/Client/Application/Query";
-    String TOPIC_405 = "SmartAlarm/Server/Application/Query"; */
+    queryHolder = queryName;
 
     var bdCliente = TOPIC_605 + '/$userId';
     var bdServer = TOPIC_405 + '/$userId';
@@ -239,9 +239,10 @@ class MQTTManagerWeb {
     _client.subscribe(bdCliente, MqttQos.atLeastOnce);
 
     Map<String, dynamic> str = {
-      'QR' : '$queryName',
-      'UN' : '${Provider.of<BedProvider>(contextNavigation, listen: false).currentUserName}',
-      'BN' : '7',
+      'QR': '$queryName',
+      'UN':
+          '${Provider.of<BedProvider>(contextNavigation, listen: false).currentUserName}',
+      'BN': '$bedId',
     };
 
     String json = jsonEncode(str);
@@ -252,7 +253,9 @@ class MQTTManagerWeb {
     _client.publishMessage(bdServer, MqttQos.atLeastOnce, dataBuffer);
   }
 
-   void insertSymptomsQuery(queryName,  String conscience,
+  void insertSymptomsQuery(
+      queryName,
+      String conscience,
       String diarrea,
       String date,
       String headache,
@@ -275,19 +278,19 @@ class MQTTManagerWeb {
     _client.subscribe(bdCliente, MqttQos.atLeastOnce);
 
     Map<String, dynamic> str = {
-      'QR' : '$queryName',
-      'conscience' : '$conscience',
-      'diarrea' : '$diarrea',
-      'date' : '$date',
-      'headache' : '$headache',
-      'hour' : '$hour',
-      'nausea' : '$nausea',
-      'others' : '$others',
-      'ox' : '$ox',
-      'pain' : '$pain',
-      'tiredness' : '$tiredness',
-      'userlogged' : '$userlogged',
-      'bednumber' : '$bednumber',
+      'QR': '$queryName',
+      'conscience': '$conscience',
+      'diarrea': '$diarrea',
+      'date': '$date',
+      'headache': '$headache',
+      'hour': '$hour',
+      'nausea': '$nausea',
+      'others': '$others',
+      'ox': '$ox',
+      'pain': '$pain',
+      'tiredness': '$tiredness',
+      'userlogged': '$userlogged',
+      'bednumber': '$bednumber',
     };
 
     String json = jsonEncode(str);
@@ -298,7 +301,8 @@ class MQTTManagerWeb {
     _client.publishMessage(bdServer, MqttQos.atLeastOnce, dataBuffer);
   }
 
-  void insertAlarmQuery(queryName,  
+  void insertAlarmQuery(
+      queryName,
       String clinicalStatus,
       String patientId,
       String bedId,
@@ -317,14 +321,14 @@ class MQTTManagerWeb {
     _client.subscribe(bdCliente, MqttQos.atLeastOnce);
 
     Map<String, dynamic> str = {
-      'QR' : '$queryName',
-      'clinicalStatus' : '$clinicalStatus',
-      'patientId' : '$patientId',
-      'bedId' : '$bedId',
-      'sectorId' : '$sectorId',
-      'dateAndMonth' : '$dateAndMonth',
-      'hourAndMinute' : '$hourAndMinute',
-      'isCancelled' : '$isCancelled',
+      'QR': '$queryName',
+      'clinicalStatus': '$clinicalStatus',
+      'patientId': '$patientId',
+      'bedId': '$bedId',
+      'sectorId': '$sectorId',
+      'dateAndMonth': '$dateAndMonth',
+      'hourAndMinute': '$hourAndMinute',
+      'isCancelled': '$isCancelled',
     };
 
     String json = jsonEncode(str);
@@ -339,8 +343,53 @@ class MQTTManagerWeb {
     var bdCliente = TOPIC_605 + '/$userId';
     print("[Mqtt Web]: conectou");
     var content = jsonDecode(contentPayload);
-    print("PAYLOAD == $content");
-    _client.unsubscribe(bdCliente); 
+
+    if (queryHolder == 'AlarmsByBed' || queryHolder == 'allAlarms' ) {
+      List<Alert> res = List<Alert>();
+      var aux;
+
+      content.forEach((element) => {
+            aux = Alert(element[0], element[1], element[2], element[3],
+                element[4], element[5], element[6]),
+            res.add(aux)
+          });
+
+      BedProvider bedProvider =
+          Provider.of<BedProvider>(contextProvider, listen: false);
+
+      bedProvider.setAlertsListByBed(res);
+      print("PAYLOAD == $content RES == $res");
+    } else if (queryHolder == 'SymptomsByBed') {
+      List<Symptom> res = List<Symptom>();
+      var aux;
+
+      content.forEach((element) => {
+            aux = Symptom(
+                element[3],
+                element[9],
+                element[8],
+                element[5],
+                element[1],
+                element[6],
+                element[4],
+                element[7],
+                element[0],
+                element[2],
+                element[10]),
+            res.add(aux)
+          });
+
+      BedProvider bedProvider =
+          Provider.of<BedProvider>(contextProvider, listen: false);
+
+      bedProvider.setSymptomListByBed(res);
+      print("PAYLOAD == $content RES == $res");
+    }
+
+    
+
+   
+    _client.unsubscribe(bdCliente);
   }
 
   ///***************************************************************************************** */
