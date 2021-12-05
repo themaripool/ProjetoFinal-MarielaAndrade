@@ -67,7 +67,9 @@ class InpatientViewModel {
     );
   }
 
-  void saveData(BuildContext context, String numberBed) {
+
+  void saveSymptomsData(BuildContext context, String numberBed) {
+   
     final _platform = Theme.of(context).platform;
 
     var inputFormat = DateFormat('yyyy-MM-dd HH:mm');
@@ -95,43 +97,13 @@ class InpatientViewModel {
     var user = Provider.of<BedProvider>(context, listen: false)
         .currentUserName;
 
-    PostgresDao().saveSymptom(conscience, diarrhea, formattedDate, headache,
+    if(_platform == TargetPlatform.iOS || _platform == TargetPlatform.android){
+      MQTTManager().insertSymptomsQuery('insertSymptoms', conscience, diarrhea, formattedDate, headache,
         formattedDateHora, nausea, other, ox, pain, tiredness, user, numberBed);
-
-    showToast(context);
-  }
-
-  void saveDataWeb(BuildContext context, String numberBed) {
-    final _platform = Theme.of(context).platform;
-
-    var inputFormat = DateFormat('yyyy-MM-dd HH:mm');
-    var inputDate = inputFormat.parse(DateTime.now().toString());
-    var outputFormat = DateFormat('dd/MM/yyyy');
-    var formattedDate = outputFormat.format(inputDate);
-
-    var formattedDateHora = _platform == TargetPlatform.iOS
-        ? DateFormat.Hm().format(DateTime.now())
-        : DateFormat.Hm().format(DateTime.now().subtract(Duration(hours: 3)));
-
-    var headache = Provider.of<Symptoms>(context, listen: false).headacheVal.toString() == "-1" ? "dados nao inseridos" : Provider.of<Symptoms>(context, listen: false).headacheVal.toString();
-    var nausea =
-        Provider.of<Symptoms>(context, listen: false).nauseaVal.toString() == "-1" ? "dados nao inseridos" : Provider.of<Symptoms>(context, listen: false).nauseaVal.toString();
-    var tiredness =
-        Provider.of<Symptoms>(context, listen: false).tirednessVal.toString() == "-1" ? "dados nao inseridos" : Provider.of<Symptoms>(context, listen: false).tirednessVal.toString();
-    var diarrhea =
-        Provider.of<Symptoms>(context, listen: false).diarrheaVal.toString() == "-1" ? "dados nao inseridos" : Provider.of<Symptoms>(context, listen: false).diarrheaVal.toString() ;
-    var pain = Provider.of<Symptoms>(context, listen: false).painVal.toString() == "-1" ? "dados nao inseridos" : Provider.of<Symptoms>(context, listen: false).painVal.toString();
-    var other =
-        Provider.of<Symptoms>(context, listen: false).otherVal.toString() == "" ? "dados nao inseridos" : Provider.of<Symptoms>(context, listen: false).otherVal.toString() ;
-    var ox = Provider.of<Symptoms>(context, listen: false).supOx.toString() == "" ? "dados nao inseridos" : Provider.of<Symptoms>(context, listen: false).supOx.toString();
-    var conscience =
-        Provider.of<Symptoms>(context, listen: false).conscience.toString() ==  "" ? "dados nao inseridos" : Provider.of<Symptoms>(context, listen: false).conscience.toString() ;
-    var user = Provider.of<BedProvider>(context, listen: false)
-        .currentUserName;
-
-    MQTTManagerWeb().insertSymptomsQuery('insertSymptoms', conscience, diarrhea, formattedDate, headache,
+    } else {
+      MQTTManagerWeb().insertSymptomsQuery('insertSymptoms', conscience, diarrhea, formattedDate, headache,
         formattedDateHora, nausea, other, ox, pain, tiredness, user, numberBed);
-
+    }
     showToast(context);
   }
 

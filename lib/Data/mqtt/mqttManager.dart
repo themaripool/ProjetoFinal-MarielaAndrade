@@ -10,9 +10,10 @@ GLOBAIS
 ===================================================== */
 
 //String broker = 'ws://192.168.5.178'; //macos
-String broker = 'ws://192.168.0.3'; //windows
+String broker = 'ws://192.168.0.4'; //windows
 int port = 9001;
 String clientIdentifier = 'SmartAlarm';
+String queryHolder = "";
 
 String username;
 String passwd;
@@ -39,6 +40,8 @@ String TOPIC_402 = "SmartAlarm/Server/Application/InitialData/";
 String TOPIC_601 = "SmartAlarm/Client/Application/Login/";
 String TOPIC_602 = "SmartAlarm/Client/Application/InitialData/";
 String TOPIC_604 = "SmartAlarm/Client/Application/History/";
+String TOPIC_605 = "SmartAlarm/Client/Application/Query";
+String TOPIC_405 = "SmartAlarm/Server/Application/Query";
 
 var clientInitialData =
     TOPIC_602 + appId; //"SmartAlarm/Client/Application/InitialData/teste1"
@@ -174,6 +177,9 @@ class MQTTManager {
         } else if (c[0].topic.contains(TOPIC_302)) {
         } else if (c[0].topic.contains(TOPIC_303)) {
           recv_alarm_cancel(contentPayload, subTopics);
+        } else if (c[0].topic.contains(TOPIC_605)) {
+          print("entrou topico 405 - ${c[0].topic} - ");
+          getPGQuery(contentPayload);
         }
       }
     });
@@ -229,6 +235,170 @@ class MQTTManager {
 
     _client.publishMessage(serverInitialData, MqttQos.atLeastOnce, dataBuffer);
   }
+
+  //***************************************************************************************** */
+
+  void makePGQuery(queryName, bedId) {
+    print("[Mqtt APP]: Connect to postgres");
+
+    queryHolder = queryName;
+
+    var bdCliente = TOPIC_605 + '/$userId';
+    var bdServer = TOPIC_405 + '/$userId';
+
+    _client.subscribe(bdCliente, MqttQos.atLeastOnce);
+
+    Map<String, dynamic> str = {
+      'QR': '$queryName',
+      'UN':
+          '${Provider.of<BedProvider>(contextNavigation, listen: false).currentUserName}',
+      'BN': '$bedId',
+    };
+
+    String json = jsonEncode(str);
+    Uint8List data = utf8.encode(json);
+    Uint8Buffer dataBuffer = Uint8Buffer();
+    dataBuffer.addAll(data);
+
+    _client.publishMessage(bdServer, MqttQos.atLeastOnce, dataBuffer);
+  }
+
+  void insertSymptomsQuery(
+      queryName,
+      String conscience,
+      String diarrea,
+      String date,
+      String headache,
+      String hour,
+      String nausea,
+      String others,
+      String ox,
+      String pain,
+      String tiredness,
+      String userlogged,
+      String bednumber) {
+    print("[Mqtt APP]: Connect to postgres - insert on db");
+
+    /*  String TOPIC_605 = "SmartAlarm/Client/Application/Query";
+    String TOPIC_405 = "SmartAlarm/Server/Application/Query"; */
+
+    var bdCliente = TOPIC_605 + '/$userId';
+    var bdServer = TOPIC_405 + '/$userId';
+
+    _client.subscribe(bdCliente, MqttQos.atLeastOnce);
+
+    Map<String, dynamic> str = {
+      'QR': '$queryName',
+      'conscience': '$conscience',
+      'diarrea': '$diarrea',
+      'date': '$date',
+      'headache': '$headache',
+      'hour': '$hour',
+      'nausea': '$nausea',
+      'others': '$others',
+      'ox': '$ox',
+      'pain': '$pain',
+      'tiredness': '$tiredness',
+      'userlogged': '$userlogged',
+      'bednumber': '$bednumber',
+    };
+
+    String json = jsonEncode(str);
+    Uint8List data = utf8.encode(json);
+    Uint8Buffer dataBuffer = Uint8Buffer();
+    dataBuffer.addAll(data);
+
+    _client.publishMessage(bdServer, MqttQos.atLeastOnce, dataBuffer);
+  }
+
+  void insertAlarmQuery(
+      queryName,
+      String clinicalStatus,
+      String patientId,
+      String bedId,
+      String sectorId,
+      String dateAndMonth,
+      String hourAndMinute,
+      bool isCancelled) {
+    print("[Mqtt APP]: Connect to postgres - insert on db");
+
+    /*  String TOPIC_605 = "SmartAlarm/Client/Application/Query";
+    String TOPIC_405 = "SmartAlarm/Server/Application/Query"; */
+
+    var bdCliente = TOPIC_605 + '/$userId';
+    var bdServer = TOPIC_405 + '/$userId';
+
+    _client.subscribe(bdCliente, MqttQos.atLeastOnce);
+
+    Map<String, dynamic> str = {
+      'QR': '$queryName',
+      'clinicalStatus': '$clinicalStatus',
+      'patientId': '$patientId',
+      'bedId': '$bedId',
+      'sectorId': '$sectorId',
+      'dateAndMonth': '$dateAndMonth',
+      'hourAndMinute': '$hourAndMinute',
+      'isCancelled': '$isCancelled',
+    };
+
+    String json = jsonEncode(str);
+    Uint8List data = utf8.encode(json);
+    Uint8Buffer dataBuffer = Uint8Buffer();
+    dataBuffer.addAll(data);
+
+    _client.publishMessage(bdServer, MqttQos.atLeastOnce, dataBuffer);
+  }
+
+  void getPGQuery(contentPayload) {
+    var bdCliente = TOPIC_605 + '/$userId';
+    print("[Mqtt APP]: conectou");
+    var content = jsonDecode(contentPayload);
+
+    if (queryHolder == 'AlarmsByBed' || queryHolder == 'allAlarms' ) {
+      List<Alert> res = List<Alert>();
+      var aux;
+
+      content.forEach((element) => {
+            aux = Alert(element[0], element[1], element[2], element[3],
+                element[4], element[5], element[6]),
+            res.add(aux)
+          });
+
+      BedProvider bedProvider =
+          Provider.of<BedProvider>(contextProvider, listen: false);
+
+      bedProvider.setAlertsListByBed(res);
+      print("PAYLOAD == $content RES == $res");
+    } else if (queryHolder == 'SymptomsByBed' || queryHolder == 'SymptomsByUser') {
+      List<Symptom> res = List<Symptom>();
+      var aux;
+
+      content.forEach((element) => {
+            aux = Symptom(
+                element[3],
+                element[9],
+                element[8],
+                element[5],
+                element[1],
+                element[6],
+                element[4],
+                element[7],
+                element[0],
+                element[2],
+                element[10]),
+            res.add(aux)
+          });
+
+      BedProvider bedProvider =
+          Provider.of<BedProvider>(contextProvider, listen: false);
+
+      bedProvider.setSymptomListByBed(res);
+      print("PAYLOAD == $content RES == $res");
+    }
+    _client.unsubscribe(bdCliente);
+  }
+
+  ///***************************************************************************************** */
 
 // ignore: non_constant_identifier_names
   void receive_InitialData(pt) {
@@ -385,8 +555,8 @@ class MQTTManager {
 
     final alert = Alert(clinicalStatus, patientId, bedId, sectorId,
         formattedDiaEMes, formattedDateHora, isCancelled);
-    PostgresDao().saveAlert(clinicalStatus, patientId, bedId, sectorId,
-        formattedDiaEMes, formattedDateHora, isCancelled);
+   /*  PostgresDao().saveAlert(clinicalStatus, patientId, bedId, sectorId,
+        formattedDiaEMes, formattedDateHora, isCancelled); */
   }
 
   // ignore: non_constant_identifier_names

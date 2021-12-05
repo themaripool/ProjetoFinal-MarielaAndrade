@@ -62,7 +62,7 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
                   padding: const EdgeInsets.only(top: 16),
                   child: CupertinoButton(
                     color: CupertinoColors.systemGrey,
-                    onPressed: () => {viewModel.saveData(context, numberBed)},
+                    onPressed: () => {viewModel.saveSymptomsData(context, numberBed)},
                     child: Text("Salvar Sintomas"),
                   ),
                 ),
@@ -105,7 +105,7 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
                 Padding(
                   padding: const EdgeInsets.only(top: 16),
                   child: ElevatedButton(
-                    onPressed: () => {viewModel.saveData(context, numberBed)},
+                    onPressed: () => {viewModel.saveSymptomsData(context, numberBed)},
                     child: Text("Salvar Sintomas"),
                     style: ButtonStyle(
                         backgroundColor:
@@ -177,7 +177,7 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
           child: Icon(Icons.save),
           backgroundColor: Colors.green,
           onPressed: () {
-            viewModel.saveDataWeb(context, numberBed);
+            viewModel.saveSymptomsData(context, numberBed);
           },
         ),
       );

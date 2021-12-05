@@ -21,178 +21,151 @@ class InpatientSymptomsHistory extends StatelessWidget {
     final _platform = Theme.of(context).platform;
     if (_platform == TargetPlatform.iOS) {
       if (isInpatient) {
+        MQTTManager().makePGQuery('SymptomsByUser', bedNumber);
         return Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: CupertinoNavigationBar(
-            middle: Text("Histórico"),
-          ),
-          body: FutureBuilder<List>(
-            future: PostgresDao().getSymptomsByUser(
-                Provider.of<BedProvider>(contextProvider, listen: false)
-                    .currentUserName),
-            initialData: List(),
-            builder: (context, snapshot) {
-              if (snapshot.data.isEmpty) {
+            resizeToAvoidBottomInset: false,
+            appBar: CupertinoNavigationBar(
+              middle: Text("Histórico"),
+            ),
+            body: Consumer<BedProvider>(builder: (__, model, _) {
+              if (model.allSymptomByBed.isEmpty) {
                 return Center(
-                    child: Text("Este paciente ainda não salvou sintomas"));
+                    child: Text("Este usuário não possui dados salvos"));
               } else {
-                return snapshot.hasData
-                    ? ListView.builder(
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (_, int position) {
-                          final symptom = snapshot.data[position];
-                          return SymptomsComponentList(
-                            symptom.headache,
-                            symptom.nausea,
-                            symptom.tiredness,
-                            symptom.diarrea,
-                            symptom.pain,
-                            symptom.others,
-                            symptom.hourAndMinute,
-                            symptom.formattedDate,
-                            symptom.ox,
-                            symptom.conscience,
-                          );
-                        },
-                      )
-                    : Center(child: CircularProgressIndicator());
+                return ListView.builder(
+                  itemCount: model.allSymptomByBed.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                        onTap: () {},
+                        child: SymptomsComponentList(
+                          model.allSymptomByBed[index].headache,
+                          model.allSymptomByBed[index].nausea,
+                          model.allSymptomByBed[index].tiredness,
+                          model.allSymptomByBed[index].diarrea,
+                          model.allSymptomByBed[index].pain,
+                          model.allSymptomByBed[index].others,
+                          model.allSymptomByBed[index].hourAndMinute,
+                          model.allSymptomByBed[index].formattedDate,
+                          model.allSymptomByBed[index].ox,
+                          model.allSymptomByBed[index].conscience,
+                        ));
+                  },
+                );
               }
-            },
-          ),
-        );
+            }));
       } else {
+        MQTTManager().makePGQuery('SymptomsByBed', bedNumber);
         return Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: CupertinoNavigationBar(
-            middle: Text("Histórico"),
-          ),
-          body: FutureBuilder<List>(
-            future: PostgresDao().getSymptomsByBed(bedNumber),
-            initialData: List(),
-            builder: (context, snapshot) {
-              if (snapshot.data.isEmpty) {
+            resizeToAvoidBottomInset: false,
+            appBar: CupertinoNavigationBar(
+              middle: Text("Histórico"),
+            ),
+            body: Consumer<BedProvider>(builder: (__, model, _) {
+              if (model.allSymptomByBed.isEmpty) {
                 return Center(child: Text("Sem dados salvos nesta cama"));
               } else {
-                return snapshot.hasData
-                    ? ListView.builder(
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (_, int position) {
-                          final symptom = snapshot.data[position];
-                          return SymptomsComponentList(
-                            symptom.headache,
-                            symptom.nausea,
-                            symptom.tiredness,
-                            symptom.diarrea,
-                            symptom.pain,
-                            symptom.others,
-                            symptom.hourAndMinute,
-                            symptom.formattedDate,
-                            symptom.ox,
-                            symptom.conscience,
-                          );
-                        },
-                      )
-                    : Center(child: CircularProgressIndicator());
+                return ListView.builder(
+                  itemCount: model.allSymptomByBed.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                        onTap: () {},
+                        child: SymptomsComponentList(
+                          model.allSymptomByBed[index].headache,
+                          model.allSymptomByBed[index].nausea,
+                          model.allSymptomByBed[index].tiredness,
+                          model.allSymptomByBed[index].diarrea,
+                          model.allSymptomByBed[index].pain,
+                          model.allSymptomByBed[index].others,
+                          model.allSymptomByBed[index].hourAndMinute,
+                          model.allSymptomByBed[index].formattedDate,
+                          model.allSymptomByBed[index].ox,
+                          model.allSymptomByBed[index].conscience,
+                        ));
+                  },
+                );
               }
-            },
-          ),
-        );
+            }));
       }
     }
     // android
     else if (_platform == TargetPlatform.android) {
       if (isInpatient) {
+        MQTTManager().makePGQuery('SymptomsByUser', bedNumber);
         return MaterialApp(
             theme: SwitchProvider.lightTheme,
             darkTheme: SwitchProvider.darkTheme,
             themeMode: currentTheme.currentTheme,
             home: Scaffold(
-              resizeToAvoidBottomInset: false,
-              appBar: AppBar(
-                title: Text("Histórico"),
-                leading: new IconButton(
-              icon: new Icon(Icons.arrow_back),
-              onPressed: () => Navigator.of(context).pop(),
-            )
-              ),
-              body: FutureBuilder<List>(
-                future: PostgresDao().getSymptomsByUser(
-                    Provider.of<BedProvider>(contextProvider, listen: false)
-                        .currentUserName),
-                initialData: List(),
-                builder: (context, snapshot) {
-                  if (snapshot.data.isEmpty) {
+                resizeToAvoidBottomInset: false,
+                appBar: AppBar(
+                    title: Text("Histórico"),
+                    leading: new IconButton(
+                      icon: new Icon(Icons.arrow_back),
+                      onPressed: () => Navigator.of(context).pop(),
+                    )),
+                body: Consumer<BedProvider>(builder: (__, model, _) {
+                  if (model.allSymptomByBed.isEmpty) {
                     return Center(
-                        child: Text("Este paciente ainda não salvou sintomas"));
+                        child: Text("Este usuário não possui dados salvos"));
                   } else {
-                    return snapshot.hasData
-                        ? ListView.builder(
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (_, int position) {
-                              final symptom = snapshot.data[position];
-                              return SymptomsComponentList(
-                                symptom.headache,
-                                symptom.nausea,
-                                symptom.tiredness,
-                                symptom.diarrea,
-                                symptom.pain,
-                                symptom.others,
-                                symptom.hourAndMinute,
-                                symptom.formattedDate,
-                                symptom.ox,
-                                symptom.conscience,
-                              );
-                            },
-                          )
-                        : Center(child: CircularProgressIndicator());
+                    return ListView.builder(
+                      itemCount: model.allSymptomByBed.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                            onTap: () {},
+                            child: SymptomsComponentList(
+                              model.allSymptomByBed[index].headache,
+                              model.allSymptomByBed[index].nausea,
+                              model.allSymptomByBed[index].tiredness,
+                              model.allSymptomByBed[index].diarrea,
+                              model.allSymptomByBed[index].pain,
+                              model.allSymptomByBed[index].others,
+                              model.allSymptomByBed[index].hourAndMinute,
+                              model.allSymptomByBed[index].formattedDate,
+                              model.allSymptomByBed[index].ox,
+                              model.allSymptomByBed[index].conscience,
+                            ));
+                      },
+                    );
                   }
-                },
-              ),
-            ));
+                })));
       } else {
+        MQTTManager().makePGQuery('SymptomsByBed', bedNumber);
         return MaterialApp(
             theme: SwitchProvider.lightTheme,
             darkTheme: SwitchProvider.darkTheme,
             themeMode: currentTheme.currentTheme,
             home: Scaffold(
-              resizeToAvoidBottomInset: false,
-              appBar: AppBar(
-                  title: Text("Histórico"),
-                  leading: new IconButton(
-                    icon: new Icon(Icons.arrow_back),
-                    onPressed: () => Navigator.of(context).pop(),
-                  )),
-              body: FutureBuilder<List>(
-                future: PostgresDao().getSymptomsByBed(bedNumber),
-                initialData: List(),
-                builder: (context, snapshot) {
-                  if (snapshot.data.isEmpty) {
+                resizeToAvoidBottomInset: false,
+                appBar: AppBar(
+                    title: Text("Histórico"),
+                    leading: new IconButton(
+                      icon: new Icon(Icons.arrow_back),
+                      onPressed: () => Navigator.of(context).pop(),
+                    )),
+                body: Consumer<BedProvider>(builder: (__, model, _) {
+                  if (model.allSymptomByBed.isEmpty) {
                     return Center(child: Text("Sem dados salvos nesta cama"));
                   } else {
-                    return snapshot.hasData
-                        ? ListView.builder(
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (_, int position) {
-                              final symptom = snapshot.data[position];
-                              return SymptomsComponentList(
-                                symptom.headache,
-                                symptom.nausea,
-                                symptom.tiredness,
-                                symptom.diarrea,
-                                symptom.pain,
-                                symptom.others,
-                                symptom.hourAndMinute,
-                                symptom.formattedDate,
-                                symptom.ox,
-                                symptom.conscience,
-                              );
-                            },
-                          )
-                        : Center(child: CircularProgressIndicator());
+                    return ListView.builder(
+                      itemCount: model.allSymptomByBed.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return SymptomsComponentList(
+                          model.allSymptomByBed[index].headache,
+                          model.allSymptomByBed[index].nausea,
+                          model.allSymptomByBed[index].tiredness,
+                          model.allSymptomByBed[index].diarrea,
+                          model.allSymptomByBed[index].pain,
+                          model.allSymptomByBed[index].others,
+                          model.allSymptomByBed[index].hourAndMinute,
+                          model.allSymptomByBed[index].formattedDate,
+                          model.allSymptomByBed[index].ox,
+                          model.allSymptomByBed[index].conscience,
+                        );
+                      },
+                    );
                   }
-                },
-              ),
-            ));
+                })));
       }
     }
   }

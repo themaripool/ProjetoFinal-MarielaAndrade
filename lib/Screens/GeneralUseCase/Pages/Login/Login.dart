@@ -28,7 +28,6 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     NotificationApi.init();
-    PostgresDao().initPostgres();
     _initialized = true;
     super.initState();
   }

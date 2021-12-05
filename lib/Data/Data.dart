@@ -1,4 +1,3 @@
-export 'DAO/PostgresDao.dart';
 export 'mqtt/mqttManager.dart';
 export 'Provider/BedProvider.dart';
 export 'Provider/News2Provider.dart';

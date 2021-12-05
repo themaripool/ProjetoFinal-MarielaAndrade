@@ -10,56 +10,31 @@ class AlertScreen extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    if (isAllAlarms == true) {
-      return FutureBuilder<List>(
-            future: PostgresDao().getAllAlerts(),
-            initialData: List(),
-            builder: (context, snapshot) {
-              if (snapshot.data.isEmpty) {
-                return Center(child: Text("Sem alertas"));
-              } else {
-                return snapshot.hasData
-                    ? ListView.builder(
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (_, int position) {
-                          final alert = snapshot.data[position];
-                          return AlertComponentList(
-                            alert.dateAndMonth, 
-                            alert.hourAndMinute,
-                            alert.clinicalStatus,
-                            alert.bedId,
-                          );
-                        },
-                      )
-                    : Center(child: CircularProgressIndicator());
-              }
-            },
-          );
+    if (isAllAlarms == false) {
+      MQTTManager().makePGQuery('AlarmsByBed', bedNumber);
     } else {
-      return FutureBuilder<List>(
-            future: PostgresDao().getAlertsByBed(bedNumber),
-            initialData: List(),
-            builder: (context, snapshot) {
-              if (snapshot.data.isEmpty) {
-                return Center(child: Text("Este paciente ainda não tem alertas"));
-              } else {
-                return snapshot.hasData
-                    ? ListView.builder(
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (_, int position) {
-                          final alert = snapshot.data[position];
-                          return AlertComponentList(
-                            alert.dateAndMonth, 
-                            alert.hourAndMinute,
-                            alert.clinicalStatus,
-                            alert.bedId,
-                          );
-                        },
-                      )
-                    : Center(child: CircularProgressIndicator());
-              }
-            },
-          );
+      MQTTManager().makePGQuery('allAlarms', bedNumber);
     }
+
+    return Consumer<BedProvider>(builder: (__, model, _) {
+      if (model.allAlertsByBed.isEmpty) {
+        return Center(child: CircularProgressIndicator());
+      } else {
+        return ListView.builder(
+          itemCount: model.allAlertsByBed.length,
+          itemBuilder: (BuildContext context, int index) {
+            return GestureDetector(
+                onTap: () {},
+                child: AlertComponentList(
+                  model.allAlertsByBed[index].dateAndMonth,
+                  model.allAlertsByBed[index].hourAndMinute,
+                  model.allAlertsByBed[index].clinicalStatus,
+                  model.allAlertsByBed[index].bedId,
+                ));
+          },
+        );
+      }
+    });
   }
+  
 }
