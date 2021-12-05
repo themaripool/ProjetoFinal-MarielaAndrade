@@ -7,8 +7,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
+import 'package:projeto_final_1/Models/SymptomsModel.dart';
 import 'package:projeto_final_1/Screens/GeneralUseCase/GeneralUseCase.dart';
 import 'package:projeto_final_1/Screens/GeneralUseCase/config.dart';
+import 'package:projeto_final_1/WebAppFiles/mqttManagerWeb.dart';
 import '../InpatientUseCase.dart';
 
 class PatientSymptoms extends StatefulWidget {
@@ -16,7 +18,8 @@ class PatientSymptoms extends StatefulWidget {
   final isInpatient;
   PatientSymptoms({this.numberBed, this.isInpatient});
   @override
-  _PatientSymptomsState createState() => _PatientSymptomsState(numberBed, isInpatient);
+  _PatientSymptomsState createState() =>
+      _PatientSymptomsState(numberBed, isInpatient);
 }
 
 class _PatientSymptomsState extends State<PatientSymptoms> {
@@ -68,7 +71,7 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
                   child: CupertinoButton(
                     color: CupertinoColors.systemGrey,
                     onPressed: () => {
-                      Navigator.push(contextNavigation,
+                      Navigator.push(context,
                           MaterialPageRoute(builder: (contextNavigation) {
                         return InpatientSymptomsHistory();
                       }))
@@ -85,7 +88,7 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
 
     /* Android */
 
-    else {
+    else if (_platform == TargetPlatform.android) {
       return Scaffold(
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
@@ -118,7 +121,7 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
                   padding: const EdgeInsets.only(top: 16),
                   child: ElevatedButton(
                     onPressed: () => {
-                      Navigator.push(contextNavigation,
+                      Navigator.push(context,
                           MaterialPageRoute(builder: (contextNavigation) {
                         return InpatientSymptomsHistory(
                           bedNumber: numberBed,
@@ -143,6 +146,205 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
         ),
       );
     }
+
+    /* SINTOMAS WEB */
+
+    else {
+      return Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: SingleChildScrollView(
+          reverse: true,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width / 2,
+                  child: PageBody(),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width / 2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: DetailsAlertsPageWeb(numberBed, false),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.save),
+          backgroundColor: Colors.green,
+          onPressed: () {
+            viewModel.saveDataWeb(context, numberBed);
+          },
+        ),
+      );
+    }
+  }
+}
+
+class DetailsAlertsPageWeb extends StatelessWidget {
+  String bedId;
+  bool allAlerts;
+  /* var mock = [
+    Symptom("1", "2", "3","4", "5", "outro", "12:12" , "Nao", "consciente", "12/12/2020", "teste1"),
+  ]; */
+  DetailsAlertsPageWeb(this.bedId, this.allAlerts);
+  @override
+  Widget build(BuildContext context) {
+    MQTTManagerWeb().makePGQuery('SymptomsByBed', bedId);
+    return Consumer<BedProvider>(builder: (__, model, _) {
+      return SizedBox(
+        height: 230,
+        width: MediaQuery.of(context).size.width,
+        child: ListView.builder(
+          itemCount: model.allSymptomByBed.length,
+          itemBuilder: (BuildContext context, int index) {
+            return GestureDetector(
+                onTap: () {},
+                child: SymptomsListWeb(
+                  model.allSymptomByBed[index].headache,
+                  model.allSymptomByBed[index].nausea,
+                  model.allSymptomByBed[index].tiredness,
+                  model.allSymptomByBed[index].diarrea,
+                  model.allSymptomByBed[index].pain,
+                  model.allSymptomByBed[index].others,
+                  model.allSymptomByBed[index].hourAndMinute,
+                  model.allSymptomByBed[index].formattedDate,
+                  model.allSymptomByBed[index].ox,
+                  model.allSymptomByBed[index].conscience,
+                ));
+          },
+        ),
+      );
+    });
+  }
+}
+
+class SymptomsListWeb extends StatelessWidget {
+  final String headache;
+  final String nausea;
+  final String tiredness;
+  final String diarrea;
+  final String pain;
+  final String others;
+  final String hourAndMinute;
+  final String formattedDate;
+  final String ox;
+  final String conscience;
+  SymptomsListWeb(
+      this.headache,
+      this.nausea,
+      this.tiredness,
+      this.diarrea,
+      this.pain,
+      this.others,
+      this.hourAndMinute,
+      this.formattedDate,
+      this.ox,
+      this.conscience);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.width / 3,
+          decoration: BoxDecoration(
+              color: Color.fromRGBO(232, 245, 249, 1),
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(color: Colors.grey.shade700, blurRadius: 5)
+              ]),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 30,
+                    height: 40,
+                    child: SizedBox(child: Icon(Icons.warning_amber_rounded)),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    '$formattedDate',
+                    style: TextStyle(color: Colors.black, fontSize: 14),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    '$hourAndMinute',
+                    style: TextStyle(color: Colors.black, fontSize: 14),
+                  ),
+                ],
+              ),
+              Container(
+                width: double.infinity,
+                height: 1,
+                color: Colors.black,
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 8, bottom: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      'Dor de Cabeça: $headache',
+                      style: TextStyle(color: Colors.black, fontSize: 14),
+                    ),
+                    Text(
+                      'Nausea: $nausea',
+                      style: TextStyle(color: Colors.black, fontSize: 14),
+                    ),
+                    Text(
+                      'Cansaço: $tiredness',
+                      style: TextStyle(color: Colors.black, fontSize: 14),
+                    ),
+                    Text(
+                      'Oxigênio: $ox',
+                      style: TextStyle(color: Colors.black, fontSize: 14),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 8, bottom: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      'Conciência: $conscience',
+                      style: TextStyle(color: Colors.black, fontSize: 14),
+                    ),
+                    Text(
+                      'Diarreia: $diarrea',
+                      style: TextStyle(color: Colors.black, fontSize: 14),
+                    ),
+                    Text(
+                      'Dor: $pain',
+                      style: TextStyle(color: Colors.black, fontSize: 14),
+                    ),
+                    Text(
+                      'Outros: $others',
+                      style: TextStyle(color: Colors.black, fontSize: 14),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
+    ));
   }
 }
 
@@ -183,16 +385,20 @@ class PageBody extends StatelessWidget {
                         children: [
                           Text(
                             "Dor de Cabeça",
-                            style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor),
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Theme.of(context).primaryColor),
                           ),
                           Consumer<Symptoms>(
                               builder: (context, headacheVal, child) {
                             if (headacheVal.toStringHeadache() == "-1") {
                               return Text("Dado não inserido",
-                            style: TextStyle(color: Theme.of(context).primaryColor));
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor));
                             }
                             return Text(headacheVal.toStringHeadache(),
-                            style: TextStyle(color: Theme.of(context).primaryColor));
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor));
                           }),
                         ],
                       ),
@@ -224,16 +430,20 @@ class PageBody extends StatelessWidget {
                         children: [
                           Text(
                             "Cansaço",
-                            style: TextStyle(fontSize: 18,color: Theme.of(context).primaryColor),
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Theme.of(context).primaryColor),
                           ),
                           Consumer<Symptoms>(
                               builder: (context, tirednessVal, child) {
                             if (tirednessVal.toStringTiredness() == "-1") {
                               return Text("Dado não inserido",
-                            style: TextStyle(color: Theme.of(context).primaryColor));
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor));
                             }
                             return Text(tirednessVal.toStringTiredness(),
-                            style: TextStyle(color: Theme.of(context).primaryColor));
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor));
                           }),
                         ],
                       ),
@@ -265,16 +475,20 @@ class PageBody extends StatelessWidget {
                         children: [
                           Text(
                             "Dor",
-                            style: TextStyle(fontSize: 18,color: Theme.of(context).primaryColor),
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Theme.of(context).primaryColor),
                           ),
                           Consumer<Symptoms>(
                               builder: (context, painVal, child) {
                             if (painVal.toStringPain() == "-1") {
                               return Text("Dado não inserido",
-                            style: TextStyle(color: Theme.of(context).primaryColor));
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor));
                             }
                             return Text(painVal.toStringPain(),
-                            style: TextStyle(color: Theme.of(context).primaryColor));
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor));
                           }),
                         ],
                       ),
@@ -303,15 +517,19 @@ class PageBody extends StatelessWidget {
                         children: [
                           Text(
                             "Suplemetação de Oxigênio",
-                            style: TextStyle(fontSize: 18,color: Theme.of(context).primaryColor),
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Theme.of(context).primaryColor),
                           ),
                           Consumer<Symptoms>(builder: (context, val, child) {
                             if (val.toStringOx() == "") {
                               return Text("Dado não inserido",
-                            style: TextStyle(color: Theme.of(context).primaryColor));
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor));
                             }
                             return Text(val.toStringOx(),
-                            style: TextStyle(color: Theme.of(context).primaryColor));
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor));
                           }),
                         ],
                       ),
@@ -352,16 +570,20 @@ class PageBody extends StatelessWidget {
                         children: [
                           Text(
                             "Nausea",
-                            style: TextStyle(fontSize: 18,color: Theme.of(context).primaryColor),
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Theme.of(context).primaryColor),
                           ),
                           Consumer<Symptoms>(
                               builder: (context, nauseaVal, child) {
                             if (nauseaVal.toStringNausea() == "-1") {
                               return Text("Dado não inserido",
-                            style: TextStyle(color: Theme.of(context).primaryColor));
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor));
                             }
                             return Text(nauseaVal.toStringNausea(),
-                            style: TextStyle(color: Theme.of(context).primaryColor));
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor));
                           }),
                         ],
                       ),
@@ -393,16 +615,20 @@ class PageBody extends StatelessWidget {
                         children: [
                           Text(
                             "Diarreia",
-                            style: TextStyle(fontSize: 18,color: Theme.of(context).primaryColor),
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Theme.of(context).primaryColor),
                           ),
                           Consumer<Symptoms>(
                               builder: (context, diarrheaVal, child) {
                             if (diarrheaVal.toStringDiarrhea() == "-1") {
                               return Text("Dado não inserido",
-                            style: TextStyle(color: Theme.of(context).primaryColor));
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor));
                             }
                             return Text(diarrheaVal.toStringDiarrhea(),
-                            style: TextStyle(color: Theme.of(context).primaryColor));
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor));
                           }),
                         ],
                       ),
@@ -434,16 +660,20 @@ class PageBody extends StatelessWidget {
                         children: [
                           Text(
                             "Outros",
-                            style: TextStyle(fontSize: 18,color: Theme.of(context).primaryColor),
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Theme.of(context).primaryColor),
                           ),
                           Consumer<Symptoms>(
                               builder: (context, othersVal, child) {
                             if (othersVal.toStringOthers() == "") {
                               return Text("Dado não inserido",
-                            style: TextStyle(color: Theme.of(context).primaryColor));
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor));
                             }
                             return Text(othersVal.toStringOthers(),
-                            style: TextStyle(color: Theme.of(context).primaryColor));
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor));
                           }),
                         ],
                       ),
@@ -472,15 +702,19 @@ class PageBody extends StatelessWidget {
                         children: [
                           Text(
                             "Estado de consciência",
-                            style: TextStyle(fontSize: 18,color: Theme.of(context).primaryColor),
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Theme.of(context).primaryColor),
                           ),
                           Consumer<Symptoms>(builder: (context, val, child) {
                             if (val.toStringConscience() == "") {
                               return Text("Dado não inserido",
-                            style: TextStyle(color: Theme.of(context).primaryColor));
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor));
                             }
                             return Text(val.toStringConscience(),
-                            style: TextStyle(color: Theme.of(context).primaryColor));
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor));
                           }),
                         ],
                       ),

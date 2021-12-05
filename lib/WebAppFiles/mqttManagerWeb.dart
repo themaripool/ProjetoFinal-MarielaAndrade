@@ -385,10 +385,6 @@ class MQTTManagerWeb {
       bedProvider.setSymptomListByBed(res);
       print("PAYLOAD == $content RES == $res");
     }
-
-    
-
-   
     _client.unsubscribe(bdCliente);
   }
 

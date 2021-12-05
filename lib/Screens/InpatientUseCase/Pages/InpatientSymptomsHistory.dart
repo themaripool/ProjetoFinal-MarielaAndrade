@@ -100,7 +100,7 @@ class InpatientSymptomsHistory extends StatelessWidget {
       }
     }
     // android
-    else {
+    else if (_platform == TargetPlatform.android) {
       if (isInpatient) {
         return MaterialApp(
             theme: SwitchProvider.lightTheme,
@@ -226,7 +226,7 @@ class SymptomsComponentList extends StatelessWidget {
     return Container(
       height: 230.0,
       child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
