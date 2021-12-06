@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/WebAppFiles/mqttManagerWeb.dart';
 
-class SignUpApp extends StatelessWidget {
+class SignUpWebApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,17 +24,6 @@ class SignUpScreen extends StatelessWidget {
             child: SignUpForm(),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class WelcomeScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('Welcome!', style: Theme.of(context).textTheme.headline2),
       ),
     );
   }

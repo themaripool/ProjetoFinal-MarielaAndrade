@@ -31,88 +31,6 @@ class _HomePageWebState extends State<HomePageWeb> {
         appBar: AppBar(
           backgroundColor: Colors.grey[350],
           title: Text("SmartAlarmsWeb"),
-          actions: [
-            GestureDetector(
-              onTap: () {
-                MQTTManagerWeb().makePGQuery('allAlarms', 7);
-              },
-              child: Icon(
-                Icons.search,
-                size: 26.0,
-              ),
-            ),
-
-             GestureDetector(
-              onTap: () {
-                MQTTManagerWeb().makePGQuery('SymptomsByUser', 7);
-              },
-              child: Icon(
-                Icons.accessible,
-                size: 26.0,
-              ),
-            ),
-
-             GestureDetector(
-              onTap: () {
-                MQTTManagerWeb().makePGQuery('SymptomsByBed', 7);
-              },
-              child: Icon(
-                Icons.ac_unit,
-                size: 26.0,
-              ),
-            ),
-
-             GestureDetector(
-              onTap: () {
-                MQTTManagerWeb().makePGQuery('AlarmsByBed', 7);
-              },
-              child: Icon(
-                Icons.ac_unit,
-                size: 26.0,
-              ),
-            ),
-
-            GestureDetector(
-              onTap: () {
-                MQTTManagerWeb().insertSymptomsQuery(
-                  'insertSymptoms', 
-                  '5',
-                  '5',
-                  '5/5/2010',
-                  '5',
-                  '16:20',
-                  '5',
-                  'dor no peito',
-                  'nao',
-                  '5',
-                  '5',
-                  'teste',
-                  '5');
-              },
-              child: Icon(
-                Icons.add_sharp,
-                size: 26.0,
-              ),
-            ),
-
-            GestureDetector(
-              onTap: () {
-                MQTTManagerWeb().insertAlarmQuery(
-                  'insertAlarm', 
-                  '1',
-                  '1',
-                  '1',
-                  '1',
-                  '1',
-                  '1',
-                  false);
-              },
-              child: Icon(
-                Icons.add_sharp,
-                size: 26.0,
-              ),
-            )
-          ],
         ),
         drawer: MediaQuery.of(context).size.width < 800
             ? Drawer(
@@ -125,7 +43,7 @@ class _HomePageWebState extends State<HomePageWeb> {
                         MediaQuery.of(context).size.width > 500
                     ? Container(
                         width: 400,
-                        child: Content(
+                        child: MainPageContent(
                           axisCount: 2,
                         ))
                     : MediaQuery.of(context).size.width > 800 &&
@@ -135,7 +53,7 @@ class _HomePageWebState extends State<HomePageWeb> {
                             Container(
                                 width:
                                     MediaQuery.of(context).size.width - 200.0,
-                                child: Content(
+                                child: MainPageContent(
                                   axisCount: 3,
                                 )),
                           ])
@@ -146,7 +64,7 @@ class _HomePageWebState extends State<HomePageWeb> {
                                 Container(
                                     width: MediaQuery.of(context).size.width -
                                         200.0,
-                                    child: Content(
+                                    child: MainPageContent(
                                       axisCount: 4,
                                     )),
                               ])
@@ -158,7 +76,7 @@ class _HomePageWebState extends State<HomePageWeb> {
                                         width:
                                             MediaQuery.of(context).size.width -
                                                 200.0,
-                                        child: Content(
+                                        child: MainPageContent(
                                           axisCount: 5,
                                         )),
                                   ])
@@ -170,63 +88,20 @@ class _HomePageWebState extends State<HomePageWeb> {
                                                     .size
                                                     .width -
                                                 200.0,
-                                            child: Content(
+                                            child: MainPageContent(
                                               axisCount: 6,
                                             )),
                                       ])
                                     : MediaQuery.of(context).size.width < 400
                                         ? Container(
                                             width: 200,
-                                            child: Content(
+                                            child: MainPageContent(
                                               axisCount: 1,
                                             ))
                                         : Container(
                                             width: 200,
-                                            child: Content(
+                                            child: MainPageContent(
                                               axisCount: 1,
                                             )))));
-  }
-}
-
-class Content extends StatelessWidget {
-  final axisCount;
-  Content({this.axisCount});
-  @override
-  Widget build(BuildContext context) {
-    if (Provider.of<BedProvider>(context, listen: false).selectedSector ==
-        null) {
-      Provider.of<BedProvider>(context, listen: false).setSector("todos");
-    }
-    return Consumer<BedProvider>(
-      builder: (__, model, _) {
-        if (model.holder.isEmpty) {
-          return Center(child: CircularProgressIndicator());
-        } else {
-          return GridView.count(
-              crossAxisCount: axisCount,
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 10,
-              childAspectRatio: (140 / 140),
-              children: List.generate(
-                  model.bySector[model.selectedSector].length, (index) {
-                return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DetailsPageWeb(
-                                model.bySector[model.selectedSector][index]
-                                    .bedNumber
-                                    .toString(),
-                                -1)),
-                      );
-                    },
-                    child: BedComponent(
-                      bedInfo: model.bySector[model.selectedSector][index],
-                    ));
-              }));
-        }
-      },
-    );
   }
 }

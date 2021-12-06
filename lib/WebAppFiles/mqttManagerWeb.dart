@@ -58,36 +58,12 @@ final _platform = Theme.of(contextProvider).platform;
 
 class MQTTManagerWeb {
   var contentLoginRequest;
-  void initializeMQTTClient(login, password, BuildContext context) {
-    username = login;
-    passwd = password;
 
-    _client = createClientWithPort(broker, clientIdentifier, port, port);
+  /* ==================================================
+    Inicialização do mqtt
+  ===================================================== */
 
-    if (username == "marcos") {
-      appId = "pacteste";
-    } else if (username == "teste") {
-      appId = "teste1";
-    }
-
-    contextNavigation = context;
-    contextProvider = context;
-
-    _client.port = port;
-    _client.keepAlivePeriod = 20;
-    _client.onConnected = onConnected;
-    _client.onSubscribed = onSubscribed;
-    _client.onDisconnected = onDisconnected;
-
-    final MqttConnectMessage connMess = MqttConnectMessage()
-        .withClientIdentifier(appId)
-        .keepAliveFor(60)
-        .startClean()
-        .withWillQos(MqttQos.atLeastOnce);
-
-    print('[Mqtt Web]: Mosquitto client connecting....');
-    _client.connectionMessage = connMess;
-  }
+  initializeMQTTClient(login, password, context);
 
   void connect() async {
     assert(_client != null);
@@ -124,6 +100,10 @@ class MQTTManagerWeb {
     app_request_login();
     onMessageArrived();
   }
+
+   /* ==================================================
+    Recebimentos das menssagens 
+  ===================================================== */
 
   void onMessageArrived() {
     _client.updates.listen((List<MqttReceivedMessage<MqttMessage>> c) {
@@ -176,12 +156,20 @@ class MQTTManagerWeb {
     });
   }
 
+   /* ==================================================
+    Logout
+  ===================================================== */
+
   void app_request_logout() {
     BedProvider bedProvider =
         Provider.of<BedProvider>(contextProvider, listen: false);
     bedProvider.eraseLists();
     _client.disconnect();
   }
+
+   /* ==================================================
+    Login
+  ===================================================== */
 
   void app_request_login() {
     print('[Mqtt Web]: Subscribing to ...$clientLoginTopic topic');
@@ -206,6 +194,10 @@ class MQTTManagerWeb {
     _client.publishMessage(serverLoginTopic, MqttQos.atLeastOnce, dataBuffer);
   }
 
+   /* ==================================================
+    Login aceito
+  ===================================================== */
+
   void login_accepted() {
     print("[Mqtt Web]: Login aceito");
 
@@ -226,7 +218,9 @@ class MQTTManagerWeb {
     _client.publishMessage(serverInitialData, MqttQos.atLeastOnce, dataBuffer);
   }
 
-  //***************************************************************************************** */
+   /* ==================================================
+    Mensagens para conexão com o banco de dados via mqtt
+  ===================================================== */
 
   void makePGQuery(queryName, bedId) {
     print("[Mqtt Web]: Connect to postgres");
@@ -269,9 +263,6 @@ class MQTTManagerWeb {
       String bednumber) {
     print("[Mqtt Web]: Connect to postgres - insert on db");
 
-    /*  String TOPIC_605 = "SmartAlarm/Client/Application/Query";
-    String TOPIC_405 = "SmartAlarm/Server/Application/Query"; */
-
     var bdCliente = TOPIC_605 + '/$userId';
     var bdServer = TOPIC_405 + '/$userId';
 
@@ -311,9 +302,6 @@ class MQTTManagerWeb {
       String hourAndMinute,
       bool isCancelled) {
     print("[Mqtt Web]: Connect to postgres - insert on db");
-
-    /*  String TOPIC_605 = "SmartAlarm/Client/Application/Query";
-    String TOPIC_405 = "SmartAlarm/Server/Application/Query"; */
 
     var bdCliente = TOPIC_605 + '/$userId';
     var bdServer = TOPIC_405 + '/$userId';
@@ -388,14 +376,16 @@ class MQTTManagerWeb {
     _client.unsubscribe(bdCliente);
   }
 
-  ///***************************************************************************************** */
+ /* ==================================================
+    Recebimento dos dados iniciais
 
-// ignore: non_constant_identifier_names
+    Get the number of beds per Sector.
+    It is a list separated by ';' with the sector number, number of beds
+    Example: 1,5; 2,1   (Sector 1 has 5 beds, and sector 2 has one bed)
+  ===================================================== */
+
   void receive_InitialData(pt) {
     var content = jsonDecode(pt);
-    // Get the number of beds per Sector.
-    // It is a list separated by ';' with the sector number, number of beds
-    // Example: 1,5; 2,1   (Sector 1 has 5 beds, and sector 2 has one bed)
     var l_bedNums = content['BN']; // 3,2
 
     if (l_bedNums.contains(";")) {
@@ -416,36 +406,26 @@ class MQTTManagerWeb {
       var alarmRecognized = TOPIC_302 + sectorId + '/#';
       var alarmCancelled = TOPIC_303 + sectorId + '/#';
 
-      _client.subscribe(
-          sectorData,
-          MqttQos
-              .atLeastOnce); //mqtt.subscribe(TOPIC_200 + "/" + MySectorId + "/#");
-      _client.subscribe(
-          alarmIssued,
-          MqttQos
-              .atLeastOnce); // mqtt.subscribe(TOPIC_301 + "/" + MySectorId + "/#");
-      _client.subscribe(
-          alarmRecognized,
-          MqttQos
-              .atLeastOnce); // mqtt.subscribe(TOPIC_302 + "/" + MySectorId + "/#");
-      _client.subscribe(
-          alarmCancelled,
-          MqttQos
-              .atLeastOnce); // mqtt.subscribe(TOPIC_303 + "/" + MySectorId + "/#");
+      _client.subscribe(sectorData,MqttQos.atLeastOnce); 
+      _client.subscribe(alarmIssued,MqttQos.atLeastOnce); 
+      _client.subscribe(alarmRecognized,MqttQos.atLeastOnce); 
+      _client.subscribe(alarmCancelled,MqttQos.atLeastOnce); 
     }
     _client.subscribe(appHistory, MqttQos.atLeastOnce);
     _client.unsubscribe(serverInitialData);
   }
+
+  /* ==================================================
+    Recebimento dos dados do sensor
+  ===================================================== */
 
   void receive_data(contentPayload, subTopics) {
     print("[Mqtt Web]: RECEIVE DATA ");
 
     print("[Mqtt Web]: subtopics = $subTopics");
 
-    // subTopics[..., Sector, Bed, Patient]
     String patientId = subTopics.removeLast();
-    String bedId = subTopics
-        .removeLast(); // id da cama ta vindo como 4 ou 5, de acordo com a cmaa ele salva o payl
+    String bedId = subTopics.removeLast(); 
     String sectorId = subTopics.removeLast();
 
     print("[Mqtt Web]: recv_data_update bedId:   $patientId $bedId $sectorId");
@@ -475,14 +455,17 @@ class MQTTManagerWeb {
 
     print("[Mqtt Web]: BED DATA ${data.sector} bedid = $bedId");
 
-    BedProvider bedProvider =
-        Provider.of<BedProvider>(contextProvider, listen: false);
+    BedProvider bedProvider = Provider.of<BedProvider>(contextProvider, listen: false);
 
     print("[Mqtt Web]: BED DATA add map $bedId no ${data.sector}");
 
     bedProvider.addToSectorMap(bedId, sectorId);
     bedProvider.addToDataList(bedId, data);
   }
+
+  /* ==================================================
+    Cancelamento do alarme
+  ===================================================== */
 
   void recv_alarm_cancel(content, subTopics) {
     print("[Mqtt Web]: Alarm cancel");
@@ -494,6 +477,10 @@ class MQTTManagerWeb {
 
     _sendMessage(clinicalStatus, patientId, bedId, sectorId, true);
   }
+
+  /* ==================================================
+    Novo alarme
+  ===================================================== */
 
   void recv_alarm_new(contentPayload, subTopics) {
     String clinicalStatus = subTopics.removeLast();
@@ -508,6 +495,10 @@ class MQTTManagerWeb {
 
     _sendMessage(clinicalStatus, patientId, bedId, sectorId, false);
   }
+
+  /* ==================================================
+    Salvamento do alarme no banco de dados -  TODO
+  ===================================================== */
 
   void _sendMessage(String clinicalStatus, String patientId, String bedId,
       String sectorId, bool isCancelled) {
@@ -527,9 +518,12 @@ class MQTTManagerWeb {
         formattedDiaEMes, formattedDateHora, isCancelled);
   }
 
-  // ignore: non_constant_identifier_names
+  /* ==================================================
+    Publicação da mensagens de recebimento de alarmes
+  ===================================================== */
+
   void send_alarm_recognition(id) {
-    var nameBed = "bedNumber" + id; // id = numero da cama ou bedId
+    var nameBed = "bedNumber" + id; 
     var nameAlarm = "bedAlarm" + id;
 
     Map<String, dynamic> str = {
