@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class AlertInfoLabel extends StatelessWidget {
   final dynamic content;
   const AlertInfoLabel({

@@ -4,6 +4,12 @@ import 'package:projeto_final_1/Screens/MedicalTeamUseCase/MedicalTeamUseCase.da
 import 'package:projeto_final_1/WebAppFiles/detailsWeb.dart';
 import 'package:projeto_final_1/WebAppFiles/mqttManagerWeb.dart';
 
+import 'alertComponents.dart/AlertButtons.dart';
+import 'alertComponents.dart/AlertCloseButton.dart';
+import 'alertComponents.dart/AlertInfoDetails.dart';
+import 'alertComponents.dart/AlertInfoLabel.dart';
+import 'alertComponents.dart/AlertTitle.dart';
+
 var bedSeverityStatus;
 var bedSeverityColor;
 const TWO_PI = 3.14 * 2;
@@ -53,7 +59,7 @@ class AlertDialogWeb extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 AlertCloseButton(),
-                AlertTitle(bedId: bedId),
+                AlertTitle(bedId: bedId, bedSeverityStatus: bedSeverityStatus,),
                 Image.asset('assets/images/warningIcon.png',
                     height: 60, width: 60),
                 AlertInfoLabel(

@@ -1,3 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Data/Data.dart';
+
+import 'pagesComponents/DetailsAlertsPageWeb.dart';
+
 class AllAlarmsPageWeb extends StatelessWidget {
   String bedId;
   bool isAllAlarms;

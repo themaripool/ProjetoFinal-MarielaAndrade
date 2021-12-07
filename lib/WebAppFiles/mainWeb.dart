@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_final_1/Data/Data.dart';
-import 'package:projeto_final_1/Models/BedModel.dart';
-import 'package:projeto_final_1/Screens/MedicalTeamUseCase/MedicalTeamUseCase.dart';
-import 'package:projeto_final_1/WebAppFiles/detailsWeb.dart';
+import 'package:projeto_final_1/WebAppFiles/MainPageContent.dart';
 import 'package:projeto_final_1/WebAppFiles/menuWeb.dart';
-import 'package:projeto_final_1/WebAppFiles/mqttManagerWeb.dart';
 
 class MyAppWeb extends StatelessWidget {
   @override

@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class AlertInfoDetails extends StatelessWidget {
   final dynamic content;
   const AlertInfoDetails({

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
+import 'package:projeto_final_1/WebAppFiles/AllAlarmsPageWeb.dart';
 import 'package:projeto_final_1/WebAppFiles/detailsWeb.dart';
 import 'package:projeto_final_1/WebAppFiles/loginWeb.dart';
 import 'package:projeto_final_1/WebAppFiles/mqttManagerWeb.dart';

@@ -1,10 +1,8 @@
-import 'dart:collection';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
-import 'package:projeto_final_1/Models/Models.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
+
+import 'graphComponents/cardWidgetWeb.dart';
 
 class DataScreenWeb extends StatefulWidget {
   final String bedId;

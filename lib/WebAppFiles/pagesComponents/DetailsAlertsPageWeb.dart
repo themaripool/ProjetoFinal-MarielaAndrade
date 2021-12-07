@@ -1,3 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Data/Data.dart';
+import 'package:projeto_final_1/WebAppFiles/mqttManagerWeb.dart';
+import 'package:projeto_final_1/WebAppFiles/pagesComponents/AlertListWeb.dart';
+
 class DetailsAlertsPageWeb extends StatelessWidget {
   String bedId;
   bool allAlerts;

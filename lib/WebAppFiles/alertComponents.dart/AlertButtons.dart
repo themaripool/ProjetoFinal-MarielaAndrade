@@ -1,3 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:projeto_final_1/WebAppFiles/detailsWeb.dart';
+
+import '../mqttManagerWeb.dart';
+
 class AlertButtons extends StatelessWidget {
   final String bedId;
   const AlertButtons({

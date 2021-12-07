@@ -1,3 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Data/Data.dart';
+import 'package:projeto_final_1/Screens/MedicalTeamUseCase/Components/BedComponentGrid.dart';
+import 'package:projeto_final_1/WebAppFiles/detailsWeb.dart';
+
 class MainPageContent extends StatelessWidget {
   final axisCount;
  MainPageContent({this.axisCount});

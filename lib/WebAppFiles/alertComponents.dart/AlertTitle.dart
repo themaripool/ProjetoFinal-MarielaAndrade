@@ -1,8 +1,11 @@
+import 'package:flutter/material.dart';
+
 class AlertTitle extends StatelessWidget {
   final String bedId;
+  final String bedSeverityStatus;
   const AlertTitle({
     Key key,
-    this.bedId,
+    this.bedId, this.bedSeverityStatus,
   }) : super(key: key);
 
   @override
