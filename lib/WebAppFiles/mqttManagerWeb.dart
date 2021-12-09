@@ -480,7 +480,8 @@ class MQTTManagerWeb {
         te: content['TE'],
         bedNumber: int.parse(bedId),
         dateDetails: formattedDate,
-        sector: sectorId);
+        sector: sectorId,
+        cs: content['CS']);
 
     print("[Mqtt Web]: BED DATA ${data.sector} bedid = $bedId");
 

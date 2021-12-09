@@ -15,7 +15,7 @@ var bedSeverityColor;
 const TWO_PI = 3.14 * 2;
 
 void checkInpatientStatus(String clinicalStatus) {
-  if (clinicalStatus == "1") {
+  if (clinicalStatus == "3") {
     bedSeverityStatus = "CRÍTICO";
     bedSeverityColor = Colors.red[700];
     return;
@@ -23,11 +23,11 @@ void checkInpatientStatus(String clinicalStatus) {
     bedSeverityStatus = "SEVERO";
     bedSeverityColor = Colors.yellow[700];
     return;
-  } else if (clinicalStatus == "3") {
+  } else if (clinicalStatus == "1") {
     bedSeverityStatus = "PREOCUPANTE";
     bedSeverityColor = Colors.blue[700];
     return;
-  } else if (clinicalStatus == "4") {
+  } else if (clinicalStatus == "0") {
     bedSeverityStatus = "ESTÁVEL";
     bedSeverityColor = Colors.green[700];
     return;
