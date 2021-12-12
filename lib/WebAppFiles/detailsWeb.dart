@@ -45,7 +45,7 @@ class DetailsPageWeb extends StatelessWidget {
         onPressed: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (contextNavigation) {
-            return NavigationWebSymptoms("7");
+            return NavigationWebSymptoms(bedId);
           }));
         },
         child: Icon(Icons.mouse),
