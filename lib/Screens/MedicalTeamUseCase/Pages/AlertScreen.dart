@@ -18,7 +18,7 @@ class AlertScreen extends StatelessWidget {
 
     return Consumer<BedProvider>(builder: (__, model, _) {
       if (model.allAlertsByBed.isEmpty) {
-        return Center(child: CircularProgressIndicator());
+        return Center(child: Text("Este paciente não tem alarmes"));
       } else {
         return ListView.builder(
           itemCount: model.allAlertsByBed.length,

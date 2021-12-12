@@ -433,18 +433,15 @@ class MQTTManager {
           sectorData,
           MqttQos
               .atLeastOnce); //mqtt.subscribe(TOPIC_200 + "/" + MySectorId + "/#");
-      _client.subscribe(
-          alarmIssued,
-          MqttQos
-              .atLeastOnce); // mqtt.subscribe(TOPIC_301 + "/" + MySectorId + "/#");
-      _client.subscribe(
+     // _client.subscribe(alarmIssued,MqttQos.atLeastOnce); // mqtt.subscribe(TOPIC_301 + "/" + MySectorId + "/#");
+      /* _client.subscribe(
           alarmRecognized,
           MqttQos
               .atLeastOnce); // mqtt.subscribe(TOPIC_302 + "/" + MySectorId + "/#");
       _client.subscribe(
           alarmCancelled,
           MqttQos
-              .atLeastOnce); // mqtt.subscribe(TOPIC_303 + "/" + MySectorId + "/#");
+              .atLeastOnce); */ // mqtt.subscribe(TOPIC_303 + "/" + MySectorId + "/#");
     }
     _client.subscribe(appHistory, MqttQos.atLeastOnce);
     _client.unsubscribe(serverInitialData);
@@ -486,7 +483,8 @@ class MQTTManager {
         te: content['TE'],
         bedNumber: int.parse(bedId),
         dateDetails: formattedDate,
-        sector: sectorId);
+        sector: sectorId,
+        cs: content['CS']);
 
     print("[Mqtt App]: Bed Data ${data.sector} bedid = $bedId");
 

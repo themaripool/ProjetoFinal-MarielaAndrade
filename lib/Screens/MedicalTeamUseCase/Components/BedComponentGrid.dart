@@ -23,7 +23,7 @@ class BedComponent extends StatelessWidget {
       width: 130.0,
       decoration: BoxDecoration(
           border: Border.all(color: statusBed[0], width: 4),
-          borderRadius:  BorderRadius.all(Radius.circular(20)),
+          borderRadius: BorderRadius.all(Radius.circular(20)),
           color: Colors.grey[850]),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -40,8 +40,15 @@ class BedComponent extends StatelessWidget {
                   fontWeight: FontWeight.bold),
             ),
           ),
+          Text(
+                  "Setor  ${bedInfo.sector}",
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
           Padding(
-            padding: const EdgeInsets.only(left: 8),
+            padding: const EdgeInsets.only(left: 8, top: 8),
             child: Row(children: [
               Text("FC: ",
                   style: TextStyle(
@@ -94,7 +101,7 @@ class BedComponent extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8, left: 8),
-            child: Text(statusBed[1] + "    " + "Setor = ${bedInfo.sector}",
+            child: Text(statusBed[1],
                 style: TextStyle(fontSize: 14, color: Colors.white)),
           ),
         ],

@@ -35,7 +35,7 @@ class _GridListViewState extends State<GridListView> {
               crossAxisCount: 2,
               crossAxisSpacing: 20,
               mainAxisSpacing: 10,
-              childAspectRatio: (140 / 140),
+              childAspectRatio: (140 / 160),
               children: List.generate(model.bySector[model.selectedSector].length, (index) {
                // var bedId = model.bedIds;
                 return GestureDetector(
