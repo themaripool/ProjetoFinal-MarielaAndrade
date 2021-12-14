@@ -7,9 +7,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
-import 'package:projeto_final_1/Models/SymptomsModel.dart';
 import 'package:projeto_final_1/Screens/GeneralUseCase/GeneralUseCase.dart';
-import 'package:projeto_final_1/Screens/GeneralUseCase/config.dart';
 import 'package:projeto_final_1/WebAppFiles/mqttManagerWeb.dart';
 import '../InpatientUseCase.dart';
 
@@ -50,7 +48,7 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
         body: SingleChildScrollView(
           reverse: true,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(top: 8.0),
             child: Column(
               children: [
                 Padding(
@@ -62,7 +60,8 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
                   padding: const EdgeInsets.only(top: 16),
                   child: CupertinoButton(
                     color: CupertinoColors.systemGrey,
-                    onPressed: () => {viewModel.saveSymptomsData(context, numberBed)},
+                    onPressed: () =>
+                        {viewModel.saveSymptomsData(context, numberBed)},
                     child: Text("Salvar Sintomas"),
                   ),
                 ),
@@ -90,61 +89,57 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
 
     else if (_platform == TargetPlatform.android) {
       return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: SingleChildScrollView(
-          reverse: true,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Container(),
-                ),
-                PageBody(),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: ElevatedButton(
-                    onPressed: () => {viewModel.saveSymptomsData(context, numberBed)},
-                    child: Text("Salvar Sintomas"),
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.grey[850]),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(40.0),
-                        ))),
+          resizeToAvoidBottomInset: false,
+          body: SingleChildScrollView(
+            reverse: true,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Column(
+                children: [
+                  PageBody(),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: ElevatedButton(
+                      onPressed: () =>
+                          {viewModel.saveSymptomsData(context, numberBed)},
+                      child: Text("Salvar Sintomas"),
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.grey[850]),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40.0),
+                          ))),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: ElevatedButton(
-                    onPressed: () => {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (contextNavigation) {
-                        return InpatientSymptomsHistory(
-                          bedNumber: numberBed,
-                          isInpatient: isInpatient,
-                        );
-                      }))
-                    },
-                    child: Text("Ver histórico"),
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.grey[850]),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(40.0),
-                        ))),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: ElevatedButton(
+                      onPressed: () => {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (contextNavigation) {
+                          return InpatientSymptomsHistory(
+                            bedNumber: numberBed,
+                            isInpatient: isInpatient,
+                          );
+                        }))
+                      },
+                      child: Text("Ver histórico"),
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.grey[850]),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40.0),
+                          ))),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ),
-      );
+          ));
     }
 
     /* SINTOMAS WEB */
@@ -358,7 +353,7 @@ class PageBody extends StatelessWidget {
     return Row(
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 16),
+          padding: const EdgeInsets.only(left: 8),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             /* Dor de Cabeça */
@@ -375,8 +370,8 @@ class PageBody extends StatelessWidget {
                   );
                 },
                 child: SizedBox(
-                    width: 150,
-                    height: 100,
+                    width: MediaQuery.of(context).size.width * 0.43, //150
+                    height: MediaQuery.of(context).size.height * 0.2, //100
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -420,8 +415,8 @@ class PageBody extends StatelessWidget {
                   );
                 },
                 child: SizedBox(
-                    width: 150,
-                    height: 100,
+                    width: MediaQuery.of(context).size.width * 0.43, //150
+                    height: MediaQuery.of(context).size.height * 0.2, //100
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -465,8 +460,8 @@ class PageBody extends StatelessWidget {
                   );
                 },
                 child: SizedBox(
-                    width: 150,
-                    height: 100,
+                    width: MediaQuery.of(context).size.width * 0.43, //150
+                    height: MediaQuery.of(context).size.height * 0.2, //100
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -507,8 +502,8 @@ class PageBody extends StatelessWidget {
                   );
                 },
                 child: SizedBox(
-                    width: 150,
-                    height: 100,
+                    width: MediaQuery.of(context).size.width * 0.43, //150
+                    height: MediaQuery.of(context).size.height * 0.2, //100
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -560,8 +555,8 @@ class PageBody extends StatelessWidget {
                   );
                 },
                 child: SizedBox(
-                    width: 150,
-                    height: 100,
+                    width: MediaQuery.of(context).size.width * 0.43, //150
+                    height: MediaQuery.of(context).size.height * 0.2, //100
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -605,8 +600,8 @@ class PageBody extends StatelessWidget {
                   );
                 },
                 child: SizedBox(
-                    width: 150,
-                    height: 100,
+                    width: MediaQuery.of(context).size.width * 0.43, //150
+                    height: MediaQuery.of(context).size.height * 0.2, //100
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -650,8 +645,8 @@ class PageBody extends StatelessWidget {
                   );
                 },
                 child: SizedBox(
-                    width: 150,
-                    height: 100,
+                    width: MediaQuery.of(context).size.width * 0.43, //150
+                    height: MediaQuery.of(context).size.height * 0.2, //100
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -692,8 +687,8 @@ class PageBody extends StatelessWidget {
                   );
                 },
                 child: SizedBox(
-                    width: 150,
-                    height: 100,
+                    width: MediaQuery.of(context).size.width * 0.43, //150
+                    height: MediaQuery.of(context).size.height * 0.2, //100
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(

@@ -15,7 +15,7 @@ class OtherAlert extends StatelessWidget {
         alignment: Alignment.topCenter,
         children: [
           Container(
-            height: 250,
+            height: 260,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(10, 70, 10, 10),
               child: Column(
@@ -28,7 +28,7 @@ class OtherAlert extends StatelessWidget {
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(), hintText: 'ex: tontura'),
                   ),
-                  SizedBox(height: 16,),
+                  SizedBox(height: 8,),
                   RaisedButton(onPressed: () {
                     viewModel.setOther(context, controller.text);
                     Navigator.of(context).pop();
