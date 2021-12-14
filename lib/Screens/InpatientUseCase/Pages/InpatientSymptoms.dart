@@ -183,9 +183,6 @@ class _PatientSymptomsState extends State<PatientSymptoms> {
 class DetailsAlertsPageWeb extends StatelessWidget {
   String bedId;
   bool allAlerts;
-  /* var mock = [
-    Symptom("1", "2", "3","4", "5", "outro", "12:12" , "Nao", "consciente", "12/12/2020", "teste1"),
-  ]; */
   DetailsAlertsPageWeb(this.bedId, this.allAlerts);
   @override
   Widget build(BuildContext context) {
