@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_client.dart';
-import 'package:projeto_final_1/Screens/InpatientUseCase/InpatientUseCase.dart';
 import 'package:projeto_final_1/stub/mqtt_client_stub.dart'
     if (dart.library.html) 'package:projeto_final_1/stub/mqtt_browser_stub.dart'
     if (dart.library.io) 'package:projeto_final_1/stub/mqtt_server_stub.dart';

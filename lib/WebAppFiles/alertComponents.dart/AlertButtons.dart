@@ -35,7 +35,7 @@ class AlertButtons extends StatelessWidget {
                     MaterialStateProperty.all(BorderSide(color: Colors.black)),
               ),
               onPressed: () {
-                MQTTManagerWeb().send_alarm_recognition(bedId);
+                //MQTTManagerWeb().send_alarm_recognition(bedId);
                 Navigator.pop(context);
               },
               child: Row(
