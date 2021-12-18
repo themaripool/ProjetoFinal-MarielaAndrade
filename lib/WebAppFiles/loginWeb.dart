@@ -6,98 +6,107 @@ class SignUpWebApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        '/': (context) => SignUpScreen(),
+        '/': (context) => LoginWeb(),
       },
     );
   }
 }
 
-class SignUpScreen extends StatelessWidget {
+class LoginWeb extends StatefulWidget {
+  LoginWeb({this.title});
+  final String title;
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<LoginWeb> with SingleTickerProviderStateMixin {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
-      body: Center(
-        child: SizedBox(
-          width: 400,
-          child: Card(
-            child: SignUpForm(),
+      backgroundColor: Colors.white,
+      body: Row(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width / 2,
+                color: Colors.grey[850],
+                child: Column(
+                  children: [
+                    Spacer(),
+                    Text(
+                      "Monitoramento",
+                      style: TextStyle(color: Colors.white, fontSize: 50),
+                    ),
+                    Text("COVID",
+                        style: TextStyle(color: Colors.white, fontSize: 50)),
+                    Spacer()
+                  ],
+                ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width / 2,
+                color: Colors.grey[300],
+                child: Center(
+                  child: Card(
+                    color: Colors.grey[350],
+                    child: Container(
+                      padding: EdgeInsets.all(42),
+                      width: MediaQuery.of(context).size.width / 3.6,
+                      height: MediaQuery.of(context).size.height / 1.2,
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(
+                            height: 60,
+                          ),
+                          Image.asset("assets/images/iconLogin.png", width: 50, height: 50,),
+                          SizedBox(height: 24.0),
+                          Stack(
+                              fit: StackFit.loose,
+                              clipBehavior: Clip.none,
+                              children: [
+                                _loginScreen(context),
+                              ]),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
-        ),
+        ],
       ),
     );
   }
-}
 
-class SignUpForm extends StatefulWidget {
-  @override
-  _SignUpFormState createState() => _SignUpFormState();
-}
-
-class _SignUpFormState extends State<SignUpForm> {
-  final _usernameTextController = TextEditingController();
-  final _passwordTextController = TextEditingController();
-
-  double _formProgress = 0;
-
-  void _updateFormProgress() {
-    var progress = 0.0;
-    final controllers = [_passwordTextController, _usernameTextController];
-
-    for (final controller in controllers) {
-      if (controller.value.text.isNotEmpty) {
-        progress += 1 / controllers.length;
-      }
-    }
-
-    setState(() {
-      _formProgress = progress;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      onChanged: _updateFormProgress,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 150,
-            color: Colors.grey[850],
-            child: Padding(
-              padding: const EdgeInsets.only(top: 90),
-              child: Column(
-                children: [
-                  Text(
-                    "Monitoramento",
-                    style: TextStyle(color: Colors.white, fontSize: 36),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Text("COVID", style: TextStyle(color: Colors.black, fontSize: 36)),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: TextFormField(
+  Container _loginScreen(BuildContext context) {
+    final _usernameTextController = TextEditingController();
+    final _passwordTextController = TextEditingController();
+    return Container(
+      width: double.infinity,
+      child: Form(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextFormField(
               controller: _usernameTextController,
               decoration: InputDecoration(hintText: 'Usuario'),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: TextFormField(
+            SizedBox(height: 8.0),
+            TextFormField(
               controller: _passwordTextController,
               keyboardType: TextInputType.number,
               obscureText: true,
               decoration: InputDecoration(hintText: 'Senha'),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextButton(
+            SizedBox(height: 24.0),
+            TextButton(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.resolveWith(
                     (Set<MaterialState> states) {
@@ -109,7 +118,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     (Set<MaterialState> states) {
                   return states.contains(MaterialState.disabled)
                       ? null
-                      : Colors.blue;
+                      : Colors.grey[850];
                 }),
               ),
               onPressed: () {
@@ -119,10 +128,10 @@ class _SignUpFormState extends State<SignUpForm> {
                     context);
                 MQTTManagerWeb().connect();
               },
-              child: Text('Sign up'),
+              child: Text('Sign in'),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
