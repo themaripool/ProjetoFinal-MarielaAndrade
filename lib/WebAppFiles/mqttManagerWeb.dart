@@ -136,15 +136,16 @@ class MQTTManagerWeb {
   void onMessageArrived() {
     _client.updates.listen((List<MqttReceivedMessage<MqttMessage>> c) {
       final recMess = c[0].payload as MqttPublishMessage;
-      final contentPayload =
-          MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
+      final contentPayload = MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
 
       if (c[0].topic == clientLoginTopic) {
+
         var content = jsonDecode(contentPayload);
         print("[Mqtt Web]: content = $content");
         contentLoginRequest = content['CD'];
 
         if (contentLoginRequest == "2") {
+
           userId = content['UI'].toString();
           sectorId = content['SI'].toString();
 
@@ -159,26 +160,44 @@ class MQTTManagerWeb {
               MaterialPageRoute(builder: (contextNavigation) {
             return MyAppWeb();
           }));
+
         } else if (contentLoginRequest != "2") {
+
           _client.disconnect();
           showErrorLoginAlertDialog(contextNavigation);
+
         }
       } else if (c[0].topic == clientInitialData) {
+
         receive_InitialData(contentPayload);
+
       } else {
         var subTopics = c[0].topic.split("/");
+
         print("TOOOPICO ELSE = ${c[0].topic}");
 
         if (c[0].topic.contains(TOPIC_200)) {
+
           receive_data(contentPayload, subTopics);
+
         } else if (c[0].topic.contains(TOPIC_301)) {
+
           recv_alarm_new(contentPayload, subTopics);
+
         } else if (c[0].topic.contains(TOPIC_302)) {
+
+          print("TOOOPICO 302 = $contentPayload");
+          //{"ID":953,"DT":2313435,"UI":2}
+
         } else if (c[0].topic.contains(TOPIC_303)) {
+
           recv_alarm_cancel(contentPayload, subTopics);
+
         } else if (c[0].topic.contains(TOPIC_605)) {
-          print("entrou topico 405 - ${c[0].topic} - ");
+
+          print("entrou topico 605 - ${c[0].topic} - ");
           getPGQuery(contentPayload);
+
         }
       }
     });
@@ -272,7 +291,31 @@ class MQTTManagerWeb {
     Uint8Buffer dataBuffer = Uint8Buffer();
     dataBuffer.addAll(data);
 
-    _client.publishMessage(bdServer, MqttQos.atLeastOnce, dataBuffer);
+    _client.publishMessage(bdServer, MqttQos.atLeastOnce, dataBuffer); 
+  }
+
+  /* ==================================================
+    Publicação da mensagens de recebimento de alarmes
+  ===================================================== */
+
+  void send_alarm_recognition(id) {
+    var nameBed = "bedNumber" + id; 
+    var nameAlarm = "bedAlarm" + id;
+
+    Map<String, dynamic> str = {
+      "ID": Random.secure().nextInt(1000),
+      "DT": 2313435,
+      "UI": 2
+    };
+
+    String json = jsonEncode(str);
+
+    Uint8List data = utf8.encode(json);
+    Uint8Buffer dataBuffer = Uint8Buffer();
+    dataBuffer.addAll(data);
+  //"SmartAlarm/Alarms/Recognized/";
+    var RECOGNIZED_TOPIC = TOPIC_302 + sectorId + "/" + id;
+    _client.publishMessage(RECOGNIZED_TOPIC, MqttQos.atLeastOnce, dataBuffer);
   }
 
   void insertSymptomsQuery(
@@ -545,29 +588,5 @@ class MQTTManagerWeb {
 
     final alert = Alert(clinicalStatus, patientId, bedId, sectorId,
         formattedDiaEMes, formattedDateHora, isCancelled);
-  }
-
-  /* ==================================================
-    Publicação da mensagens de recebimento de alarmes
-  ===================================================== */
-
-  void send_alarm_recognition(id) {
-    var nameBed = "bedNumber" + id; 
-    var nameAlarm = "bedAlarm" + id;
-
-    Map<String, dynamic> str = {
-      "ID": Random.secure().nextInt(1000),
-      "DT": 2313435,
-      "UI": 2
-    };
-
-    String json = jsonEncode(str);
-
-    Uint8List data = utf8.encode(json);
-    Uint8Buffer dataBuffer = Uint8Buffer();
-    dataBuffer.addAll(data);
-
-    var RECOGNIZED_TOPIC = TOPIC_302 + '3' + "/" + id;
-    _client.publishMessage(RECOGNIZED_TOPIC, MqttQos.atLeastOnce, dataBuffer);
   }
 }
