@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Screens/GeneralUseCase/GeneralUseCase.dart';
 import 'package:projeto_final_1/WebAppFiles/MainPageContent.dart';
+import 'package:projeto_final_1/WebAppFiles/detailsWeb.dart';
 import 'package:projeto_final_1/WebAppFiles/menuWeb.dart';
 
 class MyAppWeb extends StatelessWidget {
@@ -27,6 +29,20 @@ class _HomePageWebState extends State<HomePageWeb> {
         appBar: AppBar(
           backgroundColor: Colors.grey[350],
           title: Text("SmartAlarmsWeb"),
+          actions: [
+            FlatButton(
+              color: Colors.blue,
+              textColor: Colors.white,
+              child: Icon(Icons.ac_unit),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DetailsPageWeb("7",-1)),
+                );
+              },
+            ),
+          ],
         ),
         drawer: MediaQuery.of(context).size.width < 800
             ? Drawer(

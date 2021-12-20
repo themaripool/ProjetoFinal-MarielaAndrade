@@ -17,7 +17,7 @@ GLOBAIS
 String broker = 'ws://192.168.0.4'; //windows
 int port = 9001;
 String clientIdentifier = 'SmartAlarm';
-String queryHolder = "";
+List<String> queryHolder = List<String>();
 
 String username;
 String passwd;
@@ -25,8 +25,6 @@ String appId;
 
 BuildContext contextProvider;
 BuildContext contextNavigation;
-
-var Beds = List(2);
 
 String sectorId;
 String userId;
@@ -52,6 +50,8 @@ var serverInitialData = TOPIC_402 + appId;
 var clientLoginTopic = TOPIC_601 + appId;
 var serverLoginTopic = TOPIC_401 + appId;
 var appHistory = TOPIC_604 + '2';
+var bdCliente = TOPIC_605 + '/$userId';
+var bdServer = TOPIC_405 + '/$userId';
 
 final _platform = Theme.of(contextProvider).platform;
 
@@ -129,30 +129,29 @@ class MQTTManagerWeb {
     onMessageArrived();
   }
 
-   /* ==================================================
+  /* ==================================================
     Recebimentos das menssagens 
   ===================================================== */
 
   void onMessageArrived() {
     _client.updates.listen((List<MqttReceivedMessage<MqttMessage>> c) {
       final recMess = c[0].payload as MqttPublishMessage;
-      final contentPayload = MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
+      final contentPayload =
+          MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
 
       if (c[0].topic == clientLoginTopic) {
-
         var content = jsonDecode(contentPayload);
         print("[Mqtt Web]: content = $content");
         contentLoginRequest = content['CD'];
 
         if (contentLoginRequest == "2") {
-
           userId = content['UI'].toString();
           sectorId = content['SI'].toString();
 
           Provider.of<BedProvider>(contextNavigation, listen: false)
               .setCurrentUserName(username);
 
-          print("[Mqtt Web]: SECTORID = $sectorId, userid= $userId");
+          print("[Mqtt Web]: sectorId = $sectorId, userid= $userId");
 
           login_accepted();
 
@@ -162,19 +161,13 @@ class MQTTManagerWeb {
           }));
 
         } else if (contentLoginRequest != "2") {
-
           _client.disconnect();
           showErrorLoginAlertDialog(contextNavigation);
-
         }
       } else if (c[0].topic == clientInitialData) {
-
         receive_InitialData(contentPayload);
-
       } else {
         var subTopics = c[0].topic.split("/");
-
-        print("TOOOPICO ELSE = ${c[0].topic}");
 
         if (c[0].topic.contains(TOPIC_200)) {
 
@@ -184,18 +177,12 @@ class MQTTManagerWeb {
 
           recv_alarm_new(contentPayload, subTopics);
 
-        } else if (c[0].topic.contains(TOPIC_302)) {
-
-          print("TOOOPICO 302 = $contentPayload");
-          //{"ID":953,"DT":2313435,"UI":2}
-
         } else if (c[0].topic.contains(TOPIC_303)) {
 
           recv_alarm_cancel(contentPayload, subTopics);
 
         } else if (c[0].topic.contains(TOPIC_605)) {
 
-          print("entrou topico 605 - ${c[0].topic} - ");
           getPGQuery(contentPayload);
 
         }
@@ -203,7 +190,7 @@ class MQTTManagerWeb {
     });
   }
 
-   /* ==================================================
+  /* ==================================================
     Logout
   ===================================================== */
 
@@ -214,7 +201,7 @@ class MQTTManagerWeb {
     _client.disconnect();
   }
 
-   /* ==================================================
+  /* ==================================================
     Login
   ===================================================== */
 
@@ -241,7 +228,7 @@ class MQTTManagerWeb {
     _client.publishMessage(serverLoginTopic, MqttQos.atLeastOnce, dataBuffer);
   }
 
-   /* ==================================================
+  /* ==================================================
     Login aceito
   ===================================================== */
 
@@ -265,17 +252,14 @@ class MQTTManagerWeb {
     _client.publishMessage(serverInitialData, MqttQos.atLeastOnce, dataBuffer);
   }
 
-   /* ==================================================
+  /* ==================================================
     Mensagens para conexão com o banco de dados via mqtt
   ===================================================== */
 
   void makePGQuery(queryName, bedId) {
-    print("[Mqtt Web]: Connect to postgres");
+    print("[Mqtt Web]: Connect to postgres - query = $queryName");
 
-    queryHolder = queryName;
-
-    var bdCliente = TOPIC_605 + '/$userId';
-    var bdServer = TOPIC_405 + '/$userId';
+    queryHolder.add(queryName);
 
     _client.subscribe(bdCliente, MqttQos.atLeastOnce);
 
@@ -291,32 +275,12 @@ class MQTTManagerWeb {
     Uint8Buffer dataBuffer = Uint8Buffer();
     dataBuffer.addAll(data);
 
-    _client.publishMessage(bdServer, MqttQos.atLeastOnce, dataBuffer); 
+    _client.publishMessage(bdServer, MqttQos.atLeastOnce, dataBuffer);
   }
 
   /* ==================================================
-    Publicação da mensagens de recebimento de alarmes
+    Mensagem de inserção de dados de sintomas no banco
   ===================================================== */
-
-  void send_alarm_recognition(id) {
-    var nameBed = "bedNumber" + id; 
-    var nameAlarm = "bedAlarm" + id;
-
-    Map<String, dynamic> str = {
-      "ID": Random.secure().nextInt(1000),
-      "DT": 2313435,
-      "UI": 2
-    };
-
-    String json = jsonEncode(str);
-
-    Uint8List data = utf8.encode(json);
-    Uint8Buffer dataBuffer = Uint8Buffer();
-    dataBuffer.addAll(data);
-  //"SmartAlarm/Alarms/Recognized/";
-    var RECOGNIZED_TOPIC = TOPIC_302 + sectorId + "/" + id;
-    _client.publishMessage(RECOGNIZED_TOPIC, MqttQos.atLeastOnce, dataBuffer);
-  }
 
   void insertSymptomsQuery(
       queryName,
@@ -332,10 +296,7 @@ class MQTTManagerWeb {
       String tiredness,
       String userlogged,
       String bednumber) {
-    print("[Mqtt Web]: Connect to postgres - insert on db");
-
-    var bdCliente = TOPIC_605 + '/$userId';
-    var bdServer = TOPIC_405 + '/$userId';
+    print("[Mqtt Web]: Connect to postgres - insert symptoms on db");
 
     _client.subscribe(bdCliente, MqttQos.atLeastOnce);
 
@@ -363,6 +324,10 @@ class MQTTManagerWeb {
     _client.publishMessage(bdServer, MqttQos.atLeastOnce, dataBuffer);
   }
 
+  /* ==================================================
+    Mensagem de inserção de dados de alarmes no banco
+  ===================================================== */
+
   void insertAlarmQuery(
       queryName,
       String clinicalStatus,
@@ -372,10 +337,7 @@ class MQTTManagerWeb {
       String dateAndMonth,
       String hourAndMinute,
       bool isCancelled) {
-    print("[Mqtt Web]: Connect to postgres - insert on db");
-
-    var bdCliente = TOPIC_605 + '/$userId';
-    var bdServer = TOPIC_405 + '/$userId';
+    print("[Mqtt Web]: Connect to postgres - insert alarm on db");
 
     _client.subscribe(bdCliente, MqttQos.atLeastOnce);
 
@@ -398,12 +360,17 @@ class MQTTManagerWeb {
     _client.publishMessage(bdServer, MqttQos.atLeastOnce, dataBuffer);
   }
 
+  /* ==================================================
+    Recebimento das mensagens de resposta do banco
+  ===================================================== */
+
   void getPGQuery(contentPayload) {
-    var bdCliente = TOPIC_605 + '/$userId';
-    print("[Mqtt Web]: conectou");
+
     var content = jsonDecode(contentPayload);
 
-    if (queryHolder == 'AlarmsByBed' || queryHolder == 'allAlarms' ) {
+    if (queryHolder.contains('AlarmsByBed') || queryHolder.contains('allAlarms')) {
+
+      print("[Mqtt Web]: Receive postgress message - alarms");
       List<Alert> res = List<Alert>();
       var aux;
 
@@ -417,8 +384,16 @@ class MQTTManagerWeb {
           Provider.of<BedProvider>(contextProvider, listen: false);
 
       bedProvider.setAlertsListByBed(res);
-      print("PAYLOAD == $content RES == $res");
-    } else if (queryHolder == 'SymptomsByBed') {
+      print("AlertList == $res");
+
+      queryHolder.forEach((element) {
+        if (element == 'allAlarms' || element == 'AlarmsByBed') {
+          queryHolder.remove(element);
+        }
+      });
+    }
+    if (queryHolder.contains('SymptomsByBed')) {
+      print("[Mqtt Web]: Receive postgress message - symptoms");
       List<Symptom> res = List<Symptom>();
       var aux;
 
@@ -442,12 +417,14 @@ class MQTTManagerWeb {
           Provider.of<BedProvider>(contextProvider, listen: false);
 
       bedProvider.setSymptomListByBed(res);
-      print("PAYLOAD == $content RES == $res");
+      print("Symptoms List == $res");
+      queryHolder.remove('SymptomsByBed');
     }
+
     _client.unsubscribe(bdCliente);
   }
 
- /* ==================================================
+  /* ==================================================
     Recebimento dos dados iniciais
 
     Get the number of beds per Sector.
@@ -477,10 +454,10 @@ class MQTTManagerWeb {
       var alarmRecognized = TOPIC_302 + sectorId + '/#';
       var alarmCancelled = TOPIC_303 + sectorId + '/#';
 
-      _client.subscribe(sectorData,MqttQos.atLeastOnce); 
-      _client.subscribe(alarmIssued,MqttQos.atLeastOnce); 
-      _client.subscribe(alarmRecognized,MqttQos.atLeastOnce); 
-      _client.subscribe(alarmCancelled,MqttQos.atLeastOnce); 
+      _client.subscribe(sectorData, MqttQos.atLeastOnce);
+      _client.subscribe(alarmIssued, MqttQos.atLeastOnce);
+      _client.subscribe(alarmRecognized, MqttQos.atLeastOnce);
+      _client.subscribe(alarmCancelled, MqttQos.atLeastOnce);
     }
     _client.subscribe(appHistory, MqttQos.atLeastOnce);
     _client.unsubscribe(serverInitialData);
@@ -491,21 +468,14 @@ class MQTTManagerWeb {
   ===================================================== */
 
   void receive_data(contentPayload, subTopics) {
-    print("[Mqtt Web]: RECEIVE DATA ");
-
-    print("[Mqtt Web]: subtopics = $subTopics");
-
     String patientId = subTopics.removeLast();
-    String bedId = subTopics.removeLast(); 
+    String bedId = subTopics.removeLast();
     String sectorId = subTopics.removeLast();
-
-    print("[Mqtt Web]: recv_data_update bedId:   $patientId $bedId $sectorId");
 
     int intBedId = int.parse(bedId);
     assert(intBedId is int);
 
     var content = jsonDecode(contentPayload);
-    print("[Mqtt Web]: content = $content");
 
     var now = new DateTime.now();
     now.toUtc();
@@ -525,14 +495,34 @@ class MQTTManagerWeb {
         sector: sectorId,
         cs: content['CS']);
 
-    print("[Mqtt Web]: BED DATA ${data.sector} bedid = $bedId");
-
-    BedProvider bedProvider = Provider.of<BedProvider>(contextProvider, listen: false);
-
-    print("[Mqtt Web]: BED DATA add map $bedId no ${data.sector}");
+    BedProvider bedProvider =
+        Provider.of<BedProvider>(contextProvider, listen: false);
 
     bedProvider.addToSectorMap(bedId, sectorId);
     bedProvider.addToDataList(bedId, data);
+  }
+
+  /* ==================================================
+    Publicação da mensagens de recebimento de alarmes
+  ===================================================== */
+
+  void send_alarm_recognition(id) {
+    var nameBed = "bedNumber" + id;
+    var nameAlarm = "bedAlarm" + id;
+
+    Map<String, dynamic> str = {
+      "ID": Random.secure().nextInt(1000),
+      "DT": 2313435,
+      "UI": 2
+    };
+
+    String json = jsonEncode(str);
+
+    Uint8List data = utf8.encode(json);
+    Uint8Buffer dataBuffer = Uint8Buffer();
+    dataBuffer.addAll(data);
+    var RECOGNIZED_TOPIC = TOPIC_302 + sectorId + "/" + id;
+    _client.publishMessage(RECOGNIZED_TOPIC, MqttQos.atLeastOnce, dataBuffer);
   }
 
   /* ==================================================
@@ -555,6 +545,7 @@ class MQTTManagerWeb {
   ===================================================== */
 
   void recv_alarm_new(contentPayload, subTopics) {
+    print("[Mqtt Web]: New Alarm");
     String clinicalStatus = subTopics.removeLast();
     String patientId = subTopics.removeLast();
     String bedId = subTopics.removeLast();
@@ -569,7 +560,7 @@ class MQTTManagerWeb {
   }
 
   /* ==================================================
-    Salvamento do alarme no banco de dados -  TODO
+    Salvamento do alarme no banco de dados 
   ===================================================== */
 
   void _sendMessage(String clinicalStatus, String patientId, String bedId,
@@ -587,6 +578,9 @@ class MQTTManagerWeb {
     String formattedDateHora = f.format(now);
 
     final alert = Alert(clinicalStatus, patientId, bedId, sectorId,
+        formattedDiaEMes, formattedDateHora, isCancelled);
+
+    insertAlarmQuery('insertAlarm', clinicalStatus, patientId, bedId, sectorId,
         formattedDiaEMes, formattedDateHora, isCancelled);
   }
 }
