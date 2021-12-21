@@ -43,7 +43,7 @@ class AllAlertsList extends StatelessWidget {
                 ),
               ],
               rows: List.generate(
-                model.allAlertsByBed.length,
+                model.allAlertsByBed.take(10).length,
                 (index) => alertsRow(model.allAlertsByBed[index]),
               ),
             ),

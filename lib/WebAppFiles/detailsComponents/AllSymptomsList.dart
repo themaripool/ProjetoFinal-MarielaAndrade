@@ -33,6 +33,7 @@ class AllSymptomsList extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: DataTable(
+              dataRowHeight: 60,
               horizontalMargin: 0,
               columnSpacing: 10,
               columns: [
@@ -65,30 +66,32 @@ DataRow symptomsRow(Symptom res) {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5.0)),
           ),
-          child: Column(
+          child: Row(
             children: [
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Data: ${res.formattedDate}"),
-                  Spacer(),
+                  Text("Consciência: ${res.conscience}"),
+                  Text("Oxigênio: ${res.ox}"),
+                ],
+              ),
+              Spacer(),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                   Text("Cansaço: ${res.tiredness}"),
-                  Spacer(),
                   Text("Diarreia: ${res.diarrea}"),
-                  Spacer(),
                   Text("Dor: ${res.pain}")
                 ],
               ),
-              Row(
+              Spacer(),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Outros: ${res.others}"),
-                  Spacer(),
                   Text("Cansaço: ${res.tiredness}"),
-                  Spacer(),
                   Text("Nausea: ${res.nausea}"),
-                  Spacer(),
-                  Text("Oxigênio: ${res.ox}"),
-                  Spacer(),
-                  Text("Consciência: ${res.conscience}")
                 ],
               )
             ],
