@@ -1,3 +1,4 @@
+import 'package:projeto_final_1/Responsive.dart';
 import 'package:projeto_final_1/Screens/GeneralUseCase/GeneralUseCase.dart';
 import 'package:projeto_final_1/Screens/InpatientUseCase/InpatientUseCase.dart';
 
@@ -19,6 +20,7 @@ class OXAlert extends StatelessWidget {
         children: [
           Container(
             height: 255,
+            width: Responsive.isDesktop(context) ? MediaQuery.of(context).size.width/5 : MediaQuery.of(context).size.width/2,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(10, 70, 10, 10),
               child: Column(

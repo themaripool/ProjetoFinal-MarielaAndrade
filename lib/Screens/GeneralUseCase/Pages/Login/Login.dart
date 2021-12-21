@@ -5,14 +5,6 @@ import 'package:projeto_final_1/WebAppFiles/loginWeb.dart';
 import 'package:projeto_final_1/WebAppFiles/mainWeb.dart';
 import '../../GeneralUseCase.dart';
 
-/*
-  TODO:
-  [x] Login recebendo inputo do teclado
-  [x] Casos de erro caso o input do teclado for errado
-  [] Casos input for vazio
-  [x] Tirar dependencia do checkbox -> mudar para botao no caso do paciente
-*/
-
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -58,10 +50,6 @@ class _LoginState extends State<Login> {
                       : LoginFormMaterial(
                           userNameCntl: _userNameCntl,
                           passwordCntl: _passwordCntl),
-                  /* LoginInpatient(
-                  passwordCntl: _passwordCntl,
-                  userNameCntl: _userNameCntl,
-                ), */
                   LoginMedicalTeam(
                     passwordCntl: _passwordCntl,
                     userNameCntl: _userNameCntl,

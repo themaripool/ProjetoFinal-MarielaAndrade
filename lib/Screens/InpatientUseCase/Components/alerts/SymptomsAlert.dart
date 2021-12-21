@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:projeto_final_1/Responsive.dart';
 import 'package:projeto_final_1/Screens/InpatientUseCase/InpatientViewModel.dart';
 
 class SymptomsAlert extends StatelessWidget {
@@ -18,6 +19,7 @@ class SymptomsAlert extends StatelessWidget {
         children: [
           Container(
             height: 220,
+            width: Responsive.isDesktop(context) ? MediaQuery.of(context).size.width/5 : MediaQuery.of(context).size.width/2,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(10, 70, 10, 10),
               child: Column(
