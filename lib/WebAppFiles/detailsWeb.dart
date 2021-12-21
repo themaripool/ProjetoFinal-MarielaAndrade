@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
-import 'package:projeto_final_1/Models/Models.dart';
 import 'package:projeto_final_1/Screens/InpatientUseCase/Components/alerts/ConscienceAlert.dart';
 import 'package:projeto_final_1/Screens/InpatientUseCase/Components/alerts/OXAlert.dart';
 import 'package:projeto_final_1/Screens/InpatientUseCase/Components/alerts/OtherAlert.dart';
 import 'package:projeto_final_1/Screens/InpatientUseCase/Components/alerts/SymptomsAlert.dart';
+import 'package:projeto_final_1/WebAppFiles/alertComponents.dart/AlertComponents.dart';
 import 'package:projeto_final_1/WebAppFiles/dataScreenWeb.dart';
-import 'package:projeto_final_1/WebAppFiles/mqttManagerWeb.dart';
+import 'package:projeto_final_1/WebAppFiles/detailsComponents/DetailsComponents.dart';
 
 class DetailsPageWeb extends StatelessWidget {
   String bedId;
@@ -26,8 +26,6 @@ class DetailsPageWeb extends StatelessWidget {
           padding: EdgeInsets.all(16),
           child: Column(
             children: [
-              //Header(),
-              // SizedBox(height: defaultPadding),
               MiniInformation(), //quadradinhos
               SizedBox(height: 16),
               Row(
@@ -37,9 +35,6 @@ class DetailsPageWeb extends StatelessWidget {
                     flex: 5,
                     child: Column(
                       children: [
-                        //MyFiels(),
-                        //SizedBox(height: defaultPadding),
-                        //RecentUsers(),
                         SizedBox(height: 16),
                         DataScreenWeb(
                           bedId: bedId,
@@ -70,170 +65,6 @@ class DetailsPageWeb extends StatelessWidget {
     );
   }
 }
-
-/*------------------------------------------------- */
-/* OK */
-/*------------------------------------------------- */
-
-class AllAlertsList extends StatelessWidget {
-  String bedId;
-  AllAlertsList(this.bedId);
-
-  @override
-  Widget build(BuildContext context) {
-    if (BedProvider().allAlertsByBed.isEmpty) {
-      MQTTManagerWeb().makePGQuery('AlarmsByBed', bedId);
-    }
-    return Consumer<BedProvider>(builder: (__, model, _) {
-      return Container(
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.grey[350], //Color(0xFF292929),
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Leito x - Todos os Alertas",
-            style: Theme.of(context).textTheme.subtitle1,
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: DataTable(
-              horizontalMargin: 0,
-              columnSpacing: 10,
-              columns: [
-                DataColumn(
-                  label: Text(" "),
-                ),
-              ],
-              rows: List.generate(
-                model.allAlertsByBed.length,
-                (index) => alertsRow(model.allAlertsByBed[index]),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-    });
-  }
-}
-
-DataRow alertsRow(Alert res) {
-  return DataRow(
-    cells: [
-      DataCell(Container(
-          padding: EdgeInsets.all(5),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-          ),
-          child: Row(
-            children: [
-              Text("Data: ${res.dateAndMonth}"),
-              Spacer(),
-              Text("CS: ${res.clinicalStatus}"),
-              Spacer(),
-              Text("Hora: ${res.hourAndMinute}"),
-              Spacer(),
-              Text("Cama: ${res.bedId}")
-            ],
-          ))),
-    ],
-  );
-}
-
-class AllSymptomsList extends StatelessWidget {
-  String bedId;
-  AllSymptomsList(this.bedId);
-
-  @override
-  Widget build(BuildContext context) {
-    if (BedProvider().allSymptomByBed.isEmpty) {
-      MQTTManagerWeb().makePGQuery('SymptomsByBed', bedId);
-    }
-    return Consumer<BedProvider>(builder: (__, model, _) {
-      return Container(
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.grey[350], //Color(0xFF292929),
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Leito x - Sintomas Salvos",
-            style: Theme.of(context).textTheme.subtitle1,
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: DataTable(
-              horizontalMargin: 0,
-              columnSpacing: 10,
-              columns: [
-                DataColumn(
-                  label: Text(" "),
-                ),
-              ],
-              rows: List.generate(
-                model.allSymptomByBed.length,
-                (index) => symptomsRow(model.allSymptomByBed[index]),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-    });
-  }
-}
-
-DataRow symptomsRow(Symptom res) {
-  return DataRow(
-    cells: [
-      DataCell(Container(
-          padding: EdgeInsets.all(5),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-          ),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Text("Data: ${res.formattedDate}"),
-                  Spacer(),
-                  Text("Cansaço: ${res.tiredness}"),
-                  Spacer(),
-                  Text("Diarreia: ${res.diarrea}"),
-                  Spacer(),
-                  Text("Dor: ${res.pain}")
-                ],
-              ),
-              Row(
-                children: [
-                  Text("Outros: ${res.others}"),
-                  Spacer(),
-                  Text("Cansaço: ${res.tiredness}"),
-                  Spacer(),
-                  Text("Nausea: ${res.nausea}"),
-                  Spacer(),
-                  Text("Oxigênio: ${res.ox}"),
-                  Spacer(),
-                  Text("Consciência: ${res.conscience}")
-                ],
-              )
-            ],
-          ))),
-    ],
-  );
-}
-/*------------------------------------------------- */
-/* OK */
-/*------------------------------------------------- */
-
-
 
 class FormMaterial extends StatefulWidget {
   @override

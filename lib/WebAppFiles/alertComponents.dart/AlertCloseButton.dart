@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/* ==================================================
+  Botão de fechar do alerta
+===================================================== */
+
 class AlertCloseButton extends StatelessWidget {
   const AlertCloseButton({
     Key key,

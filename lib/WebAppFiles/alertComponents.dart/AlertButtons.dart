@@ -3,6 +3,10 @@ import 'package:projeto_final_1/WebAppFiles/detailsWeb.dart';
 
 import '../mqttManagerWeb.dart';
 
+/* ==================================================
+  Botões de ação do alerta
+===================================================== */
+
 class AlertButtons extends StatelessWidget {
   final String bedId;
   const AlertButtons({

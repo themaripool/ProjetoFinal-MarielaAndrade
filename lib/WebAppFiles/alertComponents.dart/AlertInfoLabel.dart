@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/* ==================================================
+  Componente de dados do alerta
+===================================================== */
+
 class AlertInfoLabel extends StatelessWidget {
   final dynamic content;
   const AlertInfoLabel({

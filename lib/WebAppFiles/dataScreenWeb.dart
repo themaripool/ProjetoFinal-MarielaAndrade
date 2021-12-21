@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Data/Data.dart';
+import 'package:projeto_final_1/WebAppFiles/detailsComponents/DetailsComponents.dart';
 
-import 'graphComponents/cardWidgetWeb.dart';
 
 class DataScreenWeb extends StatefulWidget {
   final String bedId;

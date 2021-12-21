@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/* ==================================================
+  Componente de título do alerta
+===================================================== */
+
 class AlertTitle extends StatelessWidget {
   final String bedId;
   final String bedSeverityStatus;
