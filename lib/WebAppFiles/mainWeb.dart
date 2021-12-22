@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Screens/GeneralUseCase/GeneralUseCase.dart';
 import 'package:projeto_final_1/WebAppFiles/MainPageContent.dart';
 import 'package:projeto_final_1/WebAppFiles/detailsWeb.dart';
-import 'package:projeto_final_1/WebAppFiles/menuWeb.dart';
+import 'package:projeto_final_1/WebAppFiles/loginWeb.dart';
+import 'package:projeto_final_1/WebAppFiles/mqttManagerWeb.dart';
 
 class MyAppWeb extends StatelessWidget {
   @override
@@ -31,24 +32,19 @@ class _HomePageWebState extends State<HomePageWeb> {
           title: Text("SmartAlarmsWeb"),
           actions: [
             FlatButton(
-              color: Colors.blue,
-              textColor: Colors.white,
-              child: Icon(Icons.ac_unit),
+              color: Colors.transparent,
+              textColor: Colors.black,
+              child: Text("Sair"),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => DetailsPageWeb("7",-1)),
-                );
+                MQTTManagerWeb().app_request_logout();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SignUpWebApp()),
+              );
               },
             ),
           ],
         ),
-        drawer: MediaQuery.of(context).size.width < 800
-            ? Drawer(
-                child: Menu(),
-              )
-            : null,
         body: SafeArea(
             child: Center(
                 child: MediaQuery.of(context).size.width < 800 &&
@@ -61,7 +57,6 @@ class _HomePageWebState extends State<HomePageWeb> {
                     : MediaQuery.of(context).size.width > 800 &&
                             MediaQuery.of(context).size.width <= 1004
                         ? Row(children: [
-                            Container(width: 200.0, child: Menu()),
                             Container(
                                 width:
                                     MediaQuery.of(context).size.width - 200.0,
@@ -72,7 +67,6 @@ class _HomePageWebState extends State<HomePageWeb> {
                         : MediaQuery.of(context).size.width > 1004 &&
                                 MediaQuery.of(context).size.width <= 1300
                             ? Row(children: [
-                                Container(width: 200.0, child: Menu()),
                                 Container(
                                     width: MediaQuery.of(context).size.width -
                                         200.0,
@@ -83,7 +77,6 @@ class _HomePageWebState extends State<HomePageWeb> {
                             : MediaQuery.of(context).size.width > 1300 &&
                                     MediaQuery.of(context).size.width <= 1500
                                 ? Row(children: [
-                                    Container(width: 200.0, child: Menu()),
                                     Container(
                                         width:
                                             MediaQuery.of(context).size.width -
@@ -94,7 +87,6 @@ class _HomePageWebState extends State<HomePageWeb> {
                                   ])
                                 : MediaQuery.of(context).size.width > 1500
                                     ? Row(children: [
-                                        Container(width: 200.0, child: Menu()),
                                         Container(
                                             width: MediaQuery.of(context)
                                                     .size
