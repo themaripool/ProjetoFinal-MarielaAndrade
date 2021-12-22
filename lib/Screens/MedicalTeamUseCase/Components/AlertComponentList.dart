@@ -33,27 +33,16 @@ class AlertComponentList extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: Colors.black)),
               Spacer(),
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Icon(
-                  Icons.arrow_upward,
-                  color: Colors
-                      .black, //cor == Colors.orange[400].withOpacity(0.4) ? Colors.black : Colors.transparent,
-                ),
-              ),
+              Text("Estado clínico ",
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black)),
               Text(clinicalStatus,
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: Colors.black)),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Icon(
-                  Icons.done,
-                  color: Colors
-                      .black, //cor == Colors.orange[400].withOpacity(0.4) ? Colors.white : Colors.black,
-                ),
-              ),
             ],
           )),
     );

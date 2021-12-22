@@ -20,7 +20,7 @@ class OXAlert extends StatelessWidget {
         children: [
           Container(
             height: 255,
-            width: Responsive.isDesktop(context) ? MediaQuery.of(context).size.width/5 : MediaQuery.of(context).size.width/2,
+            width: Responsive.isDesktop(context) ? MediaQuery.of(context).size.width/5 : MediaQuery.of(context).size.width,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(10, 70, 10, 10),
               child: Column(
