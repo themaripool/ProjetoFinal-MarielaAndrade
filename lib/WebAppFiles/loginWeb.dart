@@ -88,6 +88,8 @@ class _LoginState extends State<LoginWeb> with SingleTickerProviderStateMixin {
   Container _loginScreen(BuildContext context) {
     final _usernameTextController = TextEditingController();
     final _passwordTextController = TextEditingController();
+    final _hostTextController = TextEditingController();
+    final _appIdTextController = TextEditingController();
     return Container(
       width: double.infinity,
       child: Form(
@@ -104,6 +106,11 @@ class _LoginState extends State<LoginWeb> with SingleTickerProviderStateMixin {
               keyboardType: TextInputType.number,
               obscureText: true,
               decoration: InputDecoration(hintText: 'Senha'),
+            ),
+            SizedBox(height: 8.0),
+            TextFormField(
+              controller: _appIdTextController,
+              decoration: InputDecoration(hintText: 'AppId'),
             ),
             SizedBox(height: 24.0),
             TextButton(
@@ -125,6 +132,7 @@ class _LoginState extends State<LoginWeb> with SingleTickerProviderStateMixin {
                 MQTTManagerWeb().initializeMQTTClient(
                     _usernameTextController.text,
                     _passwordTextController.text,
+                    _appIdTextController.text,
                     context);
                 MQTTManagerWeb().connect();
               },

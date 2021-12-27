@@ -29,7 +29,7 @@ class AllAlertsList extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Leito x - Todos os Alertas",
+            "Leito $bedId - Todos os Alertas",
             style: Theme.of(context).textTheme.subtitle1,
           ),
           SizedBox(

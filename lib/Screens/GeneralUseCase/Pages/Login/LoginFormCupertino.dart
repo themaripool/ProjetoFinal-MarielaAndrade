@@ -40,6 +40,7 @@ class _LoginCupertinoFormState extends State<LoginFormCupertino> {
             child: CupertinoTextField(
                 controller: widget._passwordCntl,
                 keyboardType: TextInputType.number,
+                obscureText: true,
                 placeholder: "Password"),
           ),
         ],

@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:projeto_final_1/Data/Data.dart';
-import 'package:projeto_final_1/WebAppFiles/detailsWeb.dart';
 import 'package:projeto_final_1/WebAppFiles/loginWeb.dart';
-import 'package:projeto_final_1/WebAppFiles/mainWeb.dart';
 import '../../GeneralUseCase.dart';
 
 class Login extends StatefulWidget {

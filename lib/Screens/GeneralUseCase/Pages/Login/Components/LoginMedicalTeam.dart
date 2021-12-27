@@ -25,7 +25,7 @@ class LoginMedicalTeam extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.only(top: 16),
         child: CupertinoButton(
-          child: Text("Login Médico"),
+          child: Text("Login"),
           color: CupertinoColors.systemGrey,
           onPressed: () {
             MQTTManager().initializeMQTTClient(

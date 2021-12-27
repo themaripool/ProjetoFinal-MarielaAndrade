@@ -23,7 +23,10 @@ class _DataScreenWebState extends State<DataScreenWeb> {
       child: Consumer<BedProvider>(builder: (__, model, _) {
         return Column(
           children: [
-            Padding(
+
+            Row(
+              children: [
+                Padding(
               padding: const EdgeInsets.only(top: 16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -64,7 +67,12 @@ class _DataScreenWebState extends State<DataScreenWeb> {
                       ],
                     ),
                   ),
-                  Padding(
+                ]))
+              ],
+            ),
+            Row(
+              children: [
+                Padding(
                     padding: const EdgeInsets.only(right: 10, left: 10),
                     child: Row(
                       children: [
@@ -101,9 +109,8 @@ class _DataScreenWebState extends State<DataScreenWeb> {
                       ],
                     ),
                   ),
-                ],
-              ),
-            ),
+
+              ]),
             Padding(
               padding: const EdgeInsets.only(top: 16.0),
               child: cardWidgetWeb(

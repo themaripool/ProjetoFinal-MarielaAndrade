@@ -13,14 +13,14 @@ import 'package:projeto_final_1/Screens/MedicalTeamUseCase/MedicalTeamUseCase.da
 void main() {
   test('Color returned should be red', () {
     final vm = MedicalTeamViewModel();
-    BedData bedtestData = BedData(fc: 132, fr: 13, so: 94, te: 35.2, bedNumber: 1, dateDetails: "21/01", sector: "1");
+    BedData bedtestData = BedData(fc: 132, fr: 13, so: 94, te: 35.2, bedNumber: 1, dateDetails: "21/01", sector: "1", cs: 3);
     var result = vm.checkInpatientStatusGrid(bedtestData);
     expect(result[0], Colors.red);
   });
 
   test('Text returned should be CRÍTICO', () {
     final vm = MedicalTeamViewModel();
-    BedData bedtestData = BedData(fc: 132, fr: 13, so: 94, te: 35.2, bedNumber: 1, dateDetails: "21/01", sector: "1");
+    BedData bedtestData = BedData(fc: 132, fr: 13, so: 94, te: 35.2, bedNumber: 1, dateDetails: "21/01", sector: "1", cs: 3);
     var result = vm.checkInpatientStatusGrid(bedtestData);
     expect(result[1], "CRÍTICO");
   });

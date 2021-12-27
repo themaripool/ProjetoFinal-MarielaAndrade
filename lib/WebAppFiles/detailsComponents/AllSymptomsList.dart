@@ -27,7 +27,7 @@ class AllSymptomsList extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Leito x - Sintomas Salvos",
+            "Leito $bedId - Sintomas Salvos",
             style: Theme.of(context).textTheme.subtitle1,
           ),
           SizedBox(

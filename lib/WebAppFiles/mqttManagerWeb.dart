@@ -14,7 +14,6 @@ import 'package:typed_data/typed_data.dart';
 GLOBAIS
 ===================================================== */
 
-String broker = 'ws://192.168.0.4'; //windows
 int port = 9001;
 String clientIdentifier = 'SmartAlarm';
 List<String> queryHolder = List<String>();
@@ -62,17 +61,21 @@ class MQTTManagerWeb {
     Inicialização do mqtt
   ===================================================== */
 
-  void initializeMQTTClient(login, password, BuildContext context) {
+  void initializeMQTTClient(login, password, aplicationId, BuildContext context) {
     username = login;
     passwd = password;
 
+    String broker = 'ws://192.168.5.178';
+
     _client = createClientWithPort(broker, clientIdentifier, port, port);
 
-    if (username == "marcos") {
-      appId = "pacteste";
-    } else if (username == "teste") {
-      appId = "teste1";
-    }
+    appId = aplicationId;
+
+    // if (username == "marcos") {
+    //   appId = "pacteste";
+    // } else if (username == "teste") {
+    //   appId = "teste1";
+    // }
 
     contextNavigation = context;
     contextProvider = context;
@@ -580,7 +583,6 @@ class MQTTManagerWeb {
     final alert = Alert(clinicalStatus, patientId, bedId, sectorId,
         formattedDiaEMes, formattedDateHora, isCancelled);
 
-    insertAlarmQuery('insertAlarm', clinicalStatus, patientId, bedId, sectorId,
-        formattedDiaEMes, formattedDateHora, isCancelled);
+    //insertAlarmQuery('insertAlarm', clinicalStatus, patientId, bedId, sectorId,formattedDiaEMes, formattedDateHora, isCancelled);
   }
 }
