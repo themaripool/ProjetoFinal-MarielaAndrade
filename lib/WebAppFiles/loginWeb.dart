@@ -112,6 +112,11 @@ class _LoginState extends State<LoginWeb> with SingleTickerProviderStateMixin {
               controller: _appIdTextController,
               decoration: InputDecoration(hintText: 'AppId'),
             ),
+            SizedBox(height: 8.0),
+            TextFormField(
+              controller: _hostTextController,
+              decoration: InputDecoration(hintText: 'Host'),
+            ),
             SizedBox(height: 24.0),
             TextButton(
               style: ButtonStyle(
@@ -133,6 +138,7 @@ class _LoginState extends State<LoginWeb> with SingleTickerProviderStateMixin {
                     _usernameTextController.text,
                     _passwordTextController.text,
                     _appIdTextController.text,
+                    _hostTextController.text,
                     context);
                 MQTTManagerWeb().connect();
               },

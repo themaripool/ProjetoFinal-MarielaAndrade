@@ -10,7 +10,7 @@ GLOBAIS
 ===================================================== */
 
 //String broker = 'ws://192.168.5.178'; //macos
-String broker = 'ws://192.168.0.17'; //windows
+String broker = 'ws://192.168.0.4'; //windows
 int port = 9001;
 String clientIdentifier = 'SmartAlarm';
 String queryHolder = "";

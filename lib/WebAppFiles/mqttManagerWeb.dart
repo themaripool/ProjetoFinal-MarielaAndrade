@@ -61,11 +61,11 @@ class MQTTManagerWeb {
     Inicialização do mqtt
   ===================================================== */
 
-  void initializeMQTTClient(login, password, aplicationId, BuildContext context) {
+  void initializeMQTTClient(login, password, aplicationId, ipHost, BuildContext context) {
     username = login;
     passwd = password;
 
-    String broker = 'ws://192.168.5.178';
+    String broker = 'ws://$ipHost ';
 
     _client = createClientWithPort(broker, clientIdentifier, port, port);
 

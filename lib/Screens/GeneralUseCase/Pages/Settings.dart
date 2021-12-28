@@ -4,8 +4,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:projeto_final_1/Data/Data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../GeneralUseCase.dart';
 import '../config.dart';
@@ -27,7 +29,8 @@ class SwitchProvider with ChangeNotifier {
       scaffoldBackgroundColor: Colors.grey[200],
       bottomAppBarColor: Colors.amber,
       appBarTheme: AppBarTheme(backgroundColor: Colors.grey[400]),
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: Colors.grey[350]),
+      bottomNavigationBarTheme:
+          BottomNavigationBarThemeData(backgroundColor: Colors.grey[350]),
       textTheme: ThemeData.light().textTheme,
       cardColor: Colors.blueGrey[200],
     );
@@ -42,7 +45,8 @@ class SwitchProvider with ChangeNotifier {
       bottomAppBarColor: Colors.blue,
       textTheme: ThemeData.dark().textTheme,
       appBarTheme: AppBarTheme(backgroundColor: Colors.grey[800]),
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: Colors.grey[800]),
+      bottomNavigationBarTheme:
+          BottomNavigationBarThemeData(backgroundColor: Colors.grey[800]),
     );
   }
 }
@@ -55,16 +59,22 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   SharedPreferences prefs;
   bool _toggleDarkMode;
+  String url = 'https://themaripool.github.io/PoliticaDePrivacidade/privacidade.pdf';
 
   @override
   void initState() {
     super.initState();
   }
 
+   void launchURL() async {
+    if (!await launch(url)) throw 'Could not launch $url';
+  }
+
   @override
   Widget build(BuildContext context) {
     final _platform = Theme.of(context).platform;
-    _toggleDarkMode = currentTheme.currentTheme == ThemeMode.dark ? true : false;
+    _toggleDarkMode =
+        currentTheme.currentTheme == ThemeMode.dark ? true : false;
     if (_platform == TargetPlatform.iOS) {
       /* Ajustes no modo cupertino */
       return Scaffold(
@@ -107,6 +117,43 @@ class _SettingsState extends State<Settings> {
                   value: _toggleDarkMode,
                 ),
                 onTap: () {}),
+             ListTile(
+                title: Text("Uso de dados"),
+                leading: Icon(CupertinoIcons.doc_chart),
+                onTap: () {
+                  launchURL();
+                }),
+            ListTile(
+                title: Text("Sobre o app"),
+                leading: Icon(CupertinoIcons.info),
+                onTap: () {
+                  showModalBottomSheet(
+                      backgroundColor: Colors.transparent,
+                      context: context,
+                      builder: (context) {
+                        return Container(
+                          height: MediaQuery.of(context).size.height * 0.40,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30.0),
+                              topRight: Radius.circular(30.0),
+                            ),
+                          ),
+                          child:  Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Sobre o App", style: TextStyle(fontSize: 22, fontWeight: FontWeight.w200),),
+                                  SizedBox(height: 8.0),
+                                  Text(Constants.aboutApp),
+                                ],
+                              )
+                            ),
+                        );
+                      });
+                }),
             Padding(
               padding: const EdgeInsets.only(top: 32.0),
               child: CupertinoButton(
@@ -165,6 +212,49 @@ class _SettingsState extends State<Settings> {
               value: _toggleDarkMode,
             ),
             ListTile(
+                title: Text("Uso de dados"),
+                leading: Icon(
+                  Icons.data_usage,
+                  size: 20,
+                ),
+                onTap: () {
+                  launchURL();
+                }),
+            ListTile(
+                title: Text("Sobre o app"),
+                leading: Icon(
+                  Icons.info,
+                  size: 20,
+                ),
+                onTap: () {
+                  showModalBottomSheet(
+                      backgroundColor: Colors.transparent,
+                      context: context,
+                      builder: (context) {
+                        return Container(
+                          height: MediaQuery.of(context).size.height * 0.40,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30.0),
+                              topRight: Radius.circular(30.0),
+                            ),
+                          ),
+                          child:  Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Sobre o App", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+                                  SizedBox(height: 8.0),
+                                  Text(Constants.aboutApp),
+                                ],
+                              )
+                            ),
+                        );
+                      });
+                }),
+            ListTile(
                 title: Text(
                   "Sair",
                 ),
@@ -183,5 +273,18 @@ class _SettingsState extends State<Settings> {
         ),
       );
     }
+  }
+}
+
+class infoScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: [Text("abriu safado")],
+      ),
+    ));
   }
 }
