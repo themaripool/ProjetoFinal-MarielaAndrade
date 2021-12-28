@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projeto_final_1/Models/Models.dart';
 import 'package:projeto_final_1/Screens/GeneralUseCase/GeneralUseCase.dart';
 import 'package:projeto_final_1/Screens/InpatientUseCase/InpatientUseCase.dart';
+import 'package:projeto_final_1/Screens/MedicalTeamUseCase/MedicalTeamUseCase.dart';
 import 'package:typed_data/typed_data.dart';
 import '../Data.dart';
 
@@ -114,6 +115,7 @@ class MQTTManager {
   /// The unsolicited disconnect callback
   void onDisconnected() {
     print('[Mqtt App]: OnDisconnected client callback - Client disconnection');
+    MedicalTeamViewModel().showToastConnectionLost(contextNavigation);
     print(
         '[Mqtt App]: return code ${_client.connectionStatus.returnCode} mqtt ${MqttConnectReturnCode.noneSpecified}');
     if (_client.connectionStatus.returnCode ==
@@ -354,7 +356,7 @@ class MQTTManager {
     print("[Mqtt APP]: conectou");
     var content = jsonDecode(contentPayload);
 
-    if (queryHolder == 'AlarmsByBed' || queryHolder == 'allAlarms' ) {
+    if (queryHolder == 'AlarmsByBed' || queryHolder == 'allAlarms') {
       List<Alert> res = List<Alert>();
       var aux;
 
@@ -369,7 +371,8 @@ class MQTTManager {
 
       bedProvider.setAlertsListByBed(res);
       print("PAYLOAD == $content RES == $res");
-    } else if (queryHolder == 'SymptomsByBed' || queryHolder == 'SymptomsByUser') {
+    } else if (queryHolder == 'SymptomsByBed' ||
+        queryHolder == 'SymptomsByUser') {
       List<Symptom> res = List<Symptom>();
       var aux;
 
@@ -433,7 +436,7 @@ class MQTTManager {
           sectorData,
           MqttQos
               .atLeastOnce); //mqtt.subscribe(TOPIC_200 + "/" + MySectorId + "/#");
-     // _client.subscribe(alarmIssued,MqttQos.atLeastOnce); // mqtt.subscribe(TOPIC_301 + "/" + MySectorId + "/#");
+      // _client.subscribe(alarmIssued,MqttQos.atLeastOnce); // mqtt.subscribe(TOPIC_301 + "/" + MySectorId + "/#");
       /* _client.subscribe(
           alarmRecognized,
           MqttQos
@@ -553,7 +556,7 @@ class MQTTManager {
 
     final alert = Alert(clinicalStatus, patientId, bedId, sectorId,
         formattedDiaEMes, formattedDateHora, isCancelled);
-   /*  PostgresDao().saveAlert(clinicalStatus, patientId, bedId, sectorId,
+    /*  PostgresDao().saveAlert(clinicalStatus, patientId, bedId, sectorId,
         formattedDiaEMes, formattedDateHora, isCancelled); */
   }
 

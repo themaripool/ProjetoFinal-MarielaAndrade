@@ -37,4 +37,15 @@ List checkInpatientStatusGrid(BedData bedInfo) {
   }
 }
 
+void showToastConnectionLost(BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('Perda de conexão com o kit'),
+        action: SnackBarAction(
+            label: 'ok', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
+
 }

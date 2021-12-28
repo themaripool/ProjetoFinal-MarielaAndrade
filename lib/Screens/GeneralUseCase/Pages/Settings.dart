@@ -131,12 +131,10 @@ class _SettingsState extends State<Settings> {
                 ),
               ]),
             ),
-             RaisedButton(
-              onPressed: () {
-                _openGalery();
-              },
-              child: Text('Galeria'),
-            ),
+            ListTile(
+                title: Text("Alterar Imagem"),
+                leading: Icon(CupertinoIcons.photo),
+                onTap: () {_openGalery(); }),
             ListTile(
                 title: Text('Modo escuro'),
                 leading: Icon(CupertinoIcons.moon),
@@ -248,12 +246,12 @@ class _SettingsState extends State<Settings> {
                 ),
               ]),
             ),
-            RaisedButton(
-              onPressed: () {
-                _openGalery();
-              },
-              child: Text('Galeria'),
-            ),
+            ListTile(
+                title: Text("Alterar Imagem"),
+                leading: Icon(Icons.image),
+                onTap: () {
+                  _openGalery();
+                }),
             SwitchListTile(
               title: Text('Modo Escuro'),
               secondary: Icon(Icons.dark_mode),
