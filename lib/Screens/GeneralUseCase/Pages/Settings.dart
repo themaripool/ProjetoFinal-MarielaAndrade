@@ -2,12 +2,15 @@
   Settings: Tela de ajustes, com botões de sair e de modo escuro
 */
 
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:projeto_final_1/Data/Data.dart';
+import 'package:projeto_final_1/Data/sharedPref.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../GeneralUseCase.dart';
 import '../config.dart';
@@ -59,14 +62,27 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   SharedPreferences prefs;
   bool _toggleDarkMode;
-  String url = 'https://themaripool.github.io/PoliticaDePrivacidade/privacidade.pdf';
+  String url =
+      'https://themaripool.github.io/PoliticaDePrivacidade/privacidade.pdf';
+
+  String path = sharedPrefs.getprofileImg();
+
+  File imageFile;
+
+  _openGalery() async {
+    var picture = await ImagePicker().pickImage(source: ImageSource.gallery);
+    this.setState(() {
+      path = picture.path;
+      sharedPrefs.setProfileImg(picture.path);
+    });
+  }
 
   @override
   void initState() {
     super.initState();
   }
 
-   void launchURL() async {
+  void launchURL() async {
     if (!await launch(url)) throw 'Could not launch $url';
   }
 
@@ -86,10 +102,21 @@ class _SettingsState extends State<Settings> {
                 Align(
                   alignment: Alignment.center,
                   child: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        'https://i.pinimg.com/originals/c9/85/9c/c9859c3719f1328d1795df856940ddfd.jpg'),
-                    radius: 30.0,
-                  ),
+                      radius: 45,
+                      child: path != null && path != ""
+                          ? CircleAvatar(
+                              backgroundImage: FileImage(File(path)),
+                              radius: 45,
+                            )
+                          : CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              child: Icon(
+                                Icons.camera_alt,
+                                size: 20,
+                                color: Colors.grey,
+                              ),
+                              radius: 30.0,
+                            )),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
@@ -104,6 +131,12 @@ class _SettingsState extends State<Settings> {
                 ),
               ]),
             ),
+             RaisedButton(
+              onPressed: () {
+                _openGalery();
+              },
+              child: Text('Galeria'),
+            ),
             ListTile(
                 title: Text('Modo escuro'),
                 leading: Icon(CupertinoIcons.moon),
@@ -117,7 +150,7 @@ class _SettingsState extends State<Settings> {
                   value: _toggleDarkMode,
                 ),
                 onTap: () {}),
-             ListTile(
+            ListTile(
                 title: Text("Uso de dados"),
                 leading: Icon(CupertinoIcons.doc_chart),
                 onTap: () {
@@ -140,17 +173,21 @@ class _SettingsState extends State<Settings> {
                               topRight: Radius.circular(30.0),
                             ),
                           ),
-                          child:  Padding(
+                          child: Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Sobre o App", style: TextStyle(fontSize: 22, fontWeight: FontWeight.w200),),
+                                  Text(
+                                    "Sobre o App",
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w200),
+                                  ),
                                   SizedBox(height: 8.0),
                                   Text(Constants.aboutApp),
                                 ],
-                              )
-                            ),
+                              )),
                         );
                       });
                 }),
@@ -182,10 +219,21 @@ class _SettingsState extends State<Settings> {
                 Align(
                   alignment: Alignment.center,
                   child: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        'https://i.pinimg.com/originals/c9/85/9c/c9859c3719f1328d1795df856940ddfd.jpg'),
-                    radius: 30.0,
-                  ),
+                      radius: 45,
+                      child: path != null && path != ""
+                          ? CircleAvatar(
+                              backgroundImage: FileImage(File(path)),
+                              radius: 45,
+                            )
+                          : CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              child: Icon(
+                                Icons.camera_alt,
+                                size: 20,
+                                color: Colors.grey,
+                              ),
+                              radius: 30.0,
+                            )),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
@@ -199,6 +247,12 @@ class _SettingsState extends State<Settings> {
                   ),
                 ),
               ]),
+            ),
+            RaisedButton(
+              onPressed: () {
+                _openGalery();
+              },
+              child: Text('Galeria'),
             ),
             SwitchListTile(
               title: Text('Modo Escuro'),
@@ -240,17 +294,21 @@ class _SettingsState extends State<Settings> {
                               topRight: Radius.circular(30.0),
                             ),
                           ),
-                          child:  Padding(
+                          child: Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Sobre o App", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+                                  Text(
+                                    "Sobre o App",
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                   SizedBox(height: 8.0),
                                   Text(Constants.aboutApp),
                                 ],
-                              )
-                            ),
+                              )),
                         );
                       });
                 }),

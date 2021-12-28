@@ -1,10 +1,13 @@
  import 'package:flutter/material.dart';
+import 'package:projeto_final_1/Data/sharedPref.dart';
 import 'Data/Data.dart';
 import 'Screens/GeneralUseCase/GeneralUseCase.dart'; 
 
 
 void main() async {
   Provider.debugCheckInvalidValueType = null;
+  WidgetsFlutterBinding.ensureInitialized();
+  await sharedPrefs.init();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<Symptoms>(
