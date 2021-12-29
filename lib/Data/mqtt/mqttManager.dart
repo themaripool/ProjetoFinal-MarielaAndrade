@@ -432,19 +432,10 @@ class MQTTManager {
       var alarmRecognized = TOPIC_302 + sectorId + '/#';
       var alarmCancelled = TOPIC_303 + sectorId + '/#';
 
-      _client.subscribe(
-          sectorData,
-          MqttQos
-              .atLeastOnce); //mqtt.subscribe(TOPIC_200 + "/" + MySectorId + "/#");
-      // _client.subscribe(alarmIssued,MqttQos.atLeastOnce); // mqtt.subscribe(TOPIC_301 + "/" + MySectorId + "/#");
-      /* _client.subscribe(
-          alarmRecognized,
-          MqttQos
-              .atLeastOnce); // mqtt.subscribe(TOPIC_302 + "/" + MySectorId + "/#");
-      _client.subscribe(
-          alarmCancelled,
-          MqttQos
-              .atLeastOnce); */ // mqtt.subscribe(TOPIC_303 + "/" + MySectorId + "/#");
+      _client.subscribe(sectorData,MqttQos.atLeastOnce); 
+      _client.subscribe(alarmIssued, MqttQos.atLeastOnce);
+      _client.subscribe(alarmRecognized,MqttQos.atLeastOnce); 
+      _client.subscribe(alarmCancelled,MqttQos.atLeastOnce); 
     }
     _client.subscribe(appHistory, MqttQos.atLeastOnce);
     _client.unsubscribe(serverInitialData);
@@ -556,8 +547,6 @@ class MQTTManager {
 
     final alert = Alert(clinicalStatus, patientId, bedId, sectorId,
         formattedDiaEMes, formattedDateHora, isCancelled);
-    /*  PostgresDao().saveAlert(clinicalStatus, patientId, bedId, sectorId,
-        formattedDiaEMes, formattedDateHora, isCancelled); */
   }
 
   // ignore: non_constant_identifier_names
